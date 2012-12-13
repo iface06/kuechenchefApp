@@ -5,7 +5,7 @@ package de.vawi.kuechenchefApp;
  *  Der Bauer verrechnet die Lieferung nach der Enterfernung in km.
  *  
  *  Pro Kilometer 2,00€
- * 
+ * git push https://github.com/iface06/kuechenchefApp.git +refs/heads/master:refs/heads/master
  * @author Struebe
  * @version (a version number or a date)
  */
