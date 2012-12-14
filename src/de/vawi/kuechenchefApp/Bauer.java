@@ -6,6 +6,8 @@ package de.vawi.kuechenchefApp;
  *  
  *  Pro Kilometer 2,00€
  * git push https://github.com/iface06/kuechenchefApp.git +refs/heads/master:refs/heads/master
+ * 
+ * so das ist jetzt ne änderung von wo anasch!
  * @author Struebe
  * @version (a version number or a date)
  */
