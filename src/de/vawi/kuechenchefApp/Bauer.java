@@ -8,6 +8,8 @@ package de.vawi.kuechenchefApp;
  * git push https://github.com/iface06/kuechenchefApp.git +refs/heads/master:refs/heads/master
  * 
  * so das ist jetzt ne änderung von wo anasch!
+ * 
+ * ne Änderung vom repro direkt
  * @author Struebe
  * @version (a version number or a date)
  */
