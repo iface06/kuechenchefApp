@@ -1,4 +1,4 @@
-package de.vawi.kuechenchefApp;
+package de.vawi.kuechenchefApp.importData;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,7 +26,7 @@ import java.io.PrintWriter;
  * @author  Patrick Veith et al.
  * @version 2.1 on 11.10.2012
  */
-public class Datei
+class DateiManager
 {
     // Attribute der Klasse Datei
     // Name der Datei
@@ -57,7 +57,7 @@ public class Datei
      * Legt einen String mit dem Namen der zu bearbeitenden Datei an.
      * @param in_name (String): Dateiname der benutzt werden soll.
      */
-    public Datei(String in_name)
+    public DateiManager(String in_name)
     {   
         dName = new String(in_name);
         errorCode =0;

@@ -2,20 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.vawi.kuechenchefApp;
+package de.vawi.kuechenchefApp.importData;
 
-import de.vawi.kuechenchefApp.Datei;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.StringReader;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import static org.junit.Assert.*;
 
 public class DateiTest {
@@ -24,7 +17,7 @@ public class DateiTest {
     @Test
     public void testReadFile() throws IOException {
         System.out.println("eof");
-        Datei datei = new TestableDatei("testFile");
+        de.vawi.kuechenchefApp.importData.DateiManager datei = new TestableDatei("testFile");
         datei.openInFile();
         
         
@@ -41,7 +34,7 @@ public class DateiTest {
         assertNull(lines.get(1));
     }
     
-    class TestableDatei extends Datei{
+    class TestableDatei extends de.vawi.kuechenchefApp.importData.DateiManager{
 
         public TestableDatei(String in_name) {
             super(in_name);
