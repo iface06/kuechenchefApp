@@ -1,8 +1,8 @@
 
 package de.vawi.kuechenchefApp.rezepte;
 
-import de.vawi.kuechenchefApp.importData.Datei;
-import de.vawi.kuechenchefApp.importData.Datei;
+import de.vawi.kuechenchefApp.dateien.Datei;
+import de.vawi.kuechenchefApp.dateien.Datei;
 
 
 public enum RezepteDatei implements Datei {
