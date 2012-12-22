@@ -27,7 +27,7 @@ public class ProzessSteuerung{
     /**
      * Übergeben des SpeiseplanErsteller.
      * 
-     * @param  ersteller    Ersteller-Klasse für den Speiseplan
+     * @param  ersteller    Ersteller-Klasse für den Speiseplan Sonja
      * 
      */
     public void setSpeiseplanErsteller(SpeiseplanErsteller ersteller){
