@@ -32,7 +32,7 @@ class DateiManager {
     // nicht mit den Windows ueblichen Backslash angegeben werden duerfen,
     // sondern mit dem normalen Slash. (bsp. C:/temp/datei.txt)
 
-    private String dName;
+    private String dateiName;
     // Objekt einer Java-Klasse zum Schreiben von Zeichenketten
     private PrintWriter dAus;
     // Objekt einer Java-Klasse zum Lesen von Zeichenketten
@@ -58,7 +58,7 @@ class DateiManager {
      * @param in_name (String): Dateiname der benutzt werden soll.
      */
     public DateiManager(String in_name) {
-        dName = new String(in_name);
+        dateiName = new String(in_name);
         errorCode = 0;
         eof = false;
     }
@@ -81,7 +81,7 @@ class DateiManager {
     public void openOutFile() throws IOException {
         eof = false;
         errorCode = 0;
-        dAus = new PrintWriter(new BufferedWriter(new FileWriter(dName)));
+        dAus = new PrintWriter(new BufferedWriter(new FileWriter(dateiName)));
     }
 
     /**
@@ -91,7 +91,7 @@ class DateiManager {
     public int openOutFile_FS() {
         eof = false;
         try {
-            dAus = new PrintWriter(new BufferedWriter(new FileWriter(dName)));
+            dAus = new PrintWriter(new BufferedWriter(new FileWriter(dateiName)));
             errorCode = 0;
             return 0;
         } catch (Exception e) {
@@ -177,7 +177,7 @@ class DateiManager {
      */
     public int openInFile_FS() {
         try {
-            dEin = new BufferedReader(new FileReader(dName));
+            dEin = new BufferedReader(new FileReader(dateiName));
             errorCode = 0;
             eof = false;
             return 0;
@@ -264,7 +264,7 @@ class DateiManager {
      */
     public int deleteFile() throws IOException {
         errorCode = 0;
-        File f = new File(dName);
+        File f = new File(dateiName);
         if (f.isFile()) {
             f.delete();
         } else {
@@ -281,7 +281,7 @@ class DateiManager {
      */
     public int deleteFile_FS() {
         try {
-            File f = new File(dName);
+            File f = new File(dateiName);
             errorCode = 0;
             if (f.isFile()) {
                 f.delete();
@@ -352,6 +352,6 @@ class DateiManager {
     }
 
     protected BufferedReader createBufferedReader() throws FileNotFoundException {
-        return new BufferedReader(new FileReader(dName));
+        return new BufferedReader(new FileReader(dateiName));
     }
 }
