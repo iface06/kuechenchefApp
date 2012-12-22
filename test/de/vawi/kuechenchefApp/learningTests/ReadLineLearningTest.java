@@ -16,7 +16,7 @@ public class ReadLineLearningTest {
 
         //init variable
         final String row = "1000,\"g\",\"Buttergemuese TK\",,\"5,42\",11";
-        final List<String> cells = new ArrayList<String>();
+        List<String> cells = new ArrayList<String>();
         boolean cellStarted = false;
         StringBuffer buffer = new StringBuffer();
         
