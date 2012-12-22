@@ -10,7 +10,7 @@ import java.util.*;
 
 /**
  * Diese Klasse steuert den Prozess für die Erstellung der Speisepläne, Einkaufsliste und Kostenaufstellung.
- * 
+ * Hallo Zusammen.
  * @author Beer 
  * @version (a version number or a date)
  */
