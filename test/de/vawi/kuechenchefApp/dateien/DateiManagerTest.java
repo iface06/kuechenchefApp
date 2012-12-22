@@ -11,13 +11,13 @@ import java.util.List;
 import org.junit.*;
 import static org.junit.Assert.*;
 
-public class DateiTest {
+public class DateiManagerTest {
     
 
     @Test
     public void testReadFile() throws IOException {
         System.out.println("eof");
-        de.vawi.kuechenchefApp.dateien.DateiManager datei = new TestableDatei("testFile");
+        de.vawi.kuechenchefApp.dateien.DateiManager datei = new TestableDateiManager("testFile");
         datei.openInFile();
         
         
@@ -34,9 +34,9 @@ public class DateiTest {
         assertNull(lines.get(1));
     }
     
-    class TestableDatei extends de.vawi.kuechenchefApp.dateien.DateiManager{
+    class TestableDateiManager extends de.vawi.kuechenchefApp.dateien.DateiManager{
 
-        public TestableDatei(String in_name) {
+        public TestableDateiManager(String in_name) {
             super(in_name);
         }
         
