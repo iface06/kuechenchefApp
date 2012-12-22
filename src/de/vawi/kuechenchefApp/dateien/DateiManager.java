@@ -81,7 +81,7 @@ class DateiManager {
     public void openOutFile() throws IOException {
         eof = false;
         errorCode = 0;
-        dAus = new PrintWriter(new BufferedWriter(new FileWriter(dateiName)));
+        dAus = createPrintWriter();
     }
 
     /**
@@ -91,7 +91,7 @@ class DateiManager {
     public int openOutFile_FS() {
         eof = false;
         try {
-            dAus = new PrintWriter(new BufferedWriter(new FileWriter(dateiName)));
+            dAus = createPrintWriter();
             errorCode = 0;
             return 0;
         } catch (Exception e) {
@@ -353,5 +353,9 @@ class DateiManager {
 
     protected BufferedReader createBufferedReader() throws FileNotFoundException {
         return new BufferedReader(new FileReader(dateiName));
+    }
+
+    protected PrintWriter createPrintWriter() throws IOException {
+        return new PrintWriter(new BufferedWriter(new FileWriter(dateiName)));
     }
 }

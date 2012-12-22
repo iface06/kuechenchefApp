@@ -1,14 +1,7 @@
 package de.vawi.kuechenchefApp.dateien;
 
 
-import de.vawi.kuechenchefApp.dateien.DateiManager;
-import de.vawi.kuechenchefApp.dateien.DateiLeser;
-import de.vawi.kuechenchefApp.dateien.Datei;
-import de.vawi.kuechenchefApp.rezepte.RezepteDatei;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -40,7 +33,9 @@ public class DateiLeserTest {
 
         @Override
         protected DateiManager erstelleDateiManager() {
-            return new TestableDateiManager(datei.getDateinameMitPfad());
+            TestableDateiManager manager = new TestableDateiManager(datei.getDateinameMitPfad());
+            manager.setDateiInhalt(dateiInhalt);
+            return manager;
         }
 
         @Override
@@ -67,15 +62,5 @@ public class DateiLeserTest {
         }
     }
     
-     class TestableDateiManager extends DateiManager{
-
-        public TestableDateiManager(String in_name) {
-            super(in_name);
-        }
-        
-        @Override
-        protected BufferedReader createBufferedReader() throws FileNotFoundException {
-            return new BufferedReader(new StringReader(dateiInhalt));
-        }
-    }
+     
 }

@@ -16,39 +16,47 @@ import java.util.logging.Logger;
  */
 public class DateiSchreiber {
     
-    private DateiManager datei;
-    private final String dateiName;
+    private DateiManager dateiManager;
+    private final Datei dateiName;
+    
 
-    public DateiSchreiber(String dateiName) {
+    /**
+     *
+     * @param dateiName
+     */
+    public DateiSchreiber(Datei dateiName) {
         this.dateiName = dateiName;
+        
     }
 
     public void schreibe(String inhalt) {
-        erzeugeDatei();
+        dateiManager = erzeugeDatei();
         oeffneDatei();
         schreiberInDatei(inhalt);
         schliesseDatei();
         
     }
+    
+    protected DateiManager erzeugeDatei() {
+        return new DateiManager(dateiName.getDateinameMitPfad());
+    }
 
     private void oeffneDatei() {
         try {
-            datei.openOutFile();
+            dateiManager.openOutFile();
         } catch (IOException ex) {
             Logger.getLogger(DateiSchreiber.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void schreiberInDatei(String inhalt) {
-        datei.writeLine(inhalt);
+        dateiManager.writeLine(inhalt);
     }
 
     private void schliesseDatei() {
-        datei.closeOutFile();
+        dateiManager.closeOutFile();
     }
 
-    protected void erzeugeDatei() {
-        datei = new DateiManager(dateiName);
-    }
+    
     
 }
