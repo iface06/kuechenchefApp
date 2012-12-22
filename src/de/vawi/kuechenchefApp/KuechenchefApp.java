@@ -14,8 +14,9 @@ import de.vawi.kuechenchefApp.rezepte.SpeisenImport;
 
 /**
  * Diese Klasse ist der Einstiegspunkt der Anwendung KüchenchefApp.
+ * Hallo Tobi, Sonja und Matthias
  * @author Tatsch 
- * @version (a version number or a date)
+ * @version Beta
  * 
  * 
  */
