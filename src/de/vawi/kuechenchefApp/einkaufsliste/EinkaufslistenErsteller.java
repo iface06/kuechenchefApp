@@ -21,7 +21,7 @@ public class EinkaufslistenErsteller
     /**
      * Erzeugt eine Einkaufsliste anhand der hinzugefügten Speisepläne, nach folgdenden Regeln:
      * 
-     * 1. entsprechende Bestellmenge bei ausreichend Liefarnten vorhanden.
+     * 1. entsprechende Bestellmenge bei ausreichend Lieferanten vorhanden.
      * 2. günstigster Preis pro Nahrungsmittel
      * 
      * Die Einkaufsliste ist nach Lieferanten sortiert.
