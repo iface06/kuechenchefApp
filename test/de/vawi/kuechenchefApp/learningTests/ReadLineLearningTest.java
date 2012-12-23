@@ -14,10 +14,13 @@ public class ReadLineLearningTest {
     public void hello() {
 
 
+        //init variable
         final String row = "1000,\"g\",\"Buttergemuese TK\",,\"5,42\",11";
-        final List<String> cells = new ArrayList<String>();
+        List<String> cells = new ArrayList<String>();
         boolean cellStarted = false;
         StringBuffer buffer = new StringBuffer();
+        
+        //splitString
         for (int i = 0; i < row.length(); i++) {
             char ch = row.charAt(i);
             if (ch == '\"') {
