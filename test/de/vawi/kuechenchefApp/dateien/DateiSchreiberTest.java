@@ -1,6 +1,8 @@
 
 package de.vawi.kuechenchefApp.dateien;
 
+import java.util.Iterator;
+import java.util.List;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -45,5 +47,11 @@ public class DateiSchreiberTest {
         public String getDateinameMitPfad() {
             return "testdatei";
         }   
+
+        @Override
+        public Iterator<String> iterator() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
     }
 }

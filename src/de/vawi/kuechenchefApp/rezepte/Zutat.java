@@ -41,4 +41,19 @@ public class Zutat
     public void setNahrungsmittel(Nahrungsmittel nahrungsmittel) {
         this.nahrungsmittel = nahrungsmittel;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Zutat zutat  = (Zutat) obj;
+        return nahrungsmittel.equals(zutat.nahrungsmittel);
+    }
+
+    @Override
+    public int hashCode() {
+        return nahrungsmittel.hashCode();
+    }
+    
+    
+    
+    
 }

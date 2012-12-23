@@ -1,5 +1,8 @@
 package de.vawi.kuechenchefApp.rezepte;
 
+import de.vawi.kuechenchefApp.dateien.CsvZeileSeparator;
+import de.vawi.kuechenchefApp.dateien.Datei;
+import de.vawi.kuechenchefApp.dateien.DateiLeser;
 import java.util.*;
 /**
  * Importiert die Dateien rezepte.csv und hitliste.csv aus dem Ordner "Rezepte". 
@@ -9,6 +12,12 @@ import java.util.*;
  */
 public class SpeisenImport
 {
+    
+    private Datei rezepte; //= RezepteDatei.REZEPTE;
+    private Datei hitliste; // = RezepteDatei.HITLISTE;
+    private int SPEISENAME = 0;
+    private SpeisenVerwaltung speisen = new SpeisenVerwaltung();
+    
     /**
      * Importiert die Dateien rezepte.csv und hitliste.csv aus dem Ordner "Rezepte". 
      * Auf Basis dieser Dateien wird die SpeisenVerwaltung für den SpeiseplanErsteller erstellt.
@@ -21,8 +30,38 @@ public class SpeisenImport
      * 
      * @return     Gibt die erstellte RezepteListe gekapselt in der Speisenverwaltung zurück. 
      */
-    public SpeisenVerwaltung importFiles()
-    {
-        return new SpeisenVerwaltung(new ArrayList<Speise>());
+    public SpeisenVerwaltung importFiles() {
+        
+        Speise speise = leseNaechsteSpeiseVonDatei();
+        
+        
+        return speisen;
+    }
+
+
+    public void setRezeptDatei(Datei rezeptDatei) {
+        this.rezepte = rezeptDatei;
+    }
+
+    public void setHitliste(Datei hitliste) {
+        this.hitliste = hitliste;
+    }
+
+    private Speise leseNaechsteSpeiseVonDatei() {
+        List<Speise> speise = new ArrayList<Speise>();
+        for (String zeile : rezepte) {
+            List<String> zellen = separiereZieleInZellen(zeile);
+            Speise s = speisen.findeSpeise(zellen.get(SPEISENAME));
+            Zutat zutat = new Zutat();
+            s.addZutat(zutat);
+            
+            
+        }
+        return new Speise();
+    }
+
+    private List<String> separiereZieleInZellen(String zeile) {
+        return new CsvZeileSeparator().separiere(zeile);
+        
     }
 }

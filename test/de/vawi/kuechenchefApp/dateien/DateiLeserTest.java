@@ -2,6 +2,7 @@ package de.vawi.kuechenchefApp.dateien;
 
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -9,14 +10,14 @@ import org.junit.Test;
 
 public class DateiLeserTest {
     
-    String dateiInhalt;
+    String zeilen;
     String log = new String();
     
     @Before
     public void erstelleTestDateiKontent(){
-        dateiInhalt = new String();
-        dateiInhalt += "1000,\"g\",\"Buttergemuese TK\",,\"5,42\",11\r\n";
-        dateiInhalt += "1000,\"g\",\"Buttergemuese TK\",,\"5,42\",11";
+        zeilen = new String();
+        zeilen += "1000,\"g\",\"Buttergemuese TK\",,\"5,42\",11\r\n";
+        zeilen += "1000,\"g\",\"Buttergemuese TK\",,\"5,42\",11";
     }
     
     @Test
@@ -34,7 +35,7 @@ public class DateiLeserTest {
         @Override
         protected DateiManager erstelleDateiManager() {
             TestableDateiManager manager = new TestableDateiManager(datei.getDateinameMitPfad());
-            manager.setDateiInhalt(dateiInhalt);
+            manager.setDateiInhalt(zeilen);
             return manager;
         }
 
@@ -60,6 +61,13 @@ public class DateiLeserTest {
         public String getDateinameMitPfad() {
             return pathname;
         }
+
+        @Override
+        public Iterator<String> iterator() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        
     }
     
      

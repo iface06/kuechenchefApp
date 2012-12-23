@@ -24,7 +24,7 @@ public class DateiLeser {
         manager = erstelleDateiManager();
         try {
             oeffneDatei();
-            zeilen = leseAlleZeilen();
+            zeilen = leseAlleZeilenInDatei();
             schliesseDatei();
         } catch (IOException ex) {
             behandleFehlerfall(ex);
@@ -40,7 +40,7 @@ public class DateiLeser {
         manager.openInFile();
     }
 
-    private List<String> leseAlleZeilen() throws IOException {
+    private List<String> leseAlleZeilenInDatei() throws IOException {
         List<String> zeilen = new ArrayList<>();
         while (!istEndeDerDateiErreicht()) {
             String zeile = leseNaechsteZeileEin();
@@ -49,7 +49,6 @@ public class DateiLeser {
             }
         }
         
-
         return zeilen;
     }
 

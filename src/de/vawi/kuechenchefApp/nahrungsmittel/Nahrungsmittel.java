@@ -56,5 +56,14 @@ public class Nahrungsmittel
         this.name = name;
     }
 
-    
+    @Override
+    public boolean equals(Object obj) {
+        Nahrungsmittel nahrungsmittel = (Nahrungsmittel) obj;
+        return nahrungsmittel.name.equals(this.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.name.hashCode();
+    }
 }

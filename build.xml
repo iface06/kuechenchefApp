@@ -71,4 +71,6 @@
     nbproject/build-impl.xml file. 
 
     -->
+    
+    <target depends="clean, test, jar" description="Build and test whole project." name="test and compile"/>
 </project>

@@ -27,7 +27,8 @@ public class EinkaufslisteTest {
     }
 
     
-    // @Test
-    // public void hello() {
+    @Test
+    public void hello() {
 
     }
+}
