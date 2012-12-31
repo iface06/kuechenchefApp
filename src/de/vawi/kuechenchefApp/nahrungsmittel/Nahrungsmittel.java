@@ -1,14 +1,13 @@
 package de.vawi.kuechenchefApp.nahrungsmittel;
 
-
 /**
- * Diese Klasse hält Informationen die für die Beschreibung eines Nahrungsmittels benötigt werden.
- * 
- * @author Struebe 
+ * Diese Klasse hält Informationen die für die Beschreibung eines
+ * Nahrungsmittels benötigt werden.
+ *
+ * @author Struebe
  * @version 30.12.2012
  */
-public class Nahrungsmittel
-{
+public class Nahrungsmittel {
 
     private String name;
     private Einheit einheit;
@@ -24,51 +23,70 @@ public class Nahrungsmittel
     }
     
     /**
-     * @return     Einheit des Nahrungsmittels
+     * @return Einheit des Nahrungsmittels
      */
     public Einheit getEinheit() {
         return einheit;
     }
 
     /**
-     * @param  einheit  Einheit des Nahrungsmittels
+     * @param einheit Einheit des Nahrungsmittels
      */
     public void setEinheit(Einheit einheit) {
         this.einheit = einheit;
     }
 
     /**
-     * @return     Die Kategorie des Nahrungsmittels (Fleisch, Fisch, Vegetarisch)
+     * @return Die Kategorie des Nahrungsmittels (Fleisch, Fisch, Vegetarisch)
      */
     public NahrungsmittelKategorie getKategorie() {
         return kategorie;
     }
 
     /**
-     * @param  kategorie    Die Kategorie des Nahrungsmittels (Fleisch, Fisch, Vegetarisch)
+     * @param kategorie Die Kategorie des Nahrungsmittels (Fleisch, Fisch,
+     * Vegetarisch)
      */
     public void setKategorie(NahrungsmittelKategorie kategorie) {
         this.kategorie = kategorie;
     }
 
     /**
-     * @return     Name des Nahrungsmittels
+     * @return Name des Nahrungsmittels
      */
     public String getName() {
         return name;
     }
 
     /**
-     * @param  name     Name des Nahrungsmittels
+     *
+     * @return Name des Nahrungsmittels inklusive seiner Kategorie.
+     */
+    public String toString() {
+        return this.name + " (" + this.kategorie + ")";
+    }
+
+    /**
+     * @param name Name des Nahrungsmittels
      */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @param obj Das zu vergleichende Objekt.
+     * @return Gibt aus, ob das zu vergleichende Objekt ein Nahrungsmittel ist,
+     * und einen Namen hat.
+     */
     @Override
     public boolean equals(Object obj) {
-        Nahrungsmittel nahrungsmittel = (Nahrungsmittel) obj;
-        return nahrungsmittel.name.equals(this.name);
+        if (obj.getClass() == this.getClass()) {
+            Nahrungsmittel nahrungsmittel = (Nahrungsmittel) obj;
+            return nahrungsmittel.name.equals(this.name);
+        } else {
+            return false;
+        }
     }
 
     @Override

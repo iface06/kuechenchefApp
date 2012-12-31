@@ -36,8 +36,10 @@ public class KuechenchefApp
         new SpeisenImport().importFiles();
         PreisListeImport.LieferantenListe();
         ProzessSteuerung prozess = new ProzessSteuerung();
+
         prozess.setSpeiseplanErsteller(new SpeiseplanErsteller());
         //TODO prozess.setEinkaufslistenErsteller(new EinkaufslistenErsteller(lieferanten));
+
         prozess.setKostenaufstellungErsteller(new KostenaufstellungErsteller());
         prozess.start();
         

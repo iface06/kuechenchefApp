@@ -22,9 +22,9 @@ public class PreisListeVerarbeitung {
      * @throws InvalidPropertiesFormatException Da für die
      * Nahrungsmittel-Kategorie und die Einheit Kürzel aus der Datei ins
      * Programm übersetzt werden, wird hier eine Exception geworfen, sobald die
-     * Kürzel dem Programm nicht bekannt sind.
-     * TODO auch hier möchte er liever switch case statt if
-     * TODO ich hab die Methode public gemacht, damit ich keine Fehlermeldung mehr habe, aber sie war ursprünglich private??
+     * Kürzel dem Programm nicht bekannt sind. TODO auch hier möchte er liever
+     * switch case statt if TODO ich hab die Methode public gemacht, damit ich
+     * keine Fehlermeldung mehr habe, aber sie war ursprünglich private??
      */
     public static void lesePreisListenPositionsZeile(String preisListenPositionsZeile, Lieferant lieferant) throws InvalidPropertiesFormatException {
         CsvZeileSeparator csvSepp;
@@ -52,10 +52,10 @@ public class PreisListeVerarbeitung {
         Nahrungsmittel nahrungsmittel = new Nahrungsmittel(preisListenPositionsZellen.get(2), einheit, nahrungsmittelKategorie);
 
         PreisListenPosition preisListenPosition = new PreisListenPosition();
-            preisListenPosition.setGebindeGroesse(Double.parseDouble(preisListenPositionsZellen.get(0).replace(',', '.')));
-            preisListenPosition.setNahrungsmittel(nahrungsmittel);
-            preisListenPosition.setPreis(Double.parseDouble(preisListenPositionsZellen.get(4).replace(',', '.')));
-            preisListenPosition.setVorratsBestand(Integer.parseInt(preisListenPositionsZellen.get(5)));
-            preisListenPosition.setLieferant(lieferant);
+        preisListenPosition.setGebindeGroesse(Double.parseDouble(preisListenPositionsZellen.get(0).replace(',', '.')));
+        preisListenPosition.setNahrungsmittel(nahrungsmittel);
+        preisListenPosition.setPreis(Double.parseDouble(preisListenPositionsZellen.get(4).replace(',', '.')));
+        preisListenPosition.setVorratsBestand(Integer.parseInt(preisListenPositionsZellen.get(5)));
+        preisListenPosition.setLieferant(lieferant);
     }
 }

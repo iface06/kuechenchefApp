@@ -28,6 +28,7 @@ public class PreisListenPosition
      * @param  lieferant    Leiferant der Position
      */
     public void setLieferant(Lieferant lieferant) {
+        this.lieferant = lieferant;
         this.lieferant.hinzufuegenPreisListenPosition(this);
     }
     
