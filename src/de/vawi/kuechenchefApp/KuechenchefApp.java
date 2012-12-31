@@ -37,7 +37,7 @@ public class KuechenchefApp
         PreisListeImport.LieferantenListe();
         ProzessSteuerung prozess = new ProzessSteuerung();
         prozess.setSpeiseplanErsteller(new SpeiseplanErsteller(speisen));
-        //TODO prozess.setEinkaufslistenErsteller(new EinkaufslistenErsteller(lieferanten));
+        //TODO wird immer als Fehler angezeigt: prozess.setEinkaufslistenErsteller(new EinkaufslistenErsteller(lieferanten));
         prozess.setKostenaufstellungErsteller(new KostenaufstellungErsteller());
         prozess.start();
         
