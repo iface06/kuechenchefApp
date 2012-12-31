@@ -11,12 +11,12 @@ import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
  */
 public class PreisListenPosition
 {
-    private Lieferant lieferant;
     private double gebindeGroesse;
     private Nahrungsmittel nahrungsmittel;
     private double preis;
     private int vorratsBestand;
-
+    private Lieferant lieferant;
+    
     /**
      * @return     Lieferant der Position 
      */
@@ -28,7 +28,7 @@ public class PreisListenPosition
      * @param  lieferant    Leiferant der Position
      */
     public void setLieferant(Lieferant lieferant) {
-        this.lieferant = lieferant;
+        this.lieferant.hinzufuegenPreisListenPosition(this);
     }
     
     
@@ -88,6 +88,12 @@ public class PreisListenPosition
         this.vorratsBestand = vorratsBestand;
     }
     
-    
-    
+    /**
+     * 
+     * @return Gibt einen Text aus, der besagt welches Nahrungsmittel zu welchem Preis zur Verfügung steht. 
+     * Beispiel: Salami à 1000.0 GRAMM zu 4.98 €.
+     */
+        public String toString(){
+        return nahrungsmittel + " à " + gebindeGroesse + " " + nahrungsmittel.getEinheit() + " zu " + preis + " €";
+    }
 }

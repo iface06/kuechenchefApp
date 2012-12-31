@@ -1,21 +1,22 @@
 package de.vawi.kuechenchefApp;
 
-import de.vawi.kuechenchefApp.einkaufsliste.EinkaufslistenExport;
-import de.vawi.kuechenchefApp.kostenaufstellung.KostenaufstellungExport;
-import de.vawi.kuechenchefApp.rezepte.SpeiseplanExport;
 import de.vawi.kuechenchefApp.einkaufsliste.EinkaufslistenErsteller;
+import de.vawi.kuechenchefApp.einkaufsliste.EinkaufslistenExport;
 import de.vawi.kuechenchefApp.kostenaufstellung.KostenaufstellungErsteller;
-import de.vawi.kuechenchefApp.speiseplan.SpeiseplanErsteller;
+import de.vawi.kuechenchefApp.kostenaufstellung.KostenaufstellungExport;
+import de.vawi.kuechenchefApp.lieferanten.Lieferant;
 import de.vawi.kuechenchefApp.lieferanten.PreisListeImport;
-import de.vawi.kuechenchefApp.lieferanten.LieferantenVerwaltung;
-import de.vawi.kuechenchefApp.rezepte.SpeisenVerwaltung;
+import de.vawi.kuechenchefApp.lieferanten.PreisListenOrdnerSuche;
 import de.vawi.kuechenchefApp.rezepte.SpeisenImport;
+import de.vawi.kuechenchefApp.rezepte.SpeisenVerwaltung;
+import de.vawi.kuechenchefApp.rezepte.SpeiseplanExport;
+import de.vawi.kuechenchefApp.speiseplan.SpeiseplanErsteller;
+import java.util.List;
 
 
 /**
  * Diese Klasse ist der Einstiegspunkt der Anwendung KüchenchefApp.
- * Hallo Tobi, Sonja und Matthias
- * Hallo Max
+ * 
  * @author Tatsch 
  * @version Beta
  * 
@@ -30,14 +31,13 @@ public class KuechenchefApp
      * 
      * @param args Keine Argumente bislang notwendig!
      */
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
         SpeisenVerwaltung speisen = new SpeisenImport().importFiles();
-        LieferantenVerwaltung lieferanten = new PreisListeImport().importFiles();
-        
+        PreisListeImport.LieferantenListe();
         ProzessSteuerung prozess = new ProzessSteuerung();
         prozess.setSpeiseplanErsteller(new SpeiseplanErsteller(speisen));
-        prozess.setEinkaufslistenErsteller(new EinkaufslistenErsteller(lieferanten));
+        //TODO prozess.setEinkaufslistenErsteller(new EinkaufslistenErsteller(lieferanten));
         prozess.setKostenaufstellungErsteller(new KostenaufstellungErsteller());
         prozess.start();
         

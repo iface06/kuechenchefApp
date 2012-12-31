@@ -1,41 +1,50 @@
 package de.vawi.kuechenchefApp.lieferanten;
 
-import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import java.util.*;
+
 /**
- * Diese Klasse verwaltet die importierten Lieferanten und ihre Preislisten.
- * 
- * @author  Struebe
- * @version (a version number or a date)
+ * Diese Klasse verwaltet die importierten Lieferanten.
+ *
+ * @author Struebe
+ * @version 30.12.2012
  */
-public class LieferantenVerwaltung{
+public class LieferantenVerwaltung {
 
     private List<Lieferant> lieferanten;
 
-    public LieferantenVerwaltung(List<Lieferant> lieferanten){
-        this.lieferanten = lieferanten;
-    }
-    
     /**
-     * @return     Lieferanten aus den Preislisten-Dateien.
+     *
+     * @param lieferanten Liste der Lieferanten
      */
-    public List<Lieferant> getLieferanten() {
-        return this.lieferanten;
+    public LieferantenVerwaltung(List<Lieferant> lieferanten) {
+        this.lieferanten = lieferanten;
     }
 
     /**
-     * @param      nahrungsmittel   Nahrungsmittel zu dem man alle PreisListenPositionen haben möchte
-     * @return     Gibt alle PreisListenPositionen zu einem Nahrungsmittel von allen Lieferanten zurück
+     * Diese Methode fügt zur Liste der Lieferanten weitere Lieferanten hinzu,
+     * nachdem geprüft wurde, ob sie nocht nicht vorhanden sind.
+     *
+     * @param lieferant Liste der Lieferanten.
      */
-    public List<PreisListenPosition> findPreisListePositionBy(Nahrungsmittel nahrungsmittel){
-        return new ArrayList<PreisListenPosition>();
+    public void hinzufuegenLieferant(Lieferant lieferant) {
+        if (!lieferanten.contains(lieferant)) {
+            lieferanten.add(lieferant);
+        }
     }
-    
-      /**
-     * @param      lieferant    Lieferant dessen Preisliste man haben möchte
-     * @return     Gibt alle PreisListenPositionen zu einem Lieferanten zurück
-     */
-    public List<PreisListenPosition> findPreisListePositionBy(Lieferant lieferant){
-        return new ArrayList<PreisListenPosition>();
-   }
+/**
+ * 
+ * @param i durchlaufender Zähler der Lieferanten-Liste
+ * @return gibt den i-ten Lieferanten wider
+ */
+    public Lieferant getLieferant(int i) {
+        return lieferanten.get(i);
+
+    }
+/**
+ * 
+ * @return Gibt die Anzahl der gelisteten Lieferanten wider.
+ */
+    public int getLieferantenAnzahl() {
+        return lieferanten.size();
+    }
 }

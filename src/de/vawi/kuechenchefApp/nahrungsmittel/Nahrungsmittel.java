@@ -5,7 +5,7 @@ package de.vawi.kuechenchefApp.nahrungsmittel;
  * Diese Klasse hält Informationen die für die Beschreibung eines Nahrungsmittels benötigt werden.
  * 
  * @author Struebe 
- * @version (a version number or a date)
+ * @version 30.12.2012
  */
 public class Nahrungsmittel
 {
@@ -14,6 +14,12 @@ public class Nahrungsmittel
     private Einheit einheit;
     private NahrungsmittelKategorie kategorie;
 
+    public Nahrungsmittel(String name, Einheit einheit, NahrungsmittelKategorie kategorie) {
+        this.name = name;
+        this.einheit = einheit;
+        this.kategorie = kategorie;
+    }
+    
     /**
      * @return     Einheit des Nahrungsmittels
      */
