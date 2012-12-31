@@ -19,6 +19,9 @@ public class Nahrungsmittel
         this.einheit = einheit;
         this.kategorie = kategorie;
     }
+
+    public Nahrungsmittel() {
+    }
     
     /**
      * @return     Einheit des Nahrungsmittels

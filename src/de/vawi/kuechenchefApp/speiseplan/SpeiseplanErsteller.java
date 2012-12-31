@@ -11,11 +11,7 @@ import java.util.*;
  */
 public class SpeiseplanErsteller
 {
-    private SpeisenVerwaltung speisen;
-    
-    public SpeiseplanErsteller(SpeisenVerwaltung speisen){
-        this.speisen = speisen;
-    }
+    private SpeisenVerwaltung speisen = SpeisenVerwaltung.getInstanz();
     
     /**
      * Erstellt auf Basis der Rezpete einen Speiseplan für eine der Kantinen, nach den Regeln:
