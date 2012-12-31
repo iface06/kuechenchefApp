@@ -9,16 +9,26 @@ import java.util.*;
  */
 public class SpeisenVerwaltung
 {
-    private List<Speise> speisen;
+    private Set<Speise> speisen = new HashSet<>();
     
-    public SpeisenVerwaltung(List<Speise> speisen){
-        this.speisen = speisen;
+    public void addSpeise(Speise speise){
+        speisen.add(speise);
+    }
+    
+    public int size(){
+        return speisen.size();
     }
 
-    /**
-     * @return     gibt die Speisen zurück
-     */
-    public List<Speise> getSpeisen() {
-        return speisen;
+    public Speise findeSpeise(String speisenName) throws SpeiseNichtGefunden{
+        for (Speise speise : speisen) {
+            if(speise.getName().equals(speisenName)){
+                return speise;
+            } 
+        }
+        throw new SpeiseNichtGefunden();
+    }
+    
+    class SpeiseNichtGefunden extends RuntimeException{
+        
     }
 }

@@ -11,7 +11,7 @@ public class Speise
 {
     private String name;
     private int beliebtheit;
-    private List<Zutat> zutaten;
+    private Set<Zutat> zutaten = new HashSet<>();
     
     /**
      * @return     Beliebtheit bei den Gästen
@@ -44,14 +44,22 @@ public class Speise
     /**
      * @return     Alle Zutaten einer Speise 
      */
-    public List<Zutat> getRezeptPositionen() {
-        return this.zutaten;
+    public List<Zutat> getZutaten() {
+        return new ArrayList<Zutat>(this.zutaten);
     }
 
-    /**
-     * @param  zutaten  Alle Zutaten einer Speise
-     */
-    public void setRezeptPositionen(List<Zutat> zutaten) {
-        this.zutaten = zutaten;
+    public void addZutat(Zutat zutat){
+        zutaten.add(zutat);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Speise speise = (Speise) obj;
+        return speise.name.equals(this.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.name.hashCode();
     }
 }
