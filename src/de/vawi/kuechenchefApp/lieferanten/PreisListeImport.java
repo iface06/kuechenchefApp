@@ -57,11 +57,23 @@ public class PreisListeImport {
     }
 /**
  * TODO stimmt das so?
+ * Static-Methoden sollten die Ausnahme sein. Problem ist, dass du Vorteile aus der objektorientierten Programmierung damit aushebelst.
+ * Z. B. Kein Polyphormismus möglich. Also wenn du Ableitung von PreiListeImport machst, kannst du static-Methoden nicht überschreiben.
+ * Auch wichtig: in der Regel sollte eine Klasse nur eine public Methode haben, die mit Hilfe eines sprechenden Namen sagt, was sie tut. Hilft den Benutzer der Klasse.
+ * LieferantenListe(), hm... was macht die eigentlich. Wenn man sich den Code anschaut sieht man, dass die Methode einen Lieferanten ausgibt. 
+ * Also könnte man die Mehtode gibLieferantenAufKonsoleAus() nennen. Dann weiß jeder sofort was die Methode macht, ohne sich den Code anschauen zu müssen.
+ * Grundsätzlich sollten solche Methoden aber in unserem Projekt nicht notwendig sein, da die Ausgabe  zum einen in Dateien erfolgen soll und die Import-Klasse
+ * dafür nicht verantwortlich sein sollte (Eine Verantwortung pro Klasse) Somit hat diese Klasse schon zwei Verantwortungen, zum einen importiert die Klasse PreisListen,
+ * zum Andern ist sie dafür Verantwortlich die Preislisten auf die Konsole auszugeben.
+ * Ich vermute mal du wolltest testen ob die Dateien auch wirklich importiert werden. Dafür sollten wir allerdings einen Test schreiben. :-)
  * @throws FileNotFoundException Wird geworfen, wenn der Ordner nicht gefunden wird.
  * @throws Exception Wird geworfen, wenn keine Datei im Ordner gefunden wird.
  */
     @SuppressWarnings("ConvertToTryWithResources")
     public static void LieferantenListe() throws FileNotFoundException, Exception {
+        //PreisListenOrdnerSuche.PreisListenOrdnerSuche(): Hm, was macht die Methode? Sucht einen Ordner. Aber ich übergeb gar kein Kriterium.
+        //Ach so, aber wir brauchen doch eigenltich keine Oberflächen. Das ist zum testen, richtig? :-) Mit einem Unit-Test ist das deutlich weniger aufwendig.
+        //Vielleicht wäre der Name PreisListenOrdnerSuche.anzeigen() besser. Wobei die Methode deutlich mehr macht :-)
         List<Lieferant> lieferanten = PreisListeImport.lesePreisListenDateien(PreisListenOrdnerSuche.PreisListenOrdnerSuche());
         for (int i = 0; i < lieferanten.size(); i++) {
             Lieferant lieferant = lieferanten.get(i);
