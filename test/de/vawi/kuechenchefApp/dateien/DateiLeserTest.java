@@ -2,11 +2,9 @@ package de.vawi.kuechenchefApp.dateien;
 
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 public class DateiLeserTest {
     
@@ -40,7 +38,7 @@ public class DateiLeserTest {
         }
 
         @Override
-        protected void behandleFehlerfall(IOException ex) {
+        protected void behandelFehlerfall(IOException ex) {
             log = ex.getMessage();
         }
         

@@ -33,7 +33,7 @@ public class KuechenchefApp
      */
     public static void main(String[] args) throws Exception
     {
-        new SpeisenImport().importFiles();
+        //new SpeisenImport().importFiles();
         PreisListeImport.LieferantenListe();
         ProzessSteuerung prozess = new ProzessSteuerung();
 

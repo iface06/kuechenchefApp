@@ -35,7 +35,7 @@ public class SpeisenImportTest {
     }
     
     @Test
-    public void testZutatenAusRezpteZuSpeisenImportieren(){
+    public void testZutatenAusRezepteZuSpeisenImportieren(){
         importer.importFiles();
         
         Speise speise = speisen.findeSpeise("Bohneneintopf Mexiko");

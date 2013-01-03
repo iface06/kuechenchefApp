@@ -27,7 +27,7 @@ public class DateiLeser {
             zeilen = leseAlleZeilenInDatei();
             schliesseDatei();
         } catch (IOException ex) {
-            behandleFehlerfall(ex);
+            behandelFehlerfall(ex);
         }
 
         return zeilen;
@@ -64,7 +64,7 @@ public class DateiLeser {
         manager.closeInFile();
     }
     
-    protected void behandleFehlerfall(IOException ex) {
+    protected void behandelFehlerfall(IOException ex) {
         Logger.getLogger(DateiLeser.class.getName()).log(Level.SEVERE, null, ex);
     }
 }
