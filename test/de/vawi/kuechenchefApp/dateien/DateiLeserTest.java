@@ -20,19 +20,23 @@ public class DateiLeserTest {
     
     @Test
     public void testeDateiEinlesen() {
-        DateiLeser leser = new TestableDateiLeser();
-        leser.setDatei(TestableDatei.TESTDATEI);
-        List<String> inhalt = leser.leseDatei();
+        DateiLeser leser = new TestableDateiLeser("TestDatei");
+        Datei datei = leser.leseDatei();
     
-        assertTrue(!inhalt.isEmpty());
-        assertEquals(2, inhalt.size());
+        assertTrue(datei.iterator().hasNext());
     }
     
     class TestableDateiLeser extends DateiLeser{
 
+        public TestableDateiLeser(String dateiName) {
+            super(dateiName);
+        }
+        
+        
+
         @Override
         protected DateiManager erstelleDateiManager() {
-            TestableDateiManager manager = new TestableDateiManager(datei.getDateinameMitPfad());
+            TestableDateiManager manager = new TestableDateiManager(dateiName);
             manager.setDateiInhalt(zeilen);
             return manager;
         }
@@ -63,9 +67,7 @@ public class DateiLeserTest {
         @Override
         public Iterator<String> iterator() {
             throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        
+        }   
     }
     
      

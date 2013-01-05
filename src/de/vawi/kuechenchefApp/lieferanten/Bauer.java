@@ -11,16 +11,7 @@ import java.util.ArrayList;
  */
 public class Bauer extends Lieferant {
     public static double PAUSCHALE_PRO_KILOMETER = 2.0;
-    
-    /**
-     * 
-     * @param name Name des Bauern
-     * @param lieferKostenFaktor Entfernung in km
-     */
-    public Bauer(String name, double lieferKostenFaktor) {
-        super(name, lieferKostenFaktor);
-        this.preisListenPositionen = new ArrayList<>();
-    }
+  
      
     @Override
     double berechneLieferkosten(double einkaufsWert) {

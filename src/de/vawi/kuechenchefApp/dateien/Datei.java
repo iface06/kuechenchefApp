@@ -8,4 +8,5 @@ public interface Datei extends Iterable<String> {
 
     public String getDateinameMitPfad();
     
+    
 }

@@ -1,5 +1,6 @@
 package de.vawi.kuechenchefApp.lieferanten;
 
+import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import java.util.*;
 
 /**
@@ -10,41 +11,35 @@ import java.util.*;
  */
 public class LieferantenVerwaltung {
 
-    private List<Lieferant> lieferanten;
+    private static LieferantenVerwaltung INSTANCE;
+    
+    private List<PreisListenPosition> preisListenPositionen = new ArrayList<>();
 
-    /**
-     *
-     * @param lieferanten Liste der Lieferanten
-     */
-    public LieferantenVerwaltung(List<Lieferant> lieferanten) {
-        this.lieferanten = lieferanten;
+    
+    LieferantenVerwaltung() {
     }
-
-    /**
-     * Diese Methode fügt zur Liste der Lieferanten weitere Lieferanten hinzu,
-     * nachdem geprüft wurde, ob sie nocht nicht vorhanden sind.
-     *
-     * @param lieferant Liste der Lieferanten.
-     */
-    public void hinzufuegenLieferant(Lieferant lieferant) {
-        if (!lieferanten.contains(lieferant)) {
-            lieferanten.add(lieferant);
+    
+    public static LieferantenVerwaltung getInstance(){
+        if(INSTANCE == null){
+            INSTANCE = new LieferantenVerwaltung();
         }
+        
+        return INSTANCE;
     }
-/**
- * 
- * @param i durchlaufender Zähler der Lieferanten-Liste
- * @return gibt den i-ten Lieferanten wider
- */
-    public Lieferant getLieferant(int i) {
-        return lieferanten.get(i);
 
+    void hinzufuegenPreisListenPosition(List<PreisListenPosition> positionen) {
+        preisListenPositionen.addAll(positionen);
     }
-/**
- * 
- * @return Gibt die Anzahl der gelisteten Lieferanten wider.
- */
-    public int getLieferantenAnzahl() {
-        return lieferanten.size();
+
+    List<PreisListenPosition> findeDurchNahrungsmittel(Nahrungsmittel nahrungsmittel) {
+        List<PreisListenPosition> positionen = new ArrayList<>();
+        for (PreisListenPosition position : preisListenPositionen) {
+            if(position.getNahrungsmittel().equals(nahrungsmittel)){
+                positionen.add(position);
+            }
+        }
+        
+        return positionen;
     }
+    
 }

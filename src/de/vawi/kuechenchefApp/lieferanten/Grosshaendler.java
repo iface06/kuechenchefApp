@@ -12,15 +12,6 @@ package de.vawi.kuechenchefApp.lieferanten;
  */
 public class Grosshaendler extends Lieferant {
 
-    /**
-     *
-     * @param name Name des Großhändlers
-     * @param lieferKostenFaktor Lieferkosten-Faktor für die Berechnung der
-     * Lieferkosten anhand des Einkaufswertes.
-     */
-    public Grosshaendler(String name, double lieferKostenFaktor) {
-        super(name, lieferKostenFaktor);
-    }
 
     @Override
     double berechneLieferkosten(double einkaufsWert) {

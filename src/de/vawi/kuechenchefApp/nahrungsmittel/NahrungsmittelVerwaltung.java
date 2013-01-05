@@ -12,9 +12,9 @@ public class NahrungsmittelVerwaltung {
     
     private Set<Nahrungsmittel> nahrungsmittels = new HashSet<>();
 
-    public Nahrungsmittel findeDurchName(String kartoffeln) {
+    public Nahrungsmittel findeDurchName(String name) {
         for (Nahrungsmittel nahrungsmittel1 : nahrungsmittels) {
-            if(nahrungsmittel1.getName().contains(kartoffeln)){
+            if(nahrungsmittel1.getName().contains(name)){
                 return nahrungsmittel1;
             }
         }
@@ -32,6 +32,8 @@ public class NahrungsmittelVerwaltung {
         return INSTANZ;
         
     }
+
+    
     
     
     

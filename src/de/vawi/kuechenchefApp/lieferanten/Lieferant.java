@@ -16,17 +16,7 @@ public abstract class Lieferant {
 
     private String name;
     private double lieferKostenFaktor;
-    protected List<PreisListenPosition> preisListenPositionen;
-
-/**
- *  Konstruktor für die Auflistung der Preislisten-Positionen.
- */
-    Lieferant (String name, double lieferKostenFaktor) {
-        this.name = name;
-        this.lieferKostenFaktor = lieferKostenFaktor;
-        preisListenPositionen = new ArrayList<>();
-    }
-
+    
     /**
      * @param name Name des Lieferanten
      */
@@ -47,6 +37,10 @@ public abstract class Lieferant {
         return this.lieferKostenFaktor;
     }
 
+    public void setLieferKostenFaktor(double lieferKostenFaktor) {
+        this.lieferKostenFaktor = lieferKostenFaktor;
+    }
+
     /**
      * @return Name repräsentiert den Namen des Lieferanten
      */
@@ -65,37 +59,6 @@ public abstract class Lieferant {
     abstract double berechneLieferkosten(double einkaufsWert);
 
     /**
-     * Diese Methode fügt zum jeweiligen Lieferanten die entsprechenden
-     * Positionen der Preisliste eines Lieferanten hinzu, nachdem geprüft wurde,
-     * ob die Position noch nicht vorhanden ist.
-     *
-     * @param preisListenPosition Ein Objekt vom Typ PreisListenPosition mit den
-     * entsprechenden Parametern.
-     */
-    public void hinzufuegenPreisListenPosition(PreisListenPosition preisListenPosition) {
-        if (!preisListenPositionen.contains(preisListenPosition)) {
-            preisListenPositionen.add(preisListenPosition);
-        }
-    }
-
-    /**
-     *
-     * @param i Zählt die Preis-Listen-Positionen durch.
-     * @return Gibt die i-te Position auf der Preisliste wider.
-     */
-    public PreisListenPosition getPreisListenPosition(int i) {
-        return preisListenPositionen.get(i);
-    }
-
-    /**
-     *
-     * @return Gibt die Anzahl der Positionen auf einer Preisliste wider.
-     */
-    public int getPreisListenPositionAnzahl() {
-        return preisListenPositionen.size();
-    }
-
-    /**
      *
      * @return Gibt die Unterklasse, in die der Lieferant einsortiert wurde
      * (Bauer oder Großhändler), und den Lieferantennamen aus. Beispiel: Bauer
@@ -105,4 +68,19 @@ public abstract class Lieferant {
     public String toString() {
         return this.getClass().getSimpleName().toString() + " '" + this.name + "'";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Lieferant lieferant = (Lieferant) obj;
+        return this.name.equals(lieferant.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.name.hashCode();
+    }
+    
+    
+    
+    
 }
