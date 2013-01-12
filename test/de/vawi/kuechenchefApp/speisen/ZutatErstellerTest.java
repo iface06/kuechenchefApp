@@ -34,7 +34,7 @@ public class ZutatErstellerTest {
     @Test
     public void testErstelleZutat() {
         Zutat zutat = ersteller.erstelle(rezpetZeile);
-        assertEquals(150, zutat.getMenge());
+        assertEquals(150.0, zutat.getMenge(), 0.0001);
     }
     
     @Test
