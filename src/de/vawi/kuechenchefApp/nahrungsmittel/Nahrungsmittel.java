@@ -11,10 +11,11 @@ public class Nahrungsmittel {
 
     private String name;
     private Einheit einheit;
-    private NahrungsmittelKategorie kategorie;
     private int verfuegbareGesamtMenge;
+    private SpeisenUndNahrungsmittelKategorie kategorie;
 
-    
+
+
     /**
      * @return Einheit des Nahrungsmittels
      */
@@ -32,7 +33,7 @@ public class Nahrungsmittel {
     /**
      * @return Die Kategorie des Nahrungsmittels (Fleisch, Fisch, Vegetarisch)
      */
-    public NahrungsmittelKategorie getKategorie() {
+    public SpeisenUndNahrungsmittelKategorie getKategorie() {
         return kategorie;
     }
 
@@ -40,7 +41,7 @@ public class Nahrungsmittel {
      * @param kategorie Die Kategorie des Nahrungsmittels (Fleisch, Fisch,
      * Vegetarisch)
      */
-    public void setKategorie(NahrungsmittelKategorie kategorie) {
+    public void setKategorie(SpeisenUndNahrungsmittelKategorie kategorie) {
         this.kategorie = kategorie;
     }
 

@@ -1,5 +1,6 @@
-package de.vawi.kuechenchefApp.rezepte;
+package de.vawi.kuechenchefApp.speisen;
 
+import de.vawi.kuechenchefApp.PlanungsPeriode;
 import java.util.*;
 /**
  * Enthält alle Funktionen die für die Verwaltung der Speisen benötigt.
@@ -38,8 +39,26 @@ public class SpeisenVerwaltung {
         }
         return INSTANZ;
     }
+
+    public List<Speise> findeBeliebtesteSpeisenFuerPlanungsPeriode(PlanungsPeriode periode) {
+        
+        List<Speise> beliebtesteSpeisen = new ArrayList<Speise>();
+        
+        int anzahlBenötigteSpeisen = periode.berechneAnzahlBenötigterSpeisen();
+        
+        for(Speise speise : speisen) {
+            if(speise.getBeliebtheit() <= anzahlBenötigteSpeisen) {
+                beliebtesteSpeisen.add(speise);
+            }
+        } 
+        return beliebtesteSpeisen;
+    }
+    
+
     
     class SpeiseNichtGefunden extends RuntimeException{
         
     }
+    
+    
 }
