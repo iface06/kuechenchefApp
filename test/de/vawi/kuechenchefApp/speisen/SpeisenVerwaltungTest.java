@@ -2,7 +2,6 @@
 
 package de.vawi.kuechenchefApp.speisen;
 
-import de.vawi.kuechenchefApp.speisen.SpeisenVerwaltung;
 import de.vawi.kuechenchefApp.speisen.Speise;
 import de.vawi.kuechenchefApp.PlanungsPeriode;
 import de.vawi.kuechenchefApp.speisen.SpeisenVerwaltung.SpeiseNichtGefunden;
