@@ -44,8 +44,23 @@ public class SpeisenImportTest {
         Speise speise = speisen.findeSpeise("Bohneneintopf Mexiko");
         List<Zutat> zutatenZuSpeise = speise.getZutaten();
         assertEquals("Kartoffeln", zutatenZuSpeise.get(0).getNahrungsmittel().getName());
-        assertEquals("Chilipulver", zutatenZuSpeise.get(1).getNahrungsmittel().getName());
+        assertEquals("Chilipulver", zutatenZuSpeise.get(1).getNahrungsmittel().getName());        
+    }
+    
+    @Test
+    public void testKategorisierungDerVegetarischenSpeisen(){
+        importer.importFiles();
         
+        Speise speise = speisen.findeSpeise("Bohneneintopf Mexiko");
+        assertEquals(SpeisenUndNahrungsmittelKategorie.VEGETARISCH, speise.getKategorie());
+    }
+    
+    @Test
+    public void testKategorisierungDerFleischSpeisen(){
+        importer.importFiles();
+        
+        Speise speise = speisen.findeSpeise("Falscher Hase");
+        assertEquals(SpeisenUndNahrungsmittelKategorie.FLEISCH, speise.getKategorie());
     }
     
     private void fuegeKartoffelUndChilipulvernInNahrungsmittelVerwaltungEin() {
@@ -59,8 +74,14 @@ public class SpeisenImportTest {
         chilipulver.setEinheit(Einheit.GRAMM);
         chilipulver.setKategorie(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
         
+        Nahrungsmittel hase = new Nahrungsmittel();
+        hase.setName("Hase");
+        hase.setEinheit(Einheit.GRAMM);
+        hase.setKategorie(SpeisenUndNahrungsmittelKategorie.FLEISCH);        
+        
         NahrungsmittelVerwaltung.getInstanz().fuegeHinzu(kartoffeln);
         NahrungsmittelVerwaltung.getInstanz().fuegeHinzu(chilipulver);
+        NahrungsmittelVerwaltung.getInstanz().fuegeHinzu(hase);
     }
 
     private void initializiereImporter() {
@@ -99,6 +120,8 @@ public class SpeisenImportTest {
         static{
             zeilen.add("\"Bohneneintopf Mexiko\",150,\"g\",\"Kartoffeln\"");
             zeilen.add("\"Bohneneintopf Mexiko\",10,\"g\",\"Chilipulver\"");
+            zeilen.add("\"Falscher Hase\",10,\"g\",\"Hase\"");
+            zeilen.add("\"Falscher Hase\",10,\"g\",\"Chilipulver\"");
         }
 
         @Override
@@ -111,5 +134,4 @@ public class SpeisenImportTest {
             return zeilen.iterator();
         }
     }
-
 }

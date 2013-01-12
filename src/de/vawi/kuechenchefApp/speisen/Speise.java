@@ -1,5 +1,6 @@
 package de.vawi.kuechenchefApp.speisen;
 
+import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
 import java.util.*;
 /**
  * Speisen aus der Rezeptedatei. Erweitert um die Bliebtheit aus der Hitliste.
@@ -12,7 +13,7 @@ public class Speise
     private String name;
     private int beliebtheit;
     private Set<Zutat> zutaten = new HashSet<>();
-    
+    private SpeisenUndNahrungsmittelKategorie kategorie;
     /**
      * @return     Beliebtheit bei den Gästen
      */
@@ -61,5 +62,10 @@ public class Speise
     @Override
     public int hashCode() {
         return this.name.hashCode();
+    }
+
+    public SpeisenUndNahrungsmittelKategorie getKategorie() {
+        Iterator<Zutat> iterator = zutaten.iterator();
+        return iterator.hasNext() ? iterator.next().getKategorie() : SpeisenUndNahrungsmittelKategorie.VEGETARISCH;
     }
 }

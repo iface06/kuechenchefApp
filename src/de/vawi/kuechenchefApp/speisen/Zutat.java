@@ -1,6 +1,8 @@
 package de.vawi.kuechenchefApp.speisen;
 
+import de.vawi.kuechenchefApp.nahrungsmittel.Einheit;
 import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
+import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
 
 
 /**
@@ -53,7 +55,15 @@ public class Zutat
         return nahrungsmittel.hashCode();
     }
     
+    public SpeisenUndNahrungsmittelKategorie getKategorie(){
+        return nahrungsmittel.getKategorie();
+    }
     
+    public Einheit getEinheit(){
+        return nahrungsmittel.getEinheit();
+    }
     
-    
+    public String getName(){
+        return nahrungsmittel.getName();
+    }
 }
