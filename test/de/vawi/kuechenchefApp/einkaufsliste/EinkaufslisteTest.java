@@ -1,6 +1,7 @@
 
 package de.vawi.kuechenchefApp.einkaufsliste;
 
+import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -10,25 +11,24 @@ import static org.junit.Assert.*;
  */
 public class EinkaufslisteTest {
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
+    @Test
+    public void testFindeVorhandenePositionDurchNahrungsmittel() {
+        Einkaufsliste liste = new Einkaufsliste();
+        Nahrungsmittel kartoffeln = new Nahrungsmittel();
+        liste.hinzufügenEinkaufslistenPosition(new EinkaufslistenPosition(kartoffeln));
+        kartoffeln.setName("Kartoffeln");
+        EinkaufslistenPosition position = liste.findePositionDurchNahrungsmittel(kartoffeln);
+    
+        assertEquals(kartoffeln.getName(), position.getNahrungsmittel());
     }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
-
     
     @Test
-    public void hello() {
-
+    public void testFindeNichtVorhandenePositionDurchNahrungsmittel() {
+        Einkaufsliste liste = new Einkaufsliste();
+        Nahrungsmittel kartoffeln = new Nahrungsmittel();
+        kartoffeln.setName("Kartoffeln");
+        EinkaufslistenPosition position = liste.findePositionDurchNahrungsmittel(kartoffeln);
+    
+        assertEquals(kartoffeln.getName(), position.getNahrungsmittel());
     }
 }

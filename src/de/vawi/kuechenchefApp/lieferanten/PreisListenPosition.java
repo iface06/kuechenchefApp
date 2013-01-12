@@ -7,7 +7,7 @@ import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
  * Eine Position in der Preisliste des Lieferanten. 
  * 
  * @author Struebe
- * @version (a version number or a date)
+ * @version 30.12.2012
  */
 public class PreisListenPosition
 {

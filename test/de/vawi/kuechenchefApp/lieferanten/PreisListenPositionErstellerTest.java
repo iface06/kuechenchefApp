@@ -3,7 +3,7 @@
 package de.vawi.kuechenchefApp.lieferanten;
 
 import de.vawi.kuechenchefApp.lieferanten.PreisListenPositionErsteller.FehlerBeimErstellenEinerPreislistenPosition;
-import de.vawi.kuechenchefApp.nahrungsmittel.NahrungsmittelKategorie;
+import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -18,7 +18,8 @@ public class PreisListenPositionErstellerTest {
         PreisListenPosition position = ersteller.erstelle(zeile);
         
         assertEquals("Burgerbroetchen", position.getNahrungsmittel().getName());
-        assertEquals(NahrungsmittelKategorie.VEGETARISCH, position.getNahrungsmittel().getKategorie());
+        assertEquals(10000, position.getNahrungsmittel().getVerfuegbareGesamtMenge());
+        assertEquals(SpeisenUndNahrungsmittelKategorie.VEGETARISCH, position.getNahrungsmittel().getKategorie());
         assertEquals(lieferant, position.getLieferant());
     }
     

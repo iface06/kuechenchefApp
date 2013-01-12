@@ -16,12 +16,12 @@ public class LieferantenVerwaltungTest {
         PreisListenPosition kartoffelAngebotA = createNahrungsmittel("Kartoffeln");
         PreisListenPosition kartoffelAngebotB = createNahrungsmittel("Kartoffeln");
         PreisListenPosition moehrenAngebot = createNahrungsmittel("Möhren");
-        verwaltung = LieferantenVerwaltung.getInstance();
+        verwaltung = LieferantenVerwaltung.getInstanz();
         verwaltung.hinzufuegenPreisListenPosition(Arrays.asList(kartoffelAngebotA, kartoffelAngebotB, moehrenAngebot));
     }
     
     @Test
-    public void testFindeKartoffeln(){
+    public void testFindeKartoffeln(){ 
         Nahrungsmittel kartoffeln = new Nahrungsmittel();
         kartoffeln.setName("Kartoffeln");
         List<PreisListenPosition> positionen = verwaltung.findeDurchNahrungsmittel(kartoffeln);
@@ -37,7 +37,7 @@ public class LieferantenVerwaltungTest {
         
         assertEquals(1, positionen.size());
     }
-
+    
     private static PreisListenPosition createNahrungsmittel(String name) {
         PreisListenPosition position = new PreisListenPosition();
         Nahrungsmittel kartoffel = new Nahrungsmittel();

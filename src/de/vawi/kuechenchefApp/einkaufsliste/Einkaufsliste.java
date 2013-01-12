@@ -1,5 +1,6 @@
 package de.vawi.kuechenchefApp.einkaufsliste;
 
+import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import java.util.*;
 /**
  * Die Einkaufsliste für die Speisepläne der Planungsperiode
@@ -26,5 +27,18 @@ public class Einkaufsliste
      */
     public List<EinkaufslistenPosition> getPositionen(){
         return positionen;
+    }
+
+    EinkaufslistenPosition findePositionDurchNahrungsmittel(Nahrungsmittel nahrungsmittel) {
+        for (EinkaufslistenPosition position : positionen) {
+            if(position.getNahrungsmittel().equals(nahrungsmittel.getName())){
+                return position;
+            }
+        }
+        
+        EinkaufslistenPosition position = new EinkaufslistenPosition(nahrungsmittel);
+        hinzufügenEinkaufslistenPosition(position);
+        return position;
+                
     }
 }

@@ -1,10 +1,12 @@
 
 
-package de.vawi.kuechenchefApp.rezepte;
+package de.vawi.kuechenchefApp.speisen;
 
+import de.vawi.kuechenchefApp.speisen.Zutat;
+import de.vawi.kuechenchefApp.speisen.ZutatErsteller;
 import de.vawi.kuechenchefApp.nahrungsmittel.Einheit;
 import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
-import de.vawi.kuechenchefApp.nahrungsmittel.NahrungsmittelKategorie;
+import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
 import de.vawi.kuechenchefApp.nahrungsmittel.NahrungsmittelVerwaltung;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -32,7 +34,7 @@ public class ZutatErstellerTest {
     @Test
     public void testErstelleZutat() {
         Zutat zutat = ersteller.erstelle(rezpetZeile);
-        assertEquals(150, zutat.getMenge());
+        assertEquals(150.0, zutat.getMenge(), 0.0001);
     }
     
     @Test
@@ -45,7 +47,7 @@ public class ZutatErstellerTest {
         Nahrungsmittel kartoffeln = new Nahrungsmittel();
         kartoffeln.setName("Kartoffeln");
         kartoffeln.setEinheit(Einheit.GRAMM);
-        kartoffeln.setKategorie(NahrungsmittelKategorie.VEGETARISCH);
+        kartoffeln.setKategorie(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
         
         NahrungsmittelVerwaltung.getInstanz().fuegeHinzu(kartoffeln);
     }
@@ -54,7 +56,7 @@ public class ZutatErstellerTest {
         erwatetesNahrungsmittel = new Nahrungsmittel();
         erwatetesNahrungsmittel.setName("Kartoffeln");
         erwatetesNahrungsmittel.setEinheit(Einheit.GRAMM);
-        erwatetesNahrungsmittel.setKategorie(NahrungsmittelKategorie.VEGETARISCH);   
+        erwatetesNahrungsmittel.setKategorie(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);   
     }
 
     

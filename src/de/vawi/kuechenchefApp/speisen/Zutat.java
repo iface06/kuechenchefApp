@@ -1,4 +1,4 @@
-package de.vawi.kuechenchefApp.rezepte;
+package de.vawi.kuechenchefApp.speisen;
 
 import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 
@@ -11,20 +11,20 @@ import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
  */
 public class Zutat
 {
-    private int menge;
+    private double menge;
     private Nahrungsmittel nahrungsmittel;
     
     /**
      * @return     Menge die für das Zubereiten benötigt wird. 
      */
-    public int getMenge() {
+    public double getMenge() {
         return menge;
     }
 
     /**
      * @param  menge    Menge die für das Zubereiten benötigt wird. 
      */
-    public void setMenge(int menge) {
+    public void setMenge(double menge) {
         this.menge = menge;
     }
 

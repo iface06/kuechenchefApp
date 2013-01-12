@@ -18,4 +18,7 @@ public class Taschenrechner {
         return minuend - subtrahent;
     }
     
+    
+    
+    
 }
