@@ -2,7 +2,9 @@
 
 package de.vawi.kuechenchefApp.rezepte;
 
+import de.vawi.kuechenchefApp.PlanungsPeriode;
 import de.vawi.kuechenchefApp.rezepte.SpeisenVerwaltung.SpeiseNichtGefunden;
+import java.util.List;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -35,6 +37,14 @@ public class SpeisenVerwaltungTest {
         Speise steaks = verwaltung.findeSpeise("Steaks");
         
         assertEquals("Steaks", steaks.getName());
+    }
+    
+    @Test
+    public void testFindeBeliebtesteSpeisenFuerPlanungsPeriode(){
+        PlanungsPeriode periode = new PlanungsPeriode();
+        List<Speise> steaks = verwaltung.findeBeliebtesteSpeisenFuerPlanungsPeriode(periode);
+        
+        assertEquals(45, steaks.size());
     }
     
     @Test(expected=SpeiseNichtGefunden.class)
