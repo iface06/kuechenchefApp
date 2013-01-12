@@ -18,8 +18,8 @@ public class KostenaufstellungExport extends DateiExport<Kostenaufstellung>
      * 
      * @param  exportant    Kostenaufstellung
      */
-    public void export(Kostenaufstellung exportant)
-    {
+    public void export(Kostenaufstellung exportant) {
+        
    
     }
 }
