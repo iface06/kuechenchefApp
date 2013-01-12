@@ -8,21 +8,21 @@ import java.util.*;
  * @author Beer 
  * @version (a version number or a date)
  */
-public class Speiseplan
+public class Speiseplan implements Iterable<Tag>
 {
-    private List<Speise> speisen;
+    private List<Tag> tageMitGerichten;
     private Kantine kantine;
     
-    public Speiseplan(Kantine kantine, List<Speise> gerichte){
+    public Speiseplan(Kantine kantine, List<Tag> tageMitGerichten){
         this.kantine = kantine;
-        this.speisen = gerichte;
+        this.tageMitGerichten = tageMitGerichten;
     }
 
     /**
-     * @return  Gibt die Gerichte zurück
+     * @return  Gibt die die Liste mit den Tagen der Planungsperiode zurück.
      */
-    public List<Speise> getSpeisen(){
-        return this.speisen;
+    public List<Tag> getTageMitGerichten(){
+        return this.tageMitGerichten;
     }  
     
     /**
@@ -30,5 +30,10 @@ public class Speiseplan
      */
     public Kantine getKantine(){
         return this.kantine;
+    }
+
+    @Override
+    public Iterator<Tag> iterator() {
+        return tageMitGerichten.iterator();
     }
 }
