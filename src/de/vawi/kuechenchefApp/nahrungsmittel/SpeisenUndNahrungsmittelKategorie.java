@@ -7,12 +7,12 @@ package de.vawi.kuechenchefApp.nahrungsmittel;
  * @author Struebe
  * @version 30.12.2012
  */
-public enum NahrungsmittelKategorie {
+public enum SpeisenUndNahrungsmittelKategorie {
     FLEISCH("m"), FISCH("f"), VEGETARISCH("");
     
     private String abkuerzung;
 
-    private NahrungsmittelKategorie(String abkuerzung) {
+    private SpeisenUndNahrungsmittelKategorie(String abkuerzung) {
         this.abkuerzung = abkuerzung;
     }
 
@@ -20,12 +20,12 @@ public enum NahrungsmittelKategorie {
         return abkuerzung;
     }
     
-    public static NahrungsmittelKategorie nachAbkuerzung(String abkuerzung){
-        for (NahrungsmittelKategorie kategorie : values()) {
+    public static SpeisenUndNahrungsmittelKategorie nachAbkuerzung(String abkuerzung){
+        for (SpeisenUndNahrungsmittelKategorie kategorie : values()) {
             if(kategorie.getAbkuerzung().equals(abkuerzung)){
                 return kategorie;
             }
         }
-        return NahrungsmittelKategorie.VEGETARISCH;
+        return SpeisenUndNahrungsmittelKategorie.VEGETARISCH;
     }
 }

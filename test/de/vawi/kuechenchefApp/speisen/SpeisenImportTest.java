@@ -1,7 +1,11 @@
 
 
-package de.vawi.kuechenchefApp.rezepte;
+package de.vawi.kuechenchefApp.speisen;
 
+import de.vawi.kuechenchefApp.speisen.SpeisenVerwaltung;
+import de.vawi.kuechenchefApp.speisen.Speise;
+import de.vawi.kuechenchefApp.speisen.Zutat;
+import de.vawi.kuechenchefApp.speisen.SpeisenImport;
 import de.vawi.kuechenchefApp.dateien.Datei;
 import de.vawi.kuechenchefApp.nahrungsmittel.*;
 import java.util.*;
@@ -49,12 +53,12 @@ public class SpeisenImportTest {
         Nahrungsmittel kartoffeln = new Nahrungsmittel();
         kartoffeln.setName("Kartoffeln");
         kartoffeln.setEinheit(Einheit.GRAMM);
-        kartoffeln.setKategorie(NahrungsmittelKategorie.VEGETARISCH);
+        kartoffeln.setKategorie(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
         
         Nahrungsmittel chilipulver = new Nahrungsmittel();
         chilipulver.setName("Chilipulver");
         chilipulver.setEinheit(Einheit.GRAMM);
-        chilipulver.setKategorie(NahrungsmittelKategorie.VEGETARISCH);
+        chilipulver.setKategorie(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
         
         NahrungsmittelVerwaltung.getInstanz().fuegeHinzu(kartoffeln);
         NahrungsmittelVerwaltung.getInstanz().fuegeHinzu(chilipulver);

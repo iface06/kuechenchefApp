@@ -1,6 +1,6 @@
 
 
-package de.vawi.kuechenchefApp.rezepte;
+package de.vawi.kuechenchefApp.speisen;
 
 import de.vawi.kuechenchefApp.dateien.CsvZeileSeparator;
 import java.util.*;

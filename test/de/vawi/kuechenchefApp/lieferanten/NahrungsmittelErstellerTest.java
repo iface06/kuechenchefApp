@@ -6,7 +6,7 @@ import de.vawi.kuechenchefApp.lieferanten.NahrungsmittelErsteller;
 import de.vawi.kuechenchefApp.dateien.CsvZeileSeparator;
 import de.vawi.kuechenchefApp.nahrungsmittel.Einheit;
 import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
-import de.vawi.kuechenchefApp.nahrungsmittel.NahrungsmittelKategorie;
+import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
 import java.util.List;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -34,7 +34,7 @@ public class NahrungsmittelErstellerTest {
     public void testKategorie(){
         Nahrungsmittel nahrungsmittel = ersteller.erstelle(preisListenZeile);
         
-        assertEquals(NahrungsmittelKategorie.VEGETARISCH, nahrungsmittel.getKategorie());
+        assertEquals(SpeisenUndNahrungsmittelKategorie.VEGETARISCH, nahrungsmittel.getKategorie());
     }
 
 }
