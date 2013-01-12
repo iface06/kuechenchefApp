@@ -22,5 +22,8 @@ public class PlanungsPeriode {
         return anzahlGerichteProTag;
     }
     
+    public int berechneAnzahlBenötigterSpeisen() {
+       return anzahlGerichteProTag * anzahlTageProWoche * anzahlWochen;
+    }
     
 }

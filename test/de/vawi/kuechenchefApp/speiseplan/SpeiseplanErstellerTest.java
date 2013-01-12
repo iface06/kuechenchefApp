@@ -16,6 +16,7 @@ public class SpeiseplanErstellerTest {
      * davon 3 Fischgerichte
      * davon 15 vegetarische
      * Rest Fleisch
+     * Waren müssen ausreichend verfügbar sein
      * 
      */
 //    @Test

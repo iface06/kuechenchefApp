@@ -41,7 +41,7 @@ public class SpeisenVerwaltung {
     }
 
     public List<Speise> findeBeliebtesteSpeisenFuerPlanungsPeriode(PlanungsPeriode periode) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return null;
     }
     
 
