@@ -41,7 +41,17 @@ public class SpeisenVerwaltung {
     }
 
     public List<Speise> findeBeliebtesteSpeisenFuerPlanungsPeriode(PlanungsPeriode periode) {
-        return null;
+        
+        List<Speise> beliebtesteSpeisen = new ArrayList<Speise>();
+        
+        int anzahlBenötigteSpeisen = periode.berechneAnzahlBenötigterSpeisen();
+        
+        for(Speise speise : speisen) {
+            if(speise.getBeliebtheit() <= anzahlBenötigteSpeisen) {
+                beliebtesteSpeisen.add(speise);
+            }
+        } 
+        return beliebtesteSpeisen;
     }
     
 

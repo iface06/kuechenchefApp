@@ -1,5 +1,7 @@
 package de.vawi.kuechenchefApp.speiseplan;
 
+import de.vawi.kuechenchefApp.PlanungsPeriode;
+import de.vawi.kuechenchefApp.nahrungsmittel.NahrungsmittelKategorie;
 import de.vawi.kuechenchefApp.rezepte.SpeisenVerwaltung;
 import de.vawi.kuechenchefApp.rezepte.Speise;
 import java.util.*;
@@ -14,6 +16,11 @@ public class SpeiseplanErsteller
     // Ich benötige insgesamt 3 * 15 = 45 Gerichte also 
     private SpeisenVerwaltung speisen = SpeisenVerwaltung.getInstanz();
     private List<Speise> beliebtesteSpeisen;
+    
+    public SpeiseplanErsteller() {
+        beliebtesteSpeisen = speisen.findeBeliebtesteSpeisenFuerPlanungsPeriode(new PlanungsPeriode());
+    }
+    
     /**
      * Erstellt auf Basis der Rezpete einen Speiseplan für eine der Kantinen, nach den Regeln:
      * 
@@ -29,7 +36,7 @@ public class SpeiseplanErsteller
      */
     public Speiseplan erzeuge(Kantine kantine)
     {
-        return new Speiseplan(kantine, new ArrayList<Speise>());
+        return new Speiseplan(kantine, new ArrayList<Tag>());
     }
     
     /**
@@ -37,6 +44,10 @@ public class SpeiseplanErsteller
      * @return 
      */
     private boolean beliebtesteSpeisenBeinhalten15Fleischgerichte() {
+        
+        for(Speise speise : beliebtesteSpeisen) {
+            
+        }
         return true;
     }
     
