@@ -39,7 +39,11 @@ public class SpeisenVerwaltung {
         return INSTANZ;
     }
     
+
+    
     class SpeiseNichtGefunden extends RuntimeException{
         
     }
+    
+    
 }

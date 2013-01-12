@@ -11,8 +11,9 @@ import java.util.*;
  */
 public class SpeiseplanErsteller
 {
+    // Ich benötige insgesamt 3 * 15 = 45 Gerichte also 
     private SpeisenVerwaltung speisen = SpeisenVerwaltung.getInstanz();
-    
+    private List<Speise> beliebtesteSpeisen;
     /**
      * Erstellt auf Basis der Rezpete einen Speiseplan für eine der Kantinen, nach den Regeln:
      * 
@@ -30,4 +31,30 @@ public class SpeiseplanErsteller
     {
         return new Speiseplan(kantine, new ArrayList<Speise>());
     }
+    
+    /**
+     * Prueft ob die 45 beliebtesten Speisen schon mindestens 15 Fleischgerichte beinhaltet. 
+     * @return 
+     */
+    private boolean beliebtesteSpeisenBeinhalten15Fleischgerichte() {
+        return true;
+    }
+    
+    /**
+     * Prueft ob die 45 beliebtesten Speisen schon mindestens 3 Fischgerichte beinhaltet. 
+     * @return 
+     */
+    private boolean beliebtesteSpeisenBeinhalten3Fischgerichte() {
+        return true;
+    }
+    
+    /**
+     * Prueft ob die 45 beliebtesten Speisen schon mindestens 15 Vegetarischen Gerichte beinhaltet. 
+     * @return 
+     */
+    private boolean beliebtesteSpeisenBeinhalten15VegGerichte() {
+        return true;
+    }
+
+
 }
