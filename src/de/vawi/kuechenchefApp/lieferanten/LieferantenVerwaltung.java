@@ -42,4 +42,6 @@ public class LieferantenVerwaltung {
         return positionen;
     }
     
+    
+    
 }
