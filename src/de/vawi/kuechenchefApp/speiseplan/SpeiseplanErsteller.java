@@ -1,8 +1,9 @@
 package de.vawi.kuechenchefApp.speiseplan;
 
 import de.vawi.kuechenchefApp.PlanungsPeriode;
-import de.vawi.kuechenchefApp.speisen.*;
-
+import de.vawi.kuechenchefApp.nahrungsmittel.NahrungsmittelKategorie;
+import de.vawi.kuechenchefApp.rezepte.SpeisenVerwaltung;
+import de.vawi.kuechenchefApp.rezepte.Speise;
 import java.util.*;
 /**
  * Diese Klasse ist für das Erstellen eines Speiseplans verantwortlich.
@@ -17,7 +18,7 @@ public class SpeiseplanErsteller
     private List<Speise> beliebtesteSpeisen;
     
     public SpeiseplanErsteller() {
-       // beliebtesteSpeisen = speisen.findeBeliebtesteSpeisenFuerPlanungsPeriode(new PlanungsPeriode());
+        beliebtesteSpeisen = speisen.findeBeliebtesteSpeisenFuerPlanungsPeriode(new PlanungsPeriode());
     }
     
     /**
