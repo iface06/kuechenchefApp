@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/**
+ * 
+ * @author Tatsch
+ */
 public class DateiLeser {
 
     protected String dateiName;

@@ -3,7 +3,9 @@ package de.vawi.kuechenchefApp.speiseplan;
 import de.vawi.kuechenchefApp.PlanungsPeriode;
 import de.vawi.kuechenchefApp.speisen.Speise;
 import de.vawi.kuechenchefApp.speisen.SpeisenVerwaltung;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Diese Klasse ist für das Erstellen eines Speiseplans verantwortlich.
  * 

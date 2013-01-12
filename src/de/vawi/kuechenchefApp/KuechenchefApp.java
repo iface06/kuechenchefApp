@@ -8,7 +8,6 @@ import de.vawi.kuechenchefApp.lieferanten.Lieferant;
 import de.vawi.kuechenchefApp.lieferanten.PreisListenImport;
 import de.vawi.kuechenchefApp.lieferanten.PreisListenOrdnerSuche;
 import de.vawi.kuechenchefApp.speisen.SpeisenImport;
-import de.vawi.kuechenchefApp.speisen.SpeisenVerwaltung;
 import de.vawi.kuechenchefApp.speisen.SpeiseplanExport;
 import de.vawi.kuechenchefApp.speiseplan.SpeiseplanErsteller;
 import java.util.List;

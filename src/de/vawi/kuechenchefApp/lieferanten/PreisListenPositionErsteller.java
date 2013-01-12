@@ -41,7 +41,7 @@ class PreisListenPositionErsteller {
      * keine Fehlermeldung mehr habe, aber sie war ursprünglich private??
      *
      */
-    public PreisListenPosition erstelle(String preisListenPositionsZeile) throws FehlerBeimErstellenEinerPreislistenPosition{
+    public PreisListenPosition erstelle(String preisListenPositionsZeile) throws FehlerBeimErstellenEinerPreislistenPosition {
         List<String> zellen = separiereZeile(preisListenPositionsZeile);
         return erstellePreisListenPosition(zellen);
 
@@ -60,6 +60,7 @@ class PreisListenPositionErsteller {
             preisListenPosition.setNahrungsmittel(findeNahrungsmittel(zellen));
             preisListenPosition.setPreis(parseStringToDouble(zellen.get(ZELLE_PREIS)));
             preisListenPosition.setVorratsBestand(parseStringToInteger(zellen.get(ZELLE_VORRAT)));
+            preisListenPosition.setNahrungsmittel(addiereVerfuegbareMenge(zellen,parseStringToInteger(zellen.get(ZELLE_VORRAT)), parseStringToInteger(zellen.get(ZELLE_GEBINDEGROESSE))));
             preisListenPosition.setLieferant(lieferant);
         } catch (Exception e) {
             throw new FehlerBeimErstellenEinerPreislistenPosition(lieferant, zellen);
@@ -78,11 +79,11 @@ class PreisListenPositionErsteller {
 
     private Nahrungsmittel findeNahrungsmittel(List<String> zellen) {
         Nahrungsmittel nahrungsmittel = nahrungsmittelVerwaltung.findeDurchName(zellen.get(ZELLE_NAHRUNGSMITTELNAME));
-        if(nahrungsmittel == null){
+        if (nahrungsmittel == null) {
             nahrungsmittel = erstelleNeuesNahrungsmittel(zellen);
             nahrungsmittelVerwaltung.fuegeHinzu(nahrungsmittel);
         }
-        
+
         return nahrungsmittel;
     }
 
@@ -91,8 +92,16 @@ class PreisListenPositionErsteller {
         Nahrungsmittel mittel = ersteller.erstelle(zellen);
         return mittel;
     }
-    
-    public static class FehlerBeimErstellenEinerPreislistenPosition extends RuntimeException{
+
+    private Nahrungsmittel addiereVerfuegbareMenge(List<String> zellen, int vorratsBestand, int gebindeGroesse) {
+        
+        Nahrungsmittel nahrungsmittel = nahrungsmittelVerwaltung.findeDurchName(zellen.get(ZELLE_NAHRUNGSMITTELNAME));
+        nahrungsmittel.setVerfuegbareGesamtMenge(nahrungsmittel.getVerfuegbareGesamtMenge() + (vorratsBestand * gebindeGroesse));       
+        return nahrungsmittel;
+    }
+
+    public static class FehlerBeimErstellenEinerPreislistenPosition extends RuntimeException {
+
         Lieferant lieferant;
         List<String> zelle;
 

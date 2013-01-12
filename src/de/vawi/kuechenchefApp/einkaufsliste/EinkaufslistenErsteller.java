@@ -12,7 +12,7 @@ import java.util.*;
 public class EinkaufslistenErsteller
 {
     private List<Speiseplan> speiseplaene = new ArrayList<Speiseplan>();
-    private LieferantenVerwaltung lieferanten = LieferantenVerwaltung.getInstance();
+    private LieferantenVerwaltung lieferanten = LieferantenVerwaltung.getInstanz();
     
     /**
      * Erzeugt eine Einkaufsliste anhand der hinzugefügten Speisepläne, nach folgdenden Regeln:
