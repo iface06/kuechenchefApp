@@ -12,15 +12,8 @@ public class Nahrungsmittel {
     private String name;
     private Einheit einheit;
     private NahrungsmittelKategorie kategorie;
+    private int verfuegbareGesamtMenge;
 
-    public Nahrungsmittel(String name, Einheit einheit, NahrungsmittelKategorie kategorie) {
-        this.name = name;
-        this.einheit = einheit;
-        this.kategorie = kategorie;
-    }
-
-    public Nahrungsmittel() {
-    }
     
     /**
      * @return Einheit des Nahrungsmittels
@@ -72,6 +65,21 @@ public class Nahrungsmittel {
     public void setName(String name) {
         this.name = name;
     }
+/**
+ * 
+ * @return 
+ */
+    public int getVerfuegbareGesamtMenge() {
+        return verfuegbareGesamtMenge;
+    }
+/**
+ * 
+ * @param verfuegbareGesamtMenge 
+ */
+    public void setVerfuegbareGesamtMenge(int verfuegbareGesamtMenge) {
+        this.verfuegbareGesamtMenge = verfuegbareGesamtMenge;
+    }
+
 
     /**
      *

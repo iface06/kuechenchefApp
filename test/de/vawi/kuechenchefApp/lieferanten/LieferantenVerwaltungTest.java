@@ -16,7 +16,7 @@ public class LieferantenVerwaltungTest {
         PreisListenPosition kartoffelAngebotA = createNahrungsmittel("Kartoffeln");
         PreisListenPosition kartoffelAngebotB = createNahrungsmittel("Kartoffeln");
         PreisListenPosition moehrenAngebot = createNahrungsmittel("Möhren");
-        verwaltung = LieferantenVerwaltung.getInstance();
+        verwaltung = LieferantenVerwaltung.getInstanz();
         verwaltung.hinzufuegenPreisListenPosition(Arrays.asList(kartoffelAngebotA, kartoffelAngebotB, moehrenAngebot));
     }
     

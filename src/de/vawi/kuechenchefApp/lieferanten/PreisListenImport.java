@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.logging.*;
 
 /**
- * Importiert alle Lieferanten und ihre Angebote aus den Preislistendateien.
+ * Diese Klasse importiert alle Lieferanten und ihre Angebote aus den Preislistendateien.
  *
  *
  * @author Struebe
@@ -15,7 +15,7 @@ import java.util.logging.*;
  */
 public class PreisListenImport {
     private PreisListen listen;
-    private LieferantenVerwaltung lieferantenVerwaltung = LieferantenVerwaltung.getInstance();
+    private LieferantenVerwaltung lieferantenVerwaltung = LieferantenVerwaltung.getInstanz();
 
     /**
      * Importiert die Preislistedateien aus dem Ordner "Lieferanten" und
@@ -34,7 +34,7 @@ public class PreisListenImport {
     //TODO: habe den unten stehenden code nicht gebraucht.
     public void importFiles() {
         try {
-            LieferantenVerwaltung verwaltung = LieferantenVerwaltung.getInstance();
+            LieferantenVerwaltung verwaltung = LieferantenVerwaltung.getInstanz();
             lesePreisListenDateien(PreisListenOrdnerSuche.PreisListenOrdnerSuche());
             
         } catch (Exception ex) {
