@@ -43,7 +43,7 @@ public class EinkaufslistenErstellerTest {
    
        
        assertEquals(1, liste.getPositionen().size());
-       assertEquals(2000.0, position.getMenge(), 0.0001);
+       assertEquals(3000.0, position.getMenge(), 0.0001);
     }
 
     private Speiseplan erzeugeDummySpeiseplan() {
@@ -59,8 +59,10 @@ public class EinkaufslistenErstellerTest {
         Tag tag = new Tag(1);
         Speise speise = erzeugeSpeise();
         Speise speise1 = erzeugeSpeise();
+        Speise speise2 = erzeugeSpeise();
         tag.setBeliebtesteSpeise(speise);
         tag.setZweitbeliebtesteSpeise(speise1);
+        tag.setDrittbeliebtesteSpeise(speise2);
         return tag;
     }
 

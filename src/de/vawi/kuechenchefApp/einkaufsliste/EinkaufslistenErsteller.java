@@ -37,9 +37,9 @@ public class EinkaufslistenErsteller
             for (Tag tag : speiseplan) {
                 fuegeInEinkaufsliste(tag.getBeliebtesteSpeise(), liste);
                 fuegeInEinkaufsliste(tag.getZweitbeliebtesteSpeise(), liste);
+                fuegeInEinkaufsliste(tag.getDrittbeliebtesteSpeise(), liste);
             }
-
-           
+            
         }
         return liste;
     }
