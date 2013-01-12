@@ -38,15 +38,7 @@ public class SpeisenVerwaltungTest {
         
         assertEquals("Steaks", steaks.getName());
     }
-    
-    @Test
-    public void testFindeBeliebtesteSpeisenFuerPlanungsPeriode(){
-        PlanungsPeriode periode = new PlanungsPeriode();
-        List<Speise> steaks = verwaltung.findeBeliebtesteSpeisenFuerPlanungsPeriode(periode);
-        
-        assertEquals(45, steaks.size());
-    }
-    
+ 
     @Test(expected=SpeiseNichtGefunden.class)
     public void testFindeNichtDieSpeiseMitNamen(){
         Speise steaks = verwaltung.findeSpeise("Drei im Weckla");
