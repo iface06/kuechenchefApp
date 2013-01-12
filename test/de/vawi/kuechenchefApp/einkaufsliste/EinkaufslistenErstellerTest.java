@@ -10,13 +10,13 @@ import static org.junit.Assert.*;
  */
 public class EinkaufslistenErstellerTest {
 
-    
-    
     @Test
-    public void testname() {
+    public void Ordne() {
         
     
     }
+    
+   
         
     
     @Test
