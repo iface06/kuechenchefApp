@@ -12,11 +12,13 @@ import java.util.*;
  */
 public class SpeisenImport
 {
+    public static final int SPEISEN_NAME = 0;
+    private Datei rezepte;
+    private Datei hitliste;
+    private CsvZeileSeparator separator = new CsvZeileSeparator();
+    private SpeisenVerwaltung speisen = SpeisenVerwaltung.getInstanz();
     
-    private Datei rezepte; //= RezepteDatei.REZEPTE;
-    private Datei hitliste; // = RezepteDatei.HITLISTE;
-    private int SPEISENAME = 0;
-    private SpeisenVerwaltung speisen = new SpeisenVerwaltung();
+    
     
     /**
      * Importiert die Dateien rezepte.csv und hitliste.csv aus dem Ordner "Rezepte". 
@@ -30,38 +32,39 @@ public class SpeisenImport
      * 
      * @return     Gibt die erstellte RezepteListe gekapselt in der Speisenverwaltung zurück. 
      */
-    public SpeisenVerwaltung importFiles() {
+    public void importFiles() {
         
-        Speise speise = leseNaechsteSpeiseVonDatei();
-        
-        
-        return speisen;
+        fuegeSpeisenVonHitlisteInSpeisenverwaltungEin();
+        fuegeZutatenZuSpeisenAusRezepteDateiHinzu();
     }
 
-
-    public void setRezeptDatei(Datei rezeptDatei) {
-        this.rezepte = rezeptDatei;
-    }
-
-    public void setHitliste(Datei hitliste) {
-        this.hitliste = hitliste;
-    }
-
-    private Speise leseNaechsteSpeiseVonDatei() {
-        List<Speise> speise = new ArrayList<Speise>();
-        for (String zeile : rezepte) {
-            List<String> zellen = separiereZieleInZellen(zeile);
-            Speise s = speisen.findeSpeise(zellen.get(SPEISENAME));
-            Zutat zutat = new Zutat();
-            s.addZutat(zutat);
-            
-            
+    private void fuegeSpeisenVonHitlisteInSpeisenverwaltungEin() {
+        for (String zeile : hitliste) {
+            Speise speise = erstelleSpeise(zeile);
+            speisen.addSpeise(speise);
         }
-        return new Speise();
+    }
+    
+    private Speise erstelleSpeise(String zeile) {
+        SpeisenErsteller ersteller = new SpeisenErsteller();
+        Speise speise = ersteller.erstelle(zeile);
+        return speise;
     }
 
-    private List<String> separiereZieleInZellen(String zeile) {
-        return new CsvZeileSeparator().separiere(zeile);
-        
+    private void fuegeZutatenZuSpeisenAusRezepteDateiHinzu() {
+        for (String zeile : rezepte) {
+            List<String> zellen = separator.separiere(zeile);
+            Speise speise = speisen.findeSpeise(zellen.get(SPEISEN_NAME));
+            Zutat zutat = new ZutatErsteller().erstelle(zeile);
+            speise.addZutat(zutat);
+        }
+    }
+
+    protected void setRezepte(Datei rezepte) {
+        this.rezepte = rezepte;
+    }
+
+    protected void setHitliste(Datei hitliste) {
+        this.hitliste = hitliste;
     }
 }

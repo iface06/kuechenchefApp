@@ -1,40 +1,28 @@
 package de.vawi.kuechenchefApp.dateien;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DateiLeser {
 
-    protected Datei datei;
+    protected String dateiName;
     private DateiManager manager;
 
-    public void setDatei(Datei datei) {
-        this.datei = datei;
+    public DateiLeser(String dateiName) {
+        this.dateiName = dateiName;
     }
 
-    public void setManager(DateiManager manager) {
-        this.manager = manager;
-    }
-
-    public List<String> leseDatei() {
-        List<String> zeilen = new ArrayList<>();
+    public Datei leseDatei() {
         manager = erstelleDateiManager();
-        try {
-            oeffneDatei();
-            zeilen = leseAlleZeilenInDatei();
-            schliesseDatei();
-        } catch (IOException ex) {
-            behandleFehlerfall(ex);
-        }
-
-        return zeilen;
+        List<String> zeilen = leseZeilenAusDatei();
+        Datei datei = erstelleDatei(zeilen);
+        return datei;
     }
 
     protected DateiManager erstelleDateiManager() {
-        return new DateiManager(datei.getDateinameMitPfad());
+        return new DateiManager(dateiName);
     }
     private void oeffneDatei() throws IOException {
         manager.openInFile();
@@ -64,7 +52,35 @@ public class DateiLeser {
         manager.closeInFile();
     }
     
-    protected void behandleFehlerfall(IOException ex) {
+    protected void behandelFehlerfall(IOException ex) {
         Logger.getLogger(DateiLeser.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
+    private List<String> leseZeilenAusDatei() {
+        List<String> zeilen = new ArrayList<>();
+        try {
+            oeffneDatei();
+            zeilen = leseAlleZeilenInDatei();
+            schliesseDatei();
+        } catch (IOException ex) {
+            behandelFehlerfall(ex);
+        }
+        return zeilen;
+    }
+
+    private Datei erstelleDatei(final List<String> zeilen) {
+        Datei datei = new Datei() {
+
+            @Override
+            public String getDateinameMitPfad() {
+                return dateiName;
+            }
+
+            @Override
+            public Iterator<String> iterator() {
+                return zeilen.iterator();
+            }
+        }; 
+        return datei;
     }
 }

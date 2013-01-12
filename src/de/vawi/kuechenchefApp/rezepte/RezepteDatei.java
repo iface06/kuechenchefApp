@@ -1,8 +1,7 @@
 
 package de.vawi.kuechenchefApp.rezepte;
 
-import de.vawi.kuechenchefApp.dateien.Datei;
-import de.vawi.kuechenchefApp.dateien.DateiLeser;
+import de.vawi.kuechenchefApp.dateien.*;
 import java.util.*;
 
 
@@ -10,7 +9,8 @@ public enum RezepteDatei implements Datei {
     HITLISTE("hitliste.csv"), REZEPTE("rezepte.csv");
 
     List<String> zeilen;
-    DateiLeser leser = new DateiLeser();
+    DateiLeser leser;
+    Datei datei;
     private final String dateiNameMitPfad;
     
     RezepteDatei(String dateiNameMitPfad){
@@ -20,18 +20,16 @@ public enum RezepteDatei implements Datei {
     
     @Override
     public String getDateinameMitPfad() {
-        return "";
+        return datei.getDateinameMitPfad();
     }
 
     @Override
     public Iterator<String> iterator() {
-        return zeilen.iterator();
+        return datei.iterator();
     }
 
     private void leseZeilenAusDatei() {
-        leser.setDatei(this);
-        zeilen = leser.leseDatei();
+        leser = new DateiLeser(this.dateiNameMitPfad);
+        datei = leser.leseDatei();
     }
-
-    
 }

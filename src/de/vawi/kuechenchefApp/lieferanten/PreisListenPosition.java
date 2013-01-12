@@ -29,7 +29,6 @@ public class PreisListenPosition
      */
     public void setLieferant(Lieferant lieferant) {
         this.lieferant = lieferant;
-        this.lieferant.hinzufuegenPreisListenPosition(this);
     }
     
     
