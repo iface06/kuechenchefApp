@@ -19,11 +19,11 @@ public class SpeiseplanErstellerTest {
      * Waren müssen ausreichend verfügbar sein
      * 
      */
-//    @Test
-//    public void test45BeliebtesteSPeisen() {
-//
-//        
-//    }
+    @Test
+    public void test45BeliebtesteSPeisen() {
+
+        
+    }
 
    
 }

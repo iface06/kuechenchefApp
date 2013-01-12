@@ -1,17 +1,24 @@
 package de.vawi.kuechenchefApp.lieferanten;
 
-import de.vawi.kuechenchefApp.dateien.CsvZeileSeparator;
 import de.vawi.kuechenchefApp.nahrungsmittel.Einheit;
 import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
 import java.util.List;
-
+/**
+ * Diese Klasse erstellt ein Nahrungsmittel durch 
+ * @author Struebe (12.01.2013)
+ */
 class NahrungsmittelErsteller {
 
     public static final int ZELLE_EINHEIT = 1;
     public static final int ZELLE_NAHRUNGSMITTELNAME = 2;
     public static final int ZELLE_NAHRUNGSMITTELKATEGORIE = 3;
-
+    public static final int ZELLE_VERFUEGBAREGESAMTMENGE = 6;
+/**
+ * TODO versteh ich nicht.
+ * @param preisListenPosition
+ * @return 
+ */
     public Nahrungsmittel erstelle(List<String> preisListenPosition) {
         Nahrungsmittel nahrungsmittel = erstelleNahrungsmittel(preisListenPosition);
 
@@ -28,6 +35,8 @@ class NahrungsmittelErsteller {
 
         SpeisenUndNahrungsmittelKategorie kategorie = extrahiereKategorie(cells);
         nahrungsmittel.setKategorie(kategorie);
+        
+        
 
         return nahrungsmittel;
     }
@@ -40,4 +49,6 @@ class NahrungsmittelErsteller {
     private SpeisenUndNahrungsmittelKategorie extrahiereKategorie(List<String> cells) {
         return SpeisenUndNahrungsmittelKategorie.nachAbkuerzung(cells.get(ZELLE_NAHRUNGSMITTELKATEGORIE));
     }
+
+
 }

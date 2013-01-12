@@ -18,6 +18,7 @@ public class PreisListenPositionErstellerTest {
         PreisListenPosition position = ersteller.erstelle(zeile);
         
         assertEquals("Burgerbroetchen", position.getNahrungsmittel().getName());
+        assertEquals(10000, position.getNahrungsmittel().getVerfuegbareGesamtMenge());
         assertEquals(SpeisenUndNahrungsmittelKategorie.VEGETARISCH, position.getNahrungsmittel().getKategorie());
         assertEquals(lieferant, position.getLieferant());
     }
