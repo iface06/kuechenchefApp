@@ -88,6 +88,12 @@ public class EinkaufslistenErstellerTest {
         return nahrungsmittel;
     }
     
+    @Test
+    public void FindePreiswertestenLieferantenFuerEinkaufslistenposition() {
+        
+        System.out.print("Hallo Welt!");
+        
+    }
     
     
 }
