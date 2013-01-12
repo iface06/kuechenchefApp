@@ -1,6 +1,6 @@
 package de.vawi.kuechenchefApp.speiseplan;
 
-import de.vawi.kuechenchefApp.rezepte.Speise;
+import de.vawi.kuechenchefApp.speisen.Speise;
 import java.util.*;
 /**
  * Ein Speiseplan für eine Planungsperiode.

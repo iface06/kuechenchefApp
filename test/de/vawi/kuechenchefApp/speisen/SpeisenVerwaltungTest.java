@@ -1,9 +1,11 @@
 
 
-package de.vawi.kuechenchefApp.rezepte;
+package de.vawi.kuechenchefApp.speisen;
 
+import de.vawi.kuechenchefApp.speisen.SpeisenVerwaltung;
+import de.vawi.kuechenchefApp.speisen.Speise;
 import de.vawi.kuechenchefApp.PlanungsPeriode;
-import de.vawi.kuechenchefApp.rezepte.SpeisenVerwaltung.SpeiseNichtGefunden;
+import de.vawi.kuechenchefApp.speisen.SpeisenVerwaltung.SpeiseNichtGefunden;
 import java.util.List;
 import org.junit.*;
 import static org.junit.Assert.*;

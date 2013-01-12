@@ -11,9 +11,9 @@ public class Nahrungsmittel {
 
     private String name;
     private Einheit einheit;
-    private NahrungsmittelKategorie kategorie;
+    private SpeisenUndNahrungsmittelKategorie kategorie;
 
-    public Nahrungsmittel(String name, Einheit einheit, NahrungsmittelKategorie kategorie) {
+    public Nahrungsmittel(String name, Einheit einheit, SpeisenUndNahrungsmittelKategorie kategorie) {
         this.name = name;
         this.einheit = einheit;
         this.kategorie = kategorie;
@@ -39,7 +39,7 @@ public class Nahrungsmittel {
     /**
      * @return Die Kategorie des Nahrungsmittels (Fleisch, Fisch, Vegetarisch)
      */
-    public NahrungsmittelKategorie getKategorie() {
+    public SpeisenUndNahrungsmittelKategorie getKategorie() {
         return kategorie;
     }
 
@@ -47,7 +47,7 @@ public class Nahrungsmittel {
      * @param kategorie Die Kategorie des Nahrungsmittels (Fleisch, Fisch,
      * Vegetarisch)
      */
-    public void setKategorie(NahrungsmittelKategorie kategorie) {
+    public void setKategorie(SpeisenUndNahrungsmittelKategorie kategorie) {
         this.kategorie = kategorie;
     }
 

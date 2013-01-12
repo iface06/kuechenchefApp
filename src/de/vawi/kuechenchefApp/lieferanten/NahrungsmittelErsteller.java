@@ -3,7 +3,7 @@ package de.vawi.kuechenchefApp.lieferanten;
 import de.vawi.kuechenchefApp.dateien.CsvZeileSeparator;
 import de.vawi.kuechenchefApp.nahrungsmittel.Einheit;
 import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
-import de.vawi.kuechenchefApp.nahrungsmittel.NahrungsmittelKategorie;
+import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
 import java.util.List;
 
 class NahrungsmittelErsteller {
@@ -26,7 +26,7 @@ class NahrungsmittelErsteller {
         Einheit einheit = extrahiereEinheit(cells);
         nahrungsmittel.setEinheit(einheit);
 
-        NahrungsmittelKategorie kategorie = extrahiereKategorie(cells);
+        SpeisenUndNahrungsmittelKategorie kategorie = extrahiereKategorie(cells);
         nahrungsmittel.setKategorie(kategorie);
 
         return nahrungsmittel;
@@ -37,7 +37,7 @@ class NahrungsmittelErsteller {
         return einheit;
     }
 
-    private NahrungsmittelKategorie extrahiereKategorie(List<String> cells) {
-        return NahrungsmittelKategorie.nachAbkuerzung(cells.get(ZELLE_NAHRUNGSMITTELKATEGORIE));
+    private SpeisenUndNahrungsmittelKategorie extrahiereKategorie(List<String> cells) {
+        return SpeisenUndNahrungsmittelKategorie.nachAbkuerzung(cells.get(ZELLE_NAHRUNGSMITTELKATEGORIE));
     }
 }

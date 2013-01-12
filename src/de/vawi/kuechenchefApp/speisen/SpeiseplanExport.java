@@ -1,4 +1,4 @@
-package de.vawi.kuechenchefApp.rezepte;
+package de.vawi.kuechenchefApp.speisen;
 
 import de.vawi.kuechenchefApp.DateiExport;
 import de.vawi.kuechenchefApp.speiseplan.Speiseplan;
