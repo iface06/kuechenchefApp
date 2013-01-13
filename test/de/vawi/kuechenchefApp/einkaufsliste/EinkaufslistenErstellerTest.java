@@ -1,6 +1,7 @@
 
 package de.vawi.kuechenchefApp.einkaufsliste;
 
+import de.vawi.kuechenchefApp.lieferanten.PreisListenPosition;
 import de.vawi.kuechenchefApp.nahrungsmittel.Einheit;
 import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import de.vawi.kuechenchefApp.speisen.Speise;
@@ -45,6 +46,14 @@ public class EinkaufslistenErstellerTest {
        assertEquals(1, liste.getPositionen().size());
        assertEquals(3000.0, position.getMenge(), 0.0001);
     }
+    
+    @Test
+    public void FindePreiswertestenLieferantenFuerEinkaufslistenposition() {
+        PreisListenPosition positionsliste = new PreisListenPosition();
+        
+        System.out.print("Hallo Welt!");
+        
+    }
 
     private Speiseplan erzeugeDummySpeiseplan() {
         List<Tag> tage = new ArrayList<Tag>();
@@ -88,12 +97,16 @@ public class EinkaufslistenErstellerTest {
         return nahrungsmittel;
     }
     
-    @Test
-    public void FindePreiswertestenLieferantenFuerEinkaufslistenposition() {
+    //private PreisListenPosition erzeugeDummyPreisliste(){
+    //    List<PreisListenPosition> positionen = new ArrayList<PreisListenPosition>();
+    //    PreisListenPosition preisListenPosition = erzeugePreisListenPosition();
+    //    preisListenPosition.add(preisListenPosition);
+    //    PreisListenPosition Preisliste = new PreisListenPosition();
         
-        System.out.print("Hallo Welt!");
-        
-    }
+    //    return Preisliste;
+    //}
+    
+
     
     
 }

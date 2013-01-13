@@ -56,9 +56,20 @@ public class EinkaufslistenErsteller
     private void fuegeInEinkaufsliste(Speise speise, Einkaufsliste liste) {
         List<Zutat> zutaten = speise.getZutaten();
         for (Zutat zutat : zutaten) {
+            // Menge muss noch mit Sicherheitsfaktor multipliziert werden
             EinkaufslistenPosition position = liste.findePositionDurchNahrungsmittel(zutat.getNahrungsmittel());
             position.setMenge(position.getMenge() + zutat.getMenge());
         }
     }
+    
+    // 1. Methode zum Auffinden des Preiswertesten Angebots
+    // 2. Methode zum Vergleichen von benötigter Menge zu angbotener Menge
+    //    Wenn optimale Bestellung nicht möglich, vielleicht zu viel bestellen.
+    //    Preisunterschied mit nächstem Angeot vergleichen, dass bessere Gebindegrößen anbietet
+    // 3. Methode zum Update der Einkaufslistenposition
+    //    a) Neues Item für bestimmten Einkauf
+    //    b) Position ohne Lieferant runterzählen
+    //    c) Erneuter Aufruf von 1.
+    // 4. Opmimieren der Einkaufsliste zur Minimierung von Lieferkosten
     
 }
