@@ -56,7 +56,9 @@ public class EinkaufslistenErsteller
     private void fuegeInEinkaufsliste(Speise speise, Einkaufsliste liste) {
         List<Zutat> zutaten = speise.getZutaten();
         for (Zutat zutat : zutaten) {
-            // Menge muss noch mit Sicherheitsfaktor multipliziert werden
+            
+            // double berechneteMenge = zutat.getMenge();
+            // Menge muss noch mit Sicherheitsfaktor multipliziert werden und anschließend gerundet werden
             EinkaufslistenPosition position = liste.findePositionDurchNahrungsmittel(zutat.getNahrungsmittel());
             position.setMenge(position.getMenge() + zutat.getMenge());
         }

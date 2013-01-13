@@ -46,14 +46,22 @@ public class EinkaufslistenErstellerTest {
        assertEquals(1, liste.getPositionen().size());
        assertEquals(3000.0, position.getMenge(), 0.0001);
     }
-    
     @Test
-    public void FindePreiswertestenLieferantenFuerEinkaufslistenposition() {
-        PreisListenPosition positionsliste = new PreisListenPosition();
-        
-        System.out.print("Hallo Welt!");
+    public void testBerechneAnzahlBenoetigterGerichte() {
+
+        double berechneteMenge = 1.5*3;
+        System.out.print(berechneteMenge);
         
     }
+    
+    //@Test
+    //public void testFindePreiswertestenLieferantenFuerEinkaufslistenposition() {
+    //         
+    //    PreisListenPosition positionsliste = new PreisListenPosition();
+    //    
+    //    System.out.print("Hallo Welt!");
+    //    
+    //}
 
     private Speiseplan erzeugeDummySpeiseplan() {
         List<Tag> tage = new ArrayList<Tag>();
@@ -89,6 +97,17 @@ public class EinkaufslistenErstellerTest {
         zutat.setNahrungsmittel(nahrungsmittel);
         return zutat;
     }
+     
+   /*/ private Zutat berechneBenoetigteMenge() {
+        
+        
+        Zutat zutat = new Zutat();
+        Nahrungsmittel nahrungsmittel = erzeugeNahrungsmittel(zutat);
+        zutat.setMenge(1000.0);
+        zutat.setNahrungsmittel(nahrungsmittel);
+        return null;
+    }
+    //*/
 
     private Nahrungsmittel erzeugeNahrungsmittel(Zutat zutat) {
         Nahrungsmittel nahrungsmittel = new Nahrungsmittel();
