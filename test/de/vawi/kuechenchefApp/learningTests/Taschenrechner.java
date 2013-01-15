@@ -17,8 +17,4 @@ public class Taschenrechner {
     int subtrahiere(int minuend, int subtrahent) {
         return minuend - subtrahent;
     }
-    
-    
-    
-    
 }
