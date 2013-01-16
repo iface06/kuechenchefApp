@@ -1,6 +1,8 @@
 package de.vawi.kuechenchefApp.speisen;
 
+import de.vawi.kuechenchefApp.nahrungsmittel.Einheit;
 import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
+import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
 
 
 /**
@@ -11,20 +13,20 @@ import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
  */
 public class Zutat
 {
-    private int menge;
+    private double menge;
     private Nahrungsmittel nahrungsmittel;
     
     /**
      * @return     Menge die für das Zubereiten benötigt wird. 
      */
-    public int getMenge() {
+    public double getMenge() {
         return menge;
     }
 
     /**
      * @param  menge    Menge die für das Zubereiten benötigt wird. 
      */
-    public void setMenge(int menge) {
+    public void setMenge(double menge) {
         this.menge = menge;
     }
 
@@ -53,7 +55,15 @@ public class Zutat
         return nahrungsmittel.hashCode();
     }
     
+    public SpeisenUndNahrungsmittelKategorie getKategorie(){
+        return nahrungsmittel.getKategorie();
+    }
     
+    public Einheit getEinheit(){
+        return nahrungsmittel.getEinheit();
+    }
     
-    
+    public String getName(){
+        return nahrungsmittel.getName();
+    }
 }

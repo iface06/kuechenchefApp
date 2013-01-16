@@ -3,6 +3,7 @@ package de.vawi.kuechenchefApp.speisen;
 import de.vawi.kuechenchefApp.dateien.CsvZeileSeparator;
 import de.vawi.kuechenchefApp.dateien.Datei;
 import de.vawi.kuechenchefApp.dateien.DateiLeser;
+import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
 import java.util.*;
 /**
  * Importiert die Dateien rezepte.csv und hitliste.csv aus dem Ordner "Rezepte". 
@@ -36,7 +37,7 @@ public class SpeisenImport
         
         fuegeSpeisenVonHitlisteInSpeisenverwaltungEin();
         fuegeZutatenZuSpeisenAusRezepteDateiHinzu();
-        //kategorisiereSpeisen();
+        sortiereZutatenNachKategorie();
     }
 
     private void fuegeSpeisenVonHitlisteInSpeisenverwaltungEin() {
@@ -67,5 +68,19 @@ public class SpeisenImport
 
     protected void setHitliste(Datei hitliste) {
         this.hitliste = hitliste;
+    }
+
+    private void sortiereZutatenNachKategorie() {
+        for (Speise speise : speisen) {
+            Collections.sort(speise.getZutaten(), new Comparator<Zutat>() {
+
+                @Override
+                public int compare(Zutat o1, Zutat o2) {
+                    SpeisenUndNahrungsmittelKategorie kategorie1 = o1.getNahrungsmittel().getKategorie();
+                    SpeisenUndNahrungsmittelKategorie kategorie2 = o2.getNahrungsmittel().getKategorie();
+                    return kategorie1.compareTo(kategorie2);
+                }
+            });
+        }
     }
 }

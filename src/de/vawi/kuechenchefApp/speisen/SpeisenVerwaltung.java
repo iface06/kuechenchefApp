@@ -8,7 +8,7 @@ import java.util.*;
  * @author Tatsch
  * @version (a version number or a date)
  */
-public class SpeisenVerwaltung {
+public class SpeisenVerwaltung implements Iterable<Speise> {
     
     private static SpeisenVerwaltung INSTANZ;
     private Set<Speise> speisen = new HashSet<>();
@@ -58,6 +58,11 @@ public class SpeisenVerwaltung {
     
     class SpeiseNichtGefunden extends RuntimeException{
         
+    }
+
+    @Override
+    public Iterator<Speise> iterator() {
+        return speisen.iterator();
     }
     
     

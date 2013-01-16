@@ -7,7 +7,7 @@ package de.vawi.kuechenchefApp.nahrungsmittel;
  * @author Struebe
  * @version 30.12.2012
  */
-public enum SpeisenUndNahrungsmittelKategorie {
+public enum SpeisenUndNahrungsmittelKategorie{
     FLEISCH("m"), FISCH("f"), VEGETARISCH("");
     
     private String abkuerzung;

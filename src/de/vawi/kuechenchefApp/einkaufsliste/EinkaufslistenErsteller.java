@@ -2,6 +2,11 @@ package de.vawi.kuechenchefApp.einkaufsliste;
 
 import de.vawi.kuechenchefApp.speiseplan.Speiseplan;
 import de.vawi.kuechenchefApp.lieferanten.LieferantenVerwaltung;
+import de.vawi.kuechenchefApp.nahrungsmittel.Einheit;
+import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
+import de.vawi.kuechenchefApp.speisen.Speise;
+import de.vawi.kuechenchefApp.speisen.Zutat;
+import de.vawi.kuechenchefApp.speiseplan.Tag;
 import java.util.*;
 /**
  * Erstellt eine Einkaufsliste auf Basis der hinzugefügten Speisepläne.
@@ -26,7 +31,17 @@ public class EinkaufslistenErsteller
      */
     public Einkaufsliste erzeuge()
     {
-        return new Einkaufsliste();
+        Einkaufsliste liste = new Einkaufsliste();
+        
+        for (Speiseplan speiseplan : speiseplaene) {
+            for (Tag tag : speiseplan) {
+                fuegeInEinkaufsliste(tag.getBeliebtesteSpeise(), liste);
+                fuegeInEinkaufsliste(tag.getZweitbeliebtesteSpeise(), liste);
+                fuegeInEinkaufsliste(tag.getDrittbeliebtesteSpeise(), liste);
+            }
+            
+        }
+        return liste;
     }
     
     /**
@@ -37,5 +52,26 @@ public class EinkaufslistenErsteller
     public void add(Speiseplan plan){
         this.speiseplaene.add(plan);
     }
+
+    private void fuegeInEinkaufsliste(Speise speise, Einkaufsliste liste) {
+        List<Zutat> zutaten = speise.getZutaten();
+        for (Zutat zutat : zutaten) {
+            
+            // double berechneteMenge = zutat.getMenge();
+            // Menge muss noch mit Sicherheitsfaktor multipliziert werden und anschließend gerundet werden
+            EinkaufslistenPosition position = liste.findePositionDurchNahrungsmittel(zutat.getNahrungsmittel());
+            position.setMenge(position.getMenge() + zutat.getMenge());
+        }
+    }
+    
+    // 1. Methode zum Auffinden des Preiswertesten Angebots
+    // 2. Methode zum Vergleichen von benötigter Menge zu angbotener Menge
+    //    Wenn optimale Bestellung nicht möglich, vielleicht zu viel bestellen.
+    //    Preisunterschied mit nächstem Angeot vergleichen, dass bessere Gebindegrößen anbietet
+    // 3. Methode zum Update der Einkaufslistenposition
+    //    a) Neues Item für bestimmten Einkauf
+    //    b) Position ohne Lieferant runterzählen
+    //    c) Erneuter Aufruf von 1.
+    // 4. Opmimieren der Einkaufsliste zur Minimierung von Lieferkosten
     
 }

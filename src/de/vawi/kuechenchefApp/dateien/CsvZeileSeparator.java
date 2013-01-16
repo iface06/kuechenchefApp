@@ -6,11 +6,12 @@ import java.util.List;
 
 public class CsvZeileSeparator {
 
-    List<String> cells = new ArrayList<String>();
+    List<String> cells;
     boolean cellStarted = false;
     StringBuffer buffer = new StringBuffer();
 
     public List<String> separiere(String zeile) {
+        cells = new ArrayList<String>();
         for (int index = 0; index < zeile.length(); index++) {
             char ch = zeile.charAt(index);
             if (isStartOrEndSymbol(ch)) {
