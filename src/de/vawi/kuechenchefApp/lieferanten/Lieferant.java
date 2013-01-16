@@ -16,7 +16,7 @@ public abstract class Lieferant {
 
     private String name;
     private double lieferKostenFaktor;
-    
+
     /**
      * @param name Name des Lieferanten
      */
@@ -25,18 +25,23 @@ public abstract class Lieferant {
     }
 
     /**
-     * TODO Was ist der Unterschied hier zw. Parameter und return?
-     * @param lieferKostenFaktor Wird der Lieferant als Bauer klassifiziert, steht hier die
-     * Entfernung in km (z.B. 5 km), wird der Lieferant als Großhändler
-     * klassifiziert, steht hier der Lieferkostenfaktor, mit dem der Gesamtpreis
-     * der anzuliefernden Ware miltipliziert wird, um die Lieferkosten
-     * abzudecken.
+     * @param lieferKostenFaktor Wird der Lieferant als Bauer klassifiziert,
+     * steht hier die Entfernung in km (z.B. 5 km), wird der Lieferant als
+     * Großhändler klassifiziert, steht hier der Lieferkostenfaktor, mit dem der
+     * Gesamtpreis der anzuliefernden Ware miltipliziert wird, um die
+     * Lieferkosten abzudecken.
      * @return macht den lieferKostenFaktor öffentlich zugänglich.
      */
     public double getLieferKostenFaktor() {
         return this.lieferKostenFaktor;
     }
 
+    /**
+     *
+     * @param lieferKostenFaktor Im Falle des Bauern die Entfernung in KM, im
+     * Falle des Großhändlers der Lieferkostenfaktor zum Berechnen der
+     * Lieferkosten.
+     */
     public void setLieferKostenFaktor(double lieferKostenFaktor) {
         this.lieferKostenFaktor = lieferKostenFaktor;
     }
@@ -56,7 +61,7 @@ public abstract class Lieferant {
      * bestellten Ware dar.
      * @return Lieferkosten, die für die Bestellung anfallen.
      */
-    abstract double berechneLieferkosten(double einkaufsWert);
+    public abstract double berechneLieferkosten(double einkaufsWert);
 
     /**
      *
@@ -79,8 +84,4 @@ public abstract class Lieferant {
     public int hashCode() {
         return this.name.hashCode();
     }
-    
-    
-    
-    
 }

@@ -27,13 +27,13 @@ class LieferantenErsteller {
      */
     Lieferant erstelle(List<String> lieferantenZellen) throws Parse.FehlerBeimParsen {
         Lieferant lieferant = null;
-        String type = lieferantenZellen.get(LIEFERANTENTYP);
+        String typ = lieferantenZellen.get(LIEFERANTENTYP);
         String name = lieferantenZellen.get(NAME);
         String lieferkosten = lieferantenZellen.get(LIEFERKOSTEN);
 
-        if (type.equals("Grosshandel")) {
+        if (typ.equals("Grosshandel")) {
             lieferant = erstelleGroßhaendler(name, lieferkosten);
-        } else if (type.equals("Bauer")) {
+        } else if (typ.equals("Bauer")) {
             lieferant = erstelleBauer(name, lieferkosten);
         }
 
