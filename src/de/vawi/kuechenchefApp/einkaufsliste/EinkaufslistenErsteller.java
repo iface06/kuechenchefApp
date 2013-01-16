@@ -73,5 +73,10 @@ public class EinkaufslistenErsteller
     //    b) Position ohne Lieferant runterzählen
     //    c) Erneuter Aufruf von 1.
     // 4. Opmimieren der Einkaufsliste zur Minimierung von Lieferkosten
+    //    a) Überprüfe jede Einkaufslistenposition und überprüfe, ob durch Bestellung bei anderem Lieferanten durch Einsparung von Liefer-
+    //       kosten Einsparungen möglich sind
+    //       Falls ja: Ändere Lieferant, falls nein überprüfe nächste Position
+    
+    //Idee: Berechne durchschnittliche Lieferkosten pro Artikel generell aus. Überprüfe nur, diejenigen, welche über diesem Durschnitt liegen
     
 }
