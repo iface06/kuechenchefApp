@@ -33,6 +33,15 @@ public class EinkaufslistenErstellerTest {
        assertEquals(Einheit.STUECK,position.getEinheit());
     }
     
+    // Beliebtestes, Zweitbeliebtestes + je Kantine
+    @Test
+    public void testBerechneAnzahlBenoetigterGerichte() {
+
+        double berechneteMenge = 1.5*3;
+        System.out.print(berechneteMenge);
+        
+    }
+    
     @Test
     public void testFuegeGleichesNahrungsmittelHinzu() {
        Speiseplan plan = erzeugeDummySpeiseplan();
@@ -46,22 +55,29 @@ public class EinkaufslistenErstellerTest {
        assertEquals(1, liste.getPositionen().size());
        assertEquals(3000.0, position.getMenge(), 0.0001);
     }
-    @Test
-    public void testBerechneAnzahlBenoetigterGerichte() {
 
-        double berechneteMenge = 1.5*3;
-        System.out.print(berechneteMenge);
+    /*/Test um preisewertestes Einkaufsmittel zu finden
+    hierzu müssen zunächst  Preislistenpositionen erstellt werden
+    @Test
+    public void testFindePreiswertestenLieferantenFuerEinkaufslistenposition() {
+             
+        PreisListenPosition positionsliste = new PreisListenPosition();
+        
+        System.out.print("Hallo Welt!");
         
     }
+    */
     
-    //@Test
-    //public void testFindePreiswertestenLieferantenFuerEinkaufslistenposition() {
-    //         
-    //    PreisListenPosition positionsliste = new PreisListenPosition();
-    //    
-    //    System.out.print("Hallo Welt!");
-    //    
-    //}
+    /*/ findezweitpreiswertestenLieferanten
+    @Test
+    public void testFindePreiswertestenLieferantenFuerEinkaufslistenposition() {
+             
+        PreisListenPosition positionsliste = new PreisListenPosition();
+        
+        System.out.print("Hallo Welt!");
+     
+    }
+    */
 
     private Speiseplan erzeugeDummySpeiseplan() {
         List<Tag> tage = new ArrayList<Tag>();
