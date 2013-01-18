@@ -1,7 +1,8 @@
 package de.vawi.kuechenchefApp.einkaufsliste;
 
+import de.vawi.kuechenchefApp.ZutatenKalkulator;
+import de.vawi.kuechenchefApp.lieferanten.*;
 import de.vawi.kuechenchefApp.speiseplan.Speiseplan;
-import de.vawi.kuechenchefApp.lieferanten.LieferantenVerwaltung;
 import de.vawi.kuechenchefApp.nahrungsmittel.Einheit;
 import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import de.vawi.kuechenchefApp.speisen.Speise;
@@ -16,6 +17,9 @@ import java.util.*;
  */
 public class EinkaufslistenErsteller
 {
+    
+    
+    private Einkaufsliste liste = new Einkaufsliste();
     private List<Speiseplan> speiseplaene = new ArrayList<Speiseplan>();
     private LieferantenVerwaltung lieferanten = LieferantenVerwaltung.getInstanz();
     
@@ -31,17 +35,24 @@ public class EinkaufslistenErsteller
      */
     public Einkaufsliste erzeuge()
     {
-        Einkaufsliste liste = new Einkaufsliste();
+        erstelleEinkaufslistePosition();
+        findeGuenstigsteLieferanten();
         
-        for (Speiseplan speiseplan : speiseplaene) {
-            for (Tag tag : speiseplan) {
-                fuegeInEinkaufsliste(tag.getBeliebtesteSpeise(), liste);
-                fuegeInEinkaufsliste(tag.getZweitbeliebtesteSpeise(), liste);
-                fuegeInEinkaufsliste(tag.getDrittbeliebtesteSpeise(), liste);
-            }
-            
-        }
         return liste;
+    }
+    
+    private void erstelleEinkaufslistePosition() {
+        for (Speiseplan speiseplan : speiseplaene) {
+           Map<Nahrungsmittel, Double> mengen = new ZutatenKalkulator().berechneGesamtMengen(speiseplan);
+           fuegeMengenInEinkaufslisteEin(mengen);
+        }
+    }
+    
+    private void findeGuenstigsteLieferanten() {
+        for (EinkaufslistenPosition position : liste) {
+            List<PreisListenPosition> angebote = lieferanten.findeDurchNahrungsmittel(position.getNahrungsmittel());
+            position.setLieferant(angebote.get(0).getLieferant());
+        }
     }
     
     /**
@@ -53,16 +64,17 @@ public class EinkaufslistenErsteller
         this.speiseplaene.add(plan);
     }
 
-    private void fuegeInEinkaufsliste(Speise speise, Einkaufsliste liste) {
-        List<Zutat> zutaten = speise.getZutaten();
-        for (Zutat zutat : zutaten) {
-            
+    private void fuegeMengenInEinkaufslisteEin(Map<Nahrungsmittel, Double> mengen) {
+        for(Nahrungsmittel nahrungsmittel : mengen.keySet()){
             // double berechneteMenge = zutat.getMenge();
             // Menge muss noch mit Sicherheitsfaktor multipliziert werden und anschließend gerundet werden
-            EinkaufslistenPosition position = liste.findePositionDurchNahrungsmittel(zutat.getNahrungsmittel());
-            position.setMenge(position.getMenge() + zutat.getMenge());
+            EinkaufslistenPosition position = liste.findePositionDurchNahrungsmittel(nahrungsmittel);
+            Double gesamtMenge = position.getMenge() + mengen.get(nahrungsmittel);
+            position.setMenge(gesamtMenge);
         }
     }
+    
+    
     
     /*/1. Methode zum Auffinden des Preiswertesten Angebots
      2. Methode zum Vergleichen von benötigter Menge zu angbotener Menge

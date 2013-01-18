@@ -19,7 +19,7 @@ public class EinkaufslisteTest {
         kartoffeln.setName("Kartoffeln");
         EinkaufslistenPosition position = liste.findePositionDurchNahrungsmittel(kartoffeln);
     
-        assertEquals(kartoffeln.getName(), position.getNahrungsmittel());
+        assertEquals(kartoffeln.getName(), position.getName());
     }
     
     @Test
@@ -29,6 +29,6 @@ public class EinkaufslisteTest {
         kartoffeln.setName("Kartoffeln");
         EinkaufslistenPosition position = liste.findePositionDurchNahrungsmittel(kartoffeln);
     
-        assertEquals(kartoffeln.getName(), position.getNahrungsmittel());
+        assertEquals(kartoffeln.getName(), position.getName());
     }
 }

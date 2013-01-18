@@ -8,7 +8,7 @@ import de.vawi.kuechenchefApp.speisen.Speise;
  *
  * @author Max
  */
-public class Tag {
+public class Tag{
 
     private int nummer;
     private Speise beliebtesteSpeise;

@@ -96,4 +96,8 @@ public class PreisListenPosition
         public String toString(){
         return nahrungsmittel + " à " + gebindeGroesse + " " + nahrungsmittel.getEinheit() + " zu " + preis + " €";
     }
+
+    public double berechnePreisProEinheit() {
+        return preis / gebindeGroesse;
+    }
 }
