@@ -14,7 +14,7 @@ public class Bauer extends Lieferant {
   
      
     @Override
-    double berechneLieferkosten(double einkaufsWert) {
+    public double berechneLieferkosten(double einkaufsWert) {
         return (PAUSCHALE_PRO_KILOMETER * getLieferKostenFaktor());
     }
 }
