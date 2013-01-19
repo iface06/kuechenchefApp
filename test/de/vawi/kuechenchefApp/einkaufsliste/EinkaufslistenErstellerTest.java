@@ -18,9 +18,9 @@ public class EinkaufslistenErstellerTest {
 
     @BeforeClass
     public static void beforeClass() {
-        PreisListenPosition kartoffelAngebotA = createNahrungsmittel("Kartoffeln", 5.0, 1000.0, "Müller");
-        PreisListenPosition kartoffelAngebotB = createNahrungsmittel("Kartoffeln", 10.0, 1000.0, "Meier");
-        PreisListenPosition moehrenAngebot = createNahrungsmittel("Möhren", 1.0, 500.0, "Meier");
+        PreisListenPosition kartoffelAngebotA = createNahrungsmittel("Kartoffeln", 5.0, 1000.0, "Müller", 10000);
+        PreisListenPosition kartoffelAngebotB = createNahrungsmittel("Kartoffeln", 10.0, 1000.0, "Meier", 5000);
+        PreisListenPosition moehrenAngebot = createNahrungsmittel("Möhren", 1.0, 500.0, "Meier", 300);
         verwaltung = LieferantenVerwaltung.getInstanz();
         verwaltung.hinzufuegenPreisListenPosition(Arrays.asList(kartoffelAngebotA, kartoffelAngebotB, moehrenAngebot));
     }
@@ -68,22 +68,13 @@ public class EinkaufslistenErstellerTest {
         assertEquals("Müller", liste.getPositionen().get(0).getLieferant().getName());
     }
     
+
     @Test
     public void testFindeGünstigsterGesamtPreisFuerEinkaufslistenposition() {
         Einkaufsliste liste = ersteller.erzeuge();
         assertEquals(3850.0, liste.getPositionen().get(0).getPreis(), 0.001);
     }
 
-    /*/ findezweitpreiswertestenLieferanten
-     @Test
-     public void testFindePreiswertestenLieferantenFuerEinkaufslistenposition() {
-             
-     PreisListenPosition positionsliste = new PreisListenPosition();
-        
-     System.out.print("Hallo Welt!");
-     
-     }
-     */
     private Speiseplan erzeugeDummySpeiseplan() {
         List<Tag> tage = new ArrayList<Tag>();
         Tag tag = erzeugeTag();
@@ -136,7 +127,7 @@ public class EinkaufslistenErstellerTest {
         return nahrungsmittel;
     }
 
-    private static PreisListenPosition createNahrungsmittel(String name, double preis, double gebindeGroesse, String lieferantenName) {
+    private static PreisListenPosition createNahrungsmittel(String name, double preis, double gebindeGroesse, String lieferantenName, int vorratsMenge) {
         PreisListenPosition position = new PreisListenPosition();
         Nahrungsmittel kartoffel = new Nahrungsmittel();
         kartoffel.setName(name);
@@ -146,7 +137,9 @@ public class EinkaufslistenErstellerTest {
         Lieferant lieferant = new Grosshaendler();
         lieferant.setName(lieferantenName);
         position.setLieferant(lieferant);
+        position.setVorratsBestand(vorratsMenge);
         return position;
+        
     }
 
     

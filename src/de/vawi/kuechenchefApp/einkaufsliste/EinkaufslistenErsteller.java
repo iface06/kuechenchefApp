@@ -52,8 +52,25 @@ public class EinkaufslistenErsteller
         for (EinkaufslistenPosition position : liste) {
             List<PreisListenPosition> angebote = lieferanten.findeDurchNahrungsmittel(position.getNahrungsmittel());
             position.setLieferant(angebote.get(0).getLieferant());
+            //berechneBenoetigteAnzahlAnGebinden (benoetigteMenge/Gebindegroesse = Anzahl an zu bestellenden Gebinden (abrunden oder aufrunden?)
+            //Achtung! Falls abgerundet wird, muss Restmenge beachtet werden: 
+            //Entscheidung nötig: Lieber bei diesem Lieferanten zuviel bestellen oder bei einem anderen zusätzlich?
+            //vergleicheMitVorhandenerMenge und bestimmeBestellmengeFuerLieferanten
+            //updateVonEinkaufslistenposition
+            //wenn bestellMenge >= benoetigterMenge: nächste Position
+            //wenn bestellMenge < benoetigterMenge: nächster Lieferant
+            //berechneGesamtPreis();
+            position.setPreis(3850);
         }
     }
+    
+    //private void berechneGesamtPreis() {
+        
+    //    int benoetigteMenge = 
+
+    //}
+
+    
     
     /**
      * Hinzufügen eines Speiseplans, der zur Erzeugung der Einkaufsliste berücksichtigt werden soll.
@@ -95,4 +112,6 @@ public class EinkaufslistenErsteller
     * - Vielleicht brauche ich eine Methode, die mir für eine bestimmte Zutat einen Lieferanten nennt, dessen Gebindegröße kleiner ist als die mir vorliegende
     *   Anschließend kann der Preisunterschied verglichen werden
     */
+
+
 }
