@@ -70,13 +70,11 @@ public class EinkaufslistenErsteller
                 if (differenz == 0){
                 bestellMenge = benoetigteMenge;
                 benoetigteMenge = 0.0;
-                positionsnummer = positionsnummer + 1;
                 }
                 // wenn die Nachkommastelle größer als 0,75 ist, dann runde auf und bestell zu viel
                 else if (differenz > 0.75) {
                 bestellMenge = Math.ceil(benoetigteAnzahlAnGebinden) * angebote.get(positionsnummer).getGebindeGroesse();
                 benoetigteMenge = 0.0;
-                positionsnummer = positionsnummer + 1;
                 }
                 // wenn die Nachkommastelle kleiner als 0,75 ist, dann runde ab und bestell zu wenig (nicht optimal, da vielleicht zu teuer bestellt wird.
                 // hier müsste noch eine Prüfung mehr eingebaut werden
@@ -91,7 +89,6 @@ public class EinkaufslistenErsteller
                     else {
                     bestellMenge = Math.ceil(benoetigteAnzahlAnGebinden) * angebote.get(positionsnummer).getGebindeGroesse();
                     benoetigteMenge = 0.0;
-                    positionsnummer = positionsnummer + 1;
                 }
                 
             }
@@ -101,6 +98,7 @@ public class EinkaufslistenErsteller
             bestellMenge = angebote.get(positionsnummer).getVorratsBestand();
             benoetigteMenge = benoetigteMenge - angebote.get(positionsnummer).getVorratsBestand();
             vorhandeneMenge = vorhandeneMenge - angebote.get(positionsnummer).getVorratsBestand();
+            positionsnummer = positionsnummer + 1;
             }
             
             if (position.getLieferant() == null){
