@@ -51,7 +51,31 @@ public class EinkaufslistenErsteller
     private void findeGuenstigsteLieferanten() {
         for (EinkaufslistenPosition position : liste) {
             List<PreisListenPosition> angebote = lieferanten.findeDurchNahrungsmittel(position.getNahrungsmittel());
+            double benoetigteMenge = position.getMenge();
+            double vorhandeneMenge = position.getNahrungsmittel().getVerfuegbareGesamtMenge();
+            double bestellMenge = 0;
+            while (benoetigteMenge != 0.0) {
+            // Frage: Wie runde ich hier? Gefahr lauert
+            double benoetigteAnzahlAnGebinden = benoetigteMenge / angebote.get(0).getGebindeGroesse();
+            if (benoetigteAnzahlAnGebinden < angebote.get(0).getVorratsBestand()){
+            
+            }
+            else {
+            bestellMenge = angebote.get(0).getVorratsBestand();
+            }
+            
+            if (position.getLieferant() == null){
+            // Füge Lieferant, Menge, Preis hinzu
+            // benoetigteMenge = benoetigteMenge-Menge
+            }
+            else {
+            // Erstelle neue Einkaufsposition mit Nahrungsmittel, Lieferant, Menge und Preis
+            // benoetigteMenge = benoetigeMenge-Menge
+            }
+            
+            }
             position.setLieferant(angebote.get(0).getLieferant());
+            
             //berechneBenoetigteAnzahlAnGebinden (benoetigteMenge/Gebindegroesse = Anzahl an zu bestellenden Gebinden (abrunden oder aufrunden?)
             //Achtung! Falls abgerundet wird, muss Restmenge beachtet werden: 
             //Entscheidung nötig: Lieber bei diesem Lieferanten zuviel bestellen oder bei einem anderen zusätzlich?
