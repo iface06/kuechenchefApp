@@ -55,7 +55,7 @@ public class EinkaufslistenPosition
     /**
      * @return     Bezeichnung des Nahrungsmittels
      */
-    public String getNahrungsmittel() {
+    public String getName() {
         return this.nahrungsmittel.getName();
     }
     
@@ -78,5 +78,9 @@ public class EinkaufslistenPosition
      */
     public void setPreis(double preis) {
         this.preis = preis;
+    }
+
+    Nahrungsmittel getNahrungsmittel() {
+        return nahrungsmittel;
     }
 }
