@@ -58,6 +58,7 @@ public class EinkaufslistenErsteller
             double bestellMenge = 0;
             //Positionsnummer in der Angebotsliste, wird hochgezählt
             int positionsnummer = 0;
+            int positionsnummerfuerrest = 0;
             // laufe bis benotigteMenge gleich 0 ist
             while (benoetigteMenge != 0.0 ) {
             // Berechne Anzahl an benoetigten Gebinden    
@@ -73,6 +74,10 @@ public class EinkaufslistenErsteller
                 }
                 // wenn die Nachkommastelle größer als 0,75 ist, dann runde auf und bestell zu viel
                 else if (differenz > 0.75) {
+                //positionsnummerfuerrest = positionsnummer + 1;
+                //   for (EinkaufslistenPosition position1 : liste)
+                    
+                    
                 bestellMenge = Math.ceil(benoetigteAnzahlAnGebinden) * angebote.get(positionsnummer).getGebindeGroesse();
                 benoetigteMenge = 0.0;
                 }
