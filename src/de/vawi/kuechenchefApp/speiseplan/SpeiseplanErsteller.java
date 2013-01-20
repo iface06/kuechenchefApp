@@ -3,7 +3,6 @@ package de.vawi.kuechenchefApp.speiseplan;
 import de.vawi.kuechenchefApp.PlanungsPeriode;
 import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
 import de.vawi.kuechenchefApp.speisen.*;
-
 import java.util.*;
 /**
  * Diese Klasse ist für das Erstellen eines Speiseplans verantwortlich.
@@ -45,7 +44,7 @@ public class SpeiseplanErsteller
         if(beliebtesteSpeisenBeinhaltenGenugFischgerichte()) {
             if(beliebtesteSpeisenBeinhaltenGenugVegGerichte()) {
                 if(beliebtesteSpeisenBeinhaltenGenugFleischgerichte()) {
-                    // Do nothing alles ok
+                    // Do nothing alles ok bzw. dann weiter zur Verfügbarkeitsprüfung
                     
                     //else Zweig für "zu wenig Fleisch Gerichte in den beliebtesten Speisen"
                 } else {
