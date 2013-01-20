@@ -51,32 +51,43 @@ public class EinkaufslistenErsteller
     private void findeGuenstigsteLieferanten() {
         for (EinkaufslistenPosition position : liste) {
             List<PreisListenPosition> angebote = lieferanten.findeDurchNahrungsmittel(position.getNahrungsmittel());
+            // benoetigte Menge wird zwischengepeichert und auf 0 gesetzt, sobald die benoetigte Menge bestellt ist
             double benoetigteMenge = position.getMenge();
+            // vorhandene Menge wird benoetigt, um zu prüfen, ob restliche Lieferanten genug auf Lager haben, falls bei einem Lieferanten nicht das komplette Angebot bestellt wird
             double vorhandeneMenge = position.getNahrungsmittel().getVerfuegbareGesamtMenge();
             double bestellMenge = 0;
+            //Positionsnummer in der Angebotsliste, wird hochgezählt
             int positionsnummer = 0;
+            // laufe bis benotigteMenge gleich 0 ist
             while (benoetigteMenge != 0.0 ) {
-            // Frage: Wie runde ich hier? Gefahr lauert
+            // Berechne Anzahl an benoetigten Gebinden    
             double benoetigteAnzahlAnGebinden = benoetigteMenge / angebote.get(positionsnummer).getGebindeGroesse();
+            // Wenn mehr angeboten als benötigt wird, muss die Nachkommastelle beachtet werden
             if (benoetigteAnzahlAnGebinden < angebote.get(positionsnummer).getVorratsBestand()){
             // Berechne Bestellmenge
                 double differenz = benoetigteAnzahlAnGebinden - Math.floor(benoetigteAnzahlAnGebinden);
+                // wenn es keine Nachkommastelle gibt, dann bestell die benoetigte Menge
                 if (differenz == 0){
                 bestellMenge = benoetigteMenge;
                 benoetigteMenge = 0.0;
                 positionsnummer = positionsnummer + 1;
                 }
+                // wenn die Nachkommastelle größer als 0,75 ist, dann runde auf und bestell zu viel
                 else if (differenz > 0.75) {
                 bestellMenge = Math.ceil(benoetigteAnzahlAnGebinden) * angebote.get(positionsnummer).getGebindeGroesse();
                 benoetigteMenge = 0.0;
                 positionsnummer = positionsnummer + 1;
                 }
+                // wenn die Nachkommastelle kleiner als 0,75 ist, dann runde ab und bestell zu wenig (nicht optimal, da vielleicht zu teuer bestellt wird.
+                // hier müsste noch eine Prüfung mehr eingebaut werden
                 else {
+                    // ist die vorhandene menge genug, obwohl ich einen lieferanten nicht komplett leer kaufe?
                     if (vorhandeneMenge - angebote.get(positionsnummer).getVorratsBestand() > benoetigteMenge - Math.floor(benoetigteAnzahlAnGebinden) * angebote.get(positionsnummer).getGebindeGroesse()){
                     bestellMenge = Math.floor(benoetigteAnzahlAnGebinden) * angebote.get(positionsnummer).getGebindeGroesse();
                     benoetigteMenge = benoetigteMenge - bestellMenge;
                     positionsnummer = positionsnummer + 1;
                     }
+                    // vorhandene Menge nicht mehr genug, dann wird doch aufgerundet
                     else {
                     bestellMenge = Math.ceil(benoetigteAnzahlAnGebinden) * angebote.get(positionsnummer).getGebindeGroesse();
                     benoetigteMenge = 0.0;
@@ -85,6 +96,7 @@ public class EinkaufslistenErsteller
                 
             }
             }
+            // wenn weniger angeboten, als benoetigt wird, einfach alles bestellen, was benoetigt wird
             else {
             bestellMenge = angebote.get(positionsnummer).getVorratsBestand();
             benoetigteMenge = benoetigteMenge - angebote.get(positionsnummer).getVorratsBestand();
