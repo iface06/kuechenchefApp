@@ -75,6 +75,7 @@ public class EinkaufslistenErstellerTest {
         assertEquals(3850.0, liste.getPositionen().get(0).getPreis(), 0.001);
     }
     
+    
     /*/
     @Test
     public void testBerechneBenoetigteAnzahlAnGebinden() {

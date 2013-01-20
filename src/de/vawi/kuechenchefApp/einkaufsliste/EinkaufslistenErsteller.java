@@ -54,14 +54,41 @@ public class EinkaufslistenErsteller
             double benoetigteMenge = position.getMenge();
             double vorhandeneMenge = position.getNahrungsmittel().getVerfuegbareGesamtMenge();
             double bestellMenge = 0;
-            while (benoetigteMenge != 0.0) {
+            int positionsnummer = 0;
+            while (benoetigteMenge != 0.0 ) {
             // Frage: Wie runde ich hier? Gefahr lauert
-            double benoetigteAnzahlAnGebinden = benoetigteMenge / angebote.get(0).getGebindeGroesse();
-            if (benoetigteAnzahlAnGebinden < angebote.get(0).getVorratsBestand()){
-            
+            double benoetigteAnzahlAnGebinden = benoetigteMenge / angebote.get(positionsnummer).getGebindeGroesse();
+            if (benoetigteAnzahlAnGebinden < angebote.get(positionsnummer).getVorratsBestand()){
+            // Berechne Bestellmenge
+                double differenz = benoetigteAnzahlAnGebinden - Math.floor(benoetigteAnzahlAnGebinden);
+                if (differenz == 0){
+                bestellMenge = benoetigteMenge;
+                benoetigteMenge = 0.0;
+                positionsnummer = positionsnummer + 1;
+                }
+                else if (differenz > 0.75) {
+                bestellMenge = Math.ceil(benoetigteAnzahlAnGebinden) * angebote.get(positionsnummer).getGebindeGroesse();
+                benoetigteMenge = 0.0;
+                positionsnummer = positionsnummer + 1;
+                }
+                else {
+                    if (vorhandeneMenge - angebote.get(positionsnummer).getVorratsBestand() > benoetigteMenge - Math.floor(benoetigteAnzahlAnGebinden) * angebote.get(positionsnummer).getGebindeGroesse()){
+                    bestellMenge = Math.floor(benoetigteAnzahlAnGebinden) * angebote.get(positionsnummer).getGebindeGroesse();
+                    benoetigteMenge = benoetigteMenge - bestellMenge;
+                    positionsnummer = positionsnummer + 1;
+                    }
+                    else {
+                    bestellMenge = Math.ceil(benoetigteAnzahlAnGebinden) * angebote.get(positionsnummer).getGebindeGroesse();
+                    benoetigteMenge = 0.0;
+                    positionsnummer = positionsnummer + 1;
+                }
+                
+            }
             }
             else {
-            bestellMenge = angebote.get(0).getVorratsBestand();
+            bestellMenge = angebote.get(positionsnummer).getVorratsBestand();
+            benoetigteMenge = benoetigteMenge - angebote.get(positionsnummer).getVorratsBestand();
+            vorhandeneMenge = vorhandeneMenge - angebote.get(positionsnummer).getVorratsBestand();
             }
             
             if (position.getLieferant() == null){

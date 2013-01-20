@@ -21,4 +21,13 @@ public class MathCeilTest {
         Double gerundet = Math.ceil(1.7);
         assertEquals(2.0, gerundet, 0.0001);
     }
+    
+    @Test
+    public void testSplitVonDouble() {
+        double variable = 1.05;
+        variable =  Math.floor(variable);
+        System.out.print(variable);
+        
+
+    }
 }
