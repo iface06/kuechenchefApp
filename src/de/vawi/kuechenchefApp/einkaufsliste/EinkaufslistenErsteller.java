@@ -37,7 +37,7 @@ public class EinkaufslistenErsteller
     {
         erstelleEinkaufslistePosition();
         findeGuenstigsteLieferanten();
-        
+        ueberpruefeLieferkosten();
         return liste;
     }
     
@@ -58,7 +58,6 @@ public class EinkaufslistenErsteller
             double bestellMenge = 0;
             //Positionsnummer in der Angebotsliste, wird hochgezählt
             int positionsnummer = 0;
-            int positionsnummerfuerrest = 0;
             // laufe bis benotigteMenge gleich 0 ist
             while (benoetigteMenge != 0.0 ) {
             // Berechne Anzahl an benoetigten Gebinden    
@@ -74,6 +73,8 @@ public class EinkaufslistenErsteller
                 }
                 // wenn die Nachkommastelle größer als 0,75 ist, dann runde auf und bestell zu viel
                 else if (differenz > 0.75) {
+                // wenn diese Fkt umgesetzt ist, kann unten etwas gelöscht werden    
+                findeLieferantenFuerDifferenz(differenz, positionsnummer, position.getNahrungsmittel());
                 //positionsnummerfuerrest = positionsnummer + 1;
                 //   for (EinkaufslistenPosition position1 : liste)
                     
@@ -130,13 +131,31 @@ public class EinkaufslistenErsteller
         }
     }
     
-    //private void berechneGesamtPreis() {
-        
-    //    int benoetigteMenge = 
-
-    //}
-
+    private void findeLieferantenFuerDifferenz(double differenz, int positionsnummeralt, Nahrungsmittel nahrungsmittel) {
+        List<PreisListenPosition> angebote = lieferanten.findeDurchNahrungsmittel(nahrungsmittel);
+        int positionsnummerneu = positionsnummeralt;
+        double benoetigteMenge = angebote.get(positionsnummeralt).getGebindeGroesse() * differenz;
+        while (benoetigteMenge != 0){
+        positionsnummerneu = positionsnummerneu + 1;
+        if (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand() >= benoetigteMenge){
+            double anzahlBenoetigterGebindegroessen = benoetigteMenge / angebote.get(positionsnummerneu).getGebindeGroesse();
+            
+            // an dieser Stelle muss das gleiche passieren wie oben
+            // falls wert < 1: nächster Lieferant
+            // falls wert = 1: Preisvergleich und Entscheidung
+            // falls wert > 1: preis für abgerundete Menge zwischenspeichern und Preis vergleiche und Entscheidung, 
+            // menge verringern und differenz weitergeben, falls vorhandene menge ausreichend,
+            // selbe Methode wieder aufrufen, gleiche Prozedur, preis für abgerundete Menge zu vorläufigem preis hinzufügen, vergleichen und entscheiden, 
+            // falls menge nicht mehr ausreichend, aufrunden und Preis vergleichen und Entscheidung
+            // 
+        }
+        }
+        }
     
+     private void ueberpruefeLieferkosten() {
+   
+    } 
+  
     
     /**
      * Hinzufügen eines Speiseplans, der zur Erzeugung der Einkaufsliste berücksichtigt werden soll.
@@ -156,8 +175,7 @@ public class EinkaufslistenErsteller
             position.setMenge(gesamtMenge);
         }
     }
-    
-    
+     
     
     /*/1. Methode zum Auffinden des Preiswertesten Angebots
      2. Methode zum Vergleichen von benötigter Menge zu angbotener Menge
