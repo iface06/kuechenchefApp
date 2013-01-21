@@ -37,7 +37,7 @@ public class EinkaufslistenErsteller
     {
         erstelleEinkaufslistePosition();
         findeGuenstigsteLieferanten();
-        
+        ueberpruefeLieferkosten();
         return liste;
     }
     
@@ -73,6 +73,7 @@ public class EinkaufslistenErsteller
                 }
                 // wenn die Nachkommastelle größer als 0,75 ist, dann runde auf und bestell zu viel
                 else if (differenz > 0.75) {
+                // wenn diese Fkt umgesetzt ist, kann unten etwas gelöscht werden    
                 findeLieferantenFuerDifferenz(differenz, positionsnummer, position.getNahrungsmittel());
                 //positionsnummerfuerrest = positionsnummer + 1;
                 //   for (EinkaufslistenPosition position1 : liste)
@@ -138,6 +139,7 @@ public class EinkaufslistenErsteller
         positionsnummerneu = positionsnummerneu + 1;
         if (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand() >= benoetigteMenge){
             double anzahlBenoetigterGebindegroessen = benoetigteMenge / angebote.get(positionsnummerneu).getGebindeGroesse();
+            
             // an dieser Stelle muss das gleiche passieren wie oben
             // falls wert < 1: nächster Lieferant
             // falls wert = 1: Preisvergleich und Entscheidung
@@ -149,6 +151,10 @@ public class EinkaufslistenErsteller
         }
         }
         }
+    
+     private void ueberpruefeLieferkosten() {
+   
+    } 
   
     
     /**
