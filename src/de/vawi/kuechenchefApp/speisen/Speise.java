@@ -8,7 +8,7 @@ import java.util.*;
  * @author Tatsch 
  * @version (a version number or a date)
  */
-public class Speise
+public class Speise implements Iterable<Zutat>
 {
     private String name;
     private int beliebtheit;
@@ -67,5 +67,10 @@ public class Speise
     public SpeisenUndNahrungsmittelKategorie getKategorie() {
         Iterator<Zutat> iterator = zutaten.iterator();
         return iterator.hasNext() ? iterator.next().getKategorie() : SpeisenUndNahrungsmittelKategorie.VEGETARISCH;
+    }
+
+    @Override
+    public Iterator<Zutat> iterator() {
+        return zutaten.iterator();
     }
 }

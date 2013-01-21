@@ -36,7 +36,7 @@ public class LieferantenVerwaltung {
      *
      * @param positionen Eine Position auf der Liste.
      */
-    void hinzufuegenPreisListenPosition(List<PreisListenPosition> positionen) {
+    public void hinzufuegenPreisListenPosition(List<PreisListenPosition> positionen) {
         preisListenPositionen.addAll(positionen);
     }
 
@@ -44,21 +44,26 @@ public class LieferantenVerwaltung {
      * Mit dieser Methode werden alle Preislitenpositionen aufgelistet, die ein
      * bestimmtes Nahrungsmittel enthalten. So kann herausgefunden werden, bei
      * welchen Lieferanten die jeweiligen Nahrungsmittel inkl. ihrer Attribute
-     * zur Verfügung stehen.
+     * zur Verfügung stehen. Die Preislistenpositionen sind absteigend nach 
+     * Preisen sortiert.
      *
      * @param nahrungsmittel Ein Objekt vom Typ Nahrungsmittel.
      * @return Gibt eine Auflistung der Positionen mit dem gesuchten
      * Nahrungsmittel wider.
      */
-    List<PreisListenPosition> findeDurchNahrungsmittel(Nahrungsmittel nahrungsmittel) {
+    public List<PreisListenPosition> findeDurchNahrungsmittel(Nahrungsmittel nahrungsmittel) {
         List<PreisListenPosition> positionen = new ArrayList<>();
         for (PreisListenPosition position : preisListenPositionen) {
             if (position.getNahrungsmittel().equals(nahrungsmittel)) {
                 positionen.add(position);
             }
         }
-
+        sortierePreisListenPositionenNachPreis(positionen);
         return positionen;
+    }
+
+    private void sortierePreisListenPositionenNachPreis(List<PreisListenPosition> positionen) {
+        Collections.sort(positionen, new VergleichePreisListenPositionNachPreisProEinheit());
     }
 
 }

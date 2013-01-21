@@ -8,7 +8,7 @@ import java.util.*;
  * @author Lepping 
  * @version (a version number or a date)
  */
-public class Einkaufsliste
+public class Einkaufsliste implements Iterable<EinkaufslistenPosition>
 {
     private List<EinkaufslistenPosition> positionen = new ArrayList<EinkaufslistenPosition>();
 
@@ -31,7 +31,7 @@ public class Einkaufsliste
 
     EinkaufslistenPosition findePositionDurchNahrungsmittel(Nahrungsmittel nahrungsmittel) {
         for (EinkaufslistenPosition position : positionen) {
-            if(position.getNahrungsmittel().equals(nahrungsmittel.getName())){
+            if(position.getName().equals(nahrungsmittel.getName())){
                 return position;
             }
         }
@@ -40,5 +40,10 @@ public class Einkaufsliste
         hinzufügenEinkaufslistenPosition(position);
         return position;
                 
+    }
+
+    @Override
+    public Iterator<EinkaufslistenPosition> iterator() {
+        return positionen.iterator();
     }
 }
