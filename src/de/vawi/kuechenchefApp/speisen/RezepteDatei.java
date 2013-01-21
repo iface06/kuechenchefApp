@@ -6,7 +6,7 @@ import java.util.*;
 
 
 public enum RezepteDatei implements Datei {
-    HITLISTE("hitliste.csv"), REZEPTE("rezepte.csv");
+    HITLISTE("importDatein/hitliste.csv"), REZEPTE("importDatein/rezepte.csv");
 
     List<String> zeilen;
     DateiLeser leser;
