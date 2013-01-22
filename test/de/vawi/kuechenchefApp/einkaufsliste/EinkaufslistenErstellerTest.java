@@ -74,7 +74,35 @@ public class EinkaufslistenErstellerTest {
         Einkaufsliste liste = ersteller.erzeuge();
         assertEquals(3850.0, liste.getPositionen().get(0).getPreis(), 0.001);
     }
+    
+    
+    /*/
+    @Test
+    public void testBerechneBenoetigteAnzahlAnGebinden() {
+        Einkaufsliste liste = ersteller.erzeuge();
+        assertEquals(100.0, liste.getPositionen().get(0).getMenge(), 0.0001);
+        
+    }
+    /*/
+    
+    /*/
+    @Test
+    public void testVergleicheAnzahlBenoetigterGebindeMitVorhandenerAnzahl() {
+        Einkaufsliste liste = ersteller.erzeuge();
+        assertEquals(100.0, liste.getPositionen().get(0).getMenge(), 0.0001);
+        
+    }
+    /*/
 
+    /*/
+    @Test
+    public void testVergleicheAnzahlBenoetigterGebindeMitVorhandenerAnzahl() {
+        Einkaufsliste liste = ersteller.erzeuge();
+        assertEquals(100.0, liste.getPositionen().get(0).getMenge(), 0.0001);
+        
+    }
+    /*/    
+    
     private Speiseplan erzeugeDummySpeiseplan() {
         List<Tag> tage = new ArrayList<Tag>();
         Tag tag = erzeugeTag();
