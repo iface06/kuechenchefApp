@@ -1,46 +1,55 @@
 package de.vawi.kuechenchefApp.kostenaufstellung;
 
+import de.vawi.kuechenchefApp.einkaufsliste.EinkaufslistenPosition;
+import de.vawi.kuechenchefApp.lieferanten.Lieferant;
 import java.util.*;
-/**
- * Diese Klasse enthält alle errechneten Kosten zu jedem Nahrungsmittel und die Gesamtkosten über alle
- * Nahrungsmittel einer Planungserperiode von 3 Wochen.
- * 
- * @author Struebe 
- * @version (a version number or a date)
- */
-public class Kostenaufstellung
-{
-    
-   private List<KostenPosition> kostenPositionen = new ArrayList<KostenPosition>();
-   private double gesamtKosten = 0.0;
-   
 
-    /**
-     * Gibt die Liste aller Kostenpositionen einer Planungsperiode zurück.
-     * 
-     * @return     Liste aller Kostenpositionen
-     */
-    public List<KostenPosition> getKostenPositionen()
-    {
-        return this.kostenPositionen;
+/**
+ * Diese Klasse enthält alle errechneten Kosten zu jedem Nahrungsmittel und die
+ * Gesamtkosten über alle Nahrungsmittel einer Planungserperiode von 3 Wochen.
+ *
+ * @author Struebe
+ * @version 20.01.2013
+ */
+public class Kostenaufstellung {
+
+    Lieferant lieferant;
+    List<EinkaufslistenPosition> einkaufslistenPositionen;
+
+    public Lieferant getLieferant() {
+        return this.lieferant;
     }
-    
-    /**
-     * Fügt eine KostenPosition zu der Kostenaufstellung hinzu und addiert die Kosten zu den Gesamtkosten hinzu.
-     * 
-     * @param  position     Position in der Kostenaufstellung
-     */
-    public void hinzufügenKostenPosition(KostenPosition position){
-        gesamtKosten += position.getKosten();
-        kostenPositionen.add(position);
+
+    public void setLieferant(Lieferant lieferant) {
+        this.lieferant = lieferant;
     }
-    
-    /**
-     * Gibt die Gesamtkosten über alle Nahrungsmittel ein Planungsperiode zurück.
-     * 
-     * @return     Gesamtkosten
-     */
-    public double getGesamtKosten(){
-        return this.gesamtKosten;
+
+    public List<EinkaufslistenPosition> getEinkaufslistenPositionsListe() {
+        return this.einkaufslistenPositionen;
+    }
+
+    public void setEinkaufslistenPositionsListe(List<EinkaufslistenPosition> einkaufslistenPositionen) {
+        this.einkaufslistenPositionen = einkaufslistenPositionen;
+    }
+
+    public double berechneGesamtKostenProLieferant() {
+        double gesamtKostenProLieferant = 0.0;
+        gesamtKostenProLieferant = berechneEinkaufsKostenProLieferant() + berechneLieferKostenProLieferant();
+        return gesamtKostenProLieferant;
+    }
+
+    public double berechneEinkaufsKostenProLieferant() {
+        double einkaufsKosten = 0.0;
+
+        for (EinkaufslistenPosition position : einkaufslistenPositionen) {
+            einkaufsKosten += position.getPreis();
+        }
+        return einkaufsKosten;
+    }
+
+    public double berechneLieferKostenProLieferant() {
+        double lieferKosten = 0.0;
+        lieferKosten = lieferant.berechneLieferkosten(berechneEinkaufsKostenProLieferant());
+        return lieferKosten;
     }
 }
