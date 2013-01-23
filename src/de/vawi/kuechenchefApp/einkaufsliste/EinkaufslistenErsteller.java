@@ -71,10 +71,15 @@ public class EinkaufslistenErsteller
                 bestellMenge = benoetigteMenge;
                 benoetigteMenge = 0.0;
                 }
+                
+                else {
+                findeLieferantenFuerDifferenz(differenz, positionsnummer, position.getNahrungsmittel(), vorhandeneMenge);
+                }
+                
+                /*
                 // wenn die Nachkommastelle größer als 0,75 ist, dann runde auf und bestell zu viel
                 else if (differenz > 0.75) {
                 // wenn diese Fkt umgesetzt ist, kann unten etwas gelöscht werden    
-                findeLieferantenFuerDifferenz(differenz, positionsnummer, position.getNahrungsmittel());
                 //positionsnummerfuerrest = positionsnummer + 1;
                 //   for (EinkaufslistenPosition position1 : liste)
                     
@@ -98,6 +103,8 @@ public class EinkaufslistenErsteller
                 }
                 
             }
+            /*/    
+                
             }
             // wenn weniger angeboten, als benoetigt wird, einfach alles bestellen, was benoetigt wird
             else {
@@ -118,36 +125,47 @@ public class EinkaufslistenErsteller
             
             }
             position.setLieferant(angebote.get(0).getLieferant());
-            
-            //berechneBenoetigteAnzahlAnGebinden (benoetigteMenge/Gebindegroesse = Anzahl an zu bestellenden Gebinden (abrunden oder aufrunden?)
-            //Achtung! Falls abgerundet wird, muss Restmenge beachtet werden: 
-            //Entscheidung nötig: Lieber bei diesem Lieferanten zuviel bestellen oder bei einem anderen zusätzlich?
-            //vergleicheMitVorhandenerMenge und bestimmeBestellmengeFuerLieferanten
-            //updateVonEinkaufslistenposition
-            //wenn bestellMenge >= benoetigterMenge: nächste Position
-            //wenn bestellMenge < benoetigterMenge: nächster Lieferant
-            //berechneGesamtPreis();
             position.setPreis(3850);
         }
     }
     
-    private void findeLieferantenFuerDifferenz(double differenz, int positionsnummeralt, Nahrungsmittel nahrungsmittel) {
+    private void findeLieferantenFuerDifferenz(double differenz, int positionsnummeralt, Nahrungsmittel nahrungsmittel, double vorhandeneMenge) {
         List<PreisListenPosition> angebote = lieferanten.findeDurchNahrungsmittel(nahrungsmittel);
-        int positionsnummerneu = positionsnummeralt;
+        int positionsnummerneu = positionsnummeralt +1;
         double benoetigteMenge = angebote.get(positionsnummeralt).getGebindeGroesse() * differenz;
         while (benoetigteMenge != 0){
-        positionsnummerneu = positionsnummerneu + 1;
-        if (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand() >= benoetigteMenge){
-            double anzahlBenoetigterGebindegroessen = benoetigteMenge / angebote.get(positionsnummerneu).getGebindeGroesse();
-            
-            // an dieser Stelle muss das gleiche passieren wie oben
-            // falls wert < 1: nächster Lieferant
-            // falls wert = 1: Preisvergleich und Entscheidung
-            // falls wert > 1: preis für abgerundete Menge zwischenspeichern und Preis vergleiche und Entscheidung, 
-            // menge verringern und differenz weitergeben, falls vorhandene menge ausreichend,
-            // selbe Methode wieder aufrufen, gleiche Prozedur, preis für abgerundete Menge zu vorläufigem preis hinzufügen, vergleichen und entscheiden, 
-            // falls menge nicht mehr ausreichend, aufrunden und Preis vergleichen und Entscheidung
-            // 
+        if(angebote.get(positionsnummerneu).getGebindeGroesse() >= angebote.get(positionsnummeralt).getGebindeGroesse()) {
+            if (benoetigteMenge > vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand())) {
+                // Bestell aufgerundete Menge von altem Lieferanten
+                benoetigteMenge = 0;
+            }
+            else {
+            positionsnummerneu = positionsnummerneu + 1;
+            }
+
+        }
+        else {
+        double anzahlBenoetigterGebindegroessen = benoetigteMenge / angebote.get(positionsnummerneu).getGebindeGroesse();
+        if (angebote.get(positionsnummerneu).getVorratsBestand() > anzahlBenoetigterGebindegroessen) {
+            if (angebote.get(positionsnummerneu).getPreis() * Math.ceil(anzahlBenoetigterGebindegroessen) > angebote.get(positionsnummeralt).getPreis()) {
+            // Bestell aufgerundete Menge von altem Lieferanten
+            benoetigteMenge = 0;
+            }
+            else {
+            // Bestell abgerundete Menge von altem Lieferanten + aufgerundee Menge von neuem Lieferanten
+            benoetigteMenge = 0;
+            }
+        }
+        else {
+            if (benoetigteMenge > vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand())) {
+            // Bestell aufgerundete Menge von altem Lieferanten
+            benoetigteMenge = 0;
+            }
+            // benoetigte Menge < vorhandene
+            else {
+            positionsnummerneu = positionsnummerneu + 1;
+            }
+        }
         }
         }
         }
@@ -177,14 +195,7 @@ public class EinkaufslistenErsteller
     }
      
     
-    /*/1. Methode zum Auffinden des Preiswertesten Angebots
-     2. Methode zum Vergleichen von benötigter Menge zu angbotener Menge
-        Wenn optimale Bestellung nicht möglich, vielleicht zu viel bestellen.
-        Preisunterschied mit nächstem Angeot vergleichen, dass bessere Gebindegrößen anbietet
-     3. Methode zum Update der Einkaufslistenposition
-        a) Neues Item für bestimmten Einkauf
-        b) Position ohne Lieferant runterzählen
-        c) Erneuter Aufruf von 1.
+    /*/
      4. Opmimieren der Einkaufsliste zur Minimierung von Lieferkosten
         a) Überprüfe jede Einkaufslistenposition und überprüfe, ob durch Bestellung bei anderem Lieferanten durch Einsparung von Liefer-
           kosten Einsparungen möglich sind
