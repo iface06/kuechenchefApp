@@ -115,6 +115,19 @@ public class EinkaufslistenErsteller
             positionsnummer = positionsnummer + 1;
             }
             
+ 
+            
+
+            
+            }
+            position.setLieferant(angebote.get(0).getLieferant());
+            position.setPreis(3850);
+        }
+    }
+    
+   private void fuegeLieferantInEinkaufsliste (double bestellMenge){
+            
+            /*/
             // Dieser Teil sollte noch in eine Extramethode... die Methode wird immer dann aufgerufen, wenn Einkaufsliste upgedatet wird
             if (position.getLieferant() == null){
             // Füge Lieferant, Menge, Preis hinzu
@@ -124,12 +137,8 @@ public class EinkaufslistenErsteller
             // Erstelle neue Einkaufsposition mit Nahrungsmittel, Lieferant, Menge und Preis
             // benoetigteMenge = benoetigeMenge-Menge
             }
-            
-            }
-            position.setLieferant(angebote.get(0).getLieferant());
-            position.setPreis(3850);
-        }
-    }
+            /*/
+   }
     
     private void findeLieferantenFuerDifferenz(double differenz, int positionsnummeralt, Nahrungsmittel nahrungsmittel, double vorhandeneMenge) {
         List<PreisListenPosition> angebote = lieferanten.findeDurchNahrungsmittel(nahrungsmittel);
@@ -187,8 +196,8 @@ public class EinkaufslistenErsteller
         }
         }
     
-     private void ueberpruefeLieferkosten() {
-   
+    private void ueberpruefeLieferkosten() {
+    // hole alle 
     } 
   
     
