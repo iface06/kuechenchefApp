@@ -76,6 +76,7 @@ public class EinkaufslistenErsteller
                 findeLieferantenFuerDifferenz(differenz, positionsnummer, position.getNahrungsmittel(), vorhandeneMenge);
                 }
                 
+                // Vergiss diesen Code... anstattdessen wird oben ja die Fkt. findeLieferantenFuerDifferenz aufgerufen
                 /*
                 // wenn die Nachkommastelle größer als 0,75 ist, dann runde auf und bestell zu viel
                 else if (differenz > 0.75) {
@@ -114,6 +115,7 @@ public class EinkaufslistenErsteller
             positionsnummer = positionsnummer + 1;
             }
             
+            // Dieser Teil sollte noch in eine Extramethode... die Methode wird immer dann aufgerufen, wenn Einkaufsliste upgedatet wird
             if (position.getLieferant() == null){
             // Füge Lieferant, Menge, Preis hinzu
             // benoetigteMenge = benoetigteMenge-Menge
@@ -134,35 +136,50 @@ public class EinkaufslistenErsteller
         int positionsnummerneu = positionsnummeralt +1;
         double benoetigteMenge = angebote.get(positionsnummeralt).getGebindeGroesse() * differenz;
         while (benoetigteMenge != 0){
+        // Wenn die Gebindegroesse des neuen Lieferanten groesser oder gleich ist als die des alten kann er nicht preiswerter sein
         if(angebote.get(positionsnummerneu).getGebindeGroesse() >= angebote.get(positionsnummeralt).getGebindeGroesse()) {
+            // wenn mit ignorieren des neuen Lieferanten die benötigte Menge nicht mehr erreicht werden kann, muss beim alten Lieferanten aufgerundet werden
             if (benoetigteMenge > vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand())) {
                 // Bestell aufgerundete Menge von altem Lieferanten
                 benoetigteMenge = 0;
             }
+            // wenn trotzdem noch genug vorhanden ist, dann wird der nächste Lieferant betrachtet
             else {
+            // vorhandene Menge wird reduziert um Vorratsmenge des neuen Lieferanten
+            vorhandeneMenge = vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand());
             positionsnummerneu = positionsnummerneu + 1;
             }
 
         }
+        // Wenn die Gebindegroesse kleiner ist dann wird der neue Lieferant interessant
         else {
+        // Die benoetigte Anzahl an Gebinden fuer neuen Lieferanten wird berechnet
         double anzahlBenoetigterGebindegroessen = benoetigteMenge / angebote.get(positionsnummerneu).getGebindeGroesse();
+        // Wenn der neue Lieferant genug auf Lager hat, dann vergleiche den Preis
         if (angebote.get(positionsnummerneu).getVorratsBestand() > anzahlBenoetigterGebindegroessen) {
+            // An dieser Stelle müsste normalerweise wieder eine Differnzmenge betrachtet werden, wenn die Gebindegroesse nicht gerade ist
+            // Anstattdessen runde ich die Gebindegroesse nun auf und vergleiche den Preis
+            // Wenn Preis mit neuem Lieferanten teurer ist, kaufe mehr vom alten
             if (angebote.get(positionsnummerneu).getPreis() * Math.ceil(anzahlBenoetigterGebindegroessen) > angebote.get(positionsnummeralt).getPreis()) {
             // Bestell aufgerundete Menge von altem Lieferanten
             benoetigteMenge = 0;
             }
+            // Wenn der Preis kleiner ist, dann bestell die abgerundete Menge vom alten Lieferanten und die aufgerundete vom Neuen
             else {
             // Bestell abgerundete Menge von altem Lieferanten + aufgerundee Menge von neuem Lieferanten
             benoetigteMenge = 0;
             }
         }
+        // Wenn der neue Lieferant nicht genug auf Lager hat dann vergleiche vorhande Menge mit benötigter Menge
         else {
+            // Wenn benötigte Menge zu hoch, dann runde Menge des alten Lieferanten auf
             if (benoetigteMenge > vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand())) {
             // Bestell aufgerundete Menge von altem Lieferanten
             benoetigteMenge = 0;
             }
             // benoetigte Menge < vorhandene
             else {
+            vorhandeneMenge = vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand());
             positionsnummerneu = positionsnummerneu + 1;
             }
         }
