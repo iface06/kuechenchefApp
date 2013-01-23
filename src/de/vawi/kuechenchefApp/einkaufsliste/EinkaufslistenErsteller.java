@@ -197,5 +197,4 @@ public class EinkaufslistenErsteller
     *   Anschließend kann der Preisunterschied verglichen werden
     */
 
-
 }
