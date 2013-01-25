@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 /**
  *  Der Bauer verrechnet die Lieferung nach der Enterfernung in km.
- *  
  *  Pro Kilometer 2,00€
+ * 
  * @author Struebe
  * @version 30.12.2012
  */

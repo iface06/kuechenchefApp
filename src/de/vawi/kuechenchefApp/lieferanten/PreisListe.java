@@ -20,7 +20,11 @@ class PreisListe implements Datei{
         return datei.getDateinameMitPfad();
     }
 
-    
+    /**
+     * Diese Methode
+     * 
+     * @return 
+     */
     public String getLieferantenZeile() {
         Iterator<String> iterator = iterator();
         if(iterator.hasNext()){

@@ -15,7 +15,7 @@ public class KostenaufstellungErstellerTest {
 
     private static EinkaufslistenPosition ekPosition;
 
-    
+    /**
     @BeforeClass
     public static void beforeClass() {
         EinkaufslistenPosition ekPosition1 = erstelleDummyEKPosition();

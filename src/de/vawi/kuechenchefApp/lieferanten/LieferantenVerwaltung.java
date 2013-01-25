@@ -31,8 +31,8 @@ public class LieferantenVerwaltung {
     }
 
     /**
-     * Diese Methode stellt alle Preislistenpositionen eines Lieferanten
-     * zusammen.
+     * Diese Methode stellt eine Liste an Preislistenpositionen eines
+     * Lieferanten zusammen.
      *
      * @param positionen Eine Position auf der Liste.
      */
@@ -44,7 +44,7 @@ public class LieferantenVerwaltung {
      * Mit dieser Methode werden alle Preislitenpositionen aufgelistet, die ein
      * bestimmtes Nahrungsmittel enthalten. So kann herausgefunden werden, bei
      * welchen Lieferanten die jeweiligen Nahrungsmittel inkl. ihrer Attribute
-     * zur Verfügung stehen. Die Preislistenpositionen sind absteigend nach 
+     * zur Verfügung stehen. Die Preislistenpositionen sind absteigend nach
      * Preisen sortiert.
      *
      * @param nahrungsmittel Ein Objekt vom Typ Nahrungsmittel.
@@ -62,8 +62,13 @@ public class LieferantenVerwaltung {
         return positionen;
     }
 
+    /**
+     * Diese Methode sortiert die Preislisten-Positionen nach Preis.
+     *
+     * @param positionen Die einzelnen Positionen auf einer
+     * Preislisten-Positions-Liste.
+     */
     private void sortierePreisListenPositionenNachPreis(List<PreisListenPosition> positionen) {
         Collections.sort(positionen, new VergleichePreisListenPositionNachPreisProEinheit());
     }
-
 }
