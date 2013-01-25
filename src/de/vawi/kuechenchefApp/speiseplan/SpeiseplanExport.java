@@ -1,6 +1,8 @@
 package de.vawi.kuechenchefApp.speiseplan;
 
 import de.vawi.kuechenchefApp.DateiExport;
+import de.vawi.kuechenchefApp.dateien.Datei;
+import de.vawi.kuechenchefApp.dateien.DateiSchreiber;
 import de.vawi.kuechenchefApp.speiseplan.Speiseplan;
 import java.util.*;
 /**
@@ -20,5 +22,15 @@ public class SpeiseplanExport extends DateiExport<List<Speiseplan>>
     * @param  exportants    Liste von Speisepläne
    */
    public void export(List<Speiseplan> exportants){
+       SpeiseplanDrucker drucker = new SpeiseplanDrucker();
+       for (Speiseplan speiseplan : exportants) {
+           String plan = drucker.drucke(speiseplan);
+           DateiSchreiber schreiber = erstelleSchreiberFuer(speiseplan);
+           schreiber.schreibe(plan);
+       }
    }
+
+    protected DateiSchreiber erstelleSchreiberFuer(Speiseplan speiseplan) {
+        return new DateiSchreiber(new SpeiseplanDatei(speiseplan.getKantine()));
+    }
 }
