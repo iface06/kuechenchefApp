@@ -4,6 +4,7 @@ import de.vawi.kuechenchefApp.einkaufsliste.EinkaufslistenExport;
 import de.vawi.kuechenchefApp.kostenaufstellung.KostenaufstellungErsteller;
 import de.vawi.kuechenchefApp.kostenaufstellung.KostenaufstellungExport;
 import de.vawi.kuechenchefApp.lieferanten.PreisListenImport;
+import de.vawi.kuechenchefApp.speisen.SpeisenImport;
 import de.vawi.kuechenchefApp.speiseplan.SpeiseplanErsteller;
 import de.vawi.kuechenchefApp.speiseplan.SpeiseplanExport;
 
@@ -27,7 +28,7 @@ public class KuechenchefApp
      */
     public static void main(String[] args) throws Exception
     {
-        //new SpeisenImport().importFiles();
+        new SpeisenImport().importFiles();
         new PreisListenImport().importFiles();
         
         ProzessSteuerung prozess = new ProzessSteuerung();

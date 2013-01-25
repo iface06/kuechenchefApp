@@ -6,18 +6,20 @@ import de.vawi.kuechenchefApp.nahrungsmittel.*;
 import java.util.*;
 
 /**
+ * Diese Klasse erstellt die Preislisten-Positionen eines Lieferanten aus den
+ * Zeilen der Preisliste.
  *
  * @author Struebe
  * @version 30.12.2012
  */
 class PreisListenPositionErsteller {
 
-    public static final int ZELLE_GEBINDEGROESSE = 0;
-    public static final int ZELLE_EINHEIT = 1;
-    public static final int ZELLE_NAHRUNGSMITTELNAME = 2;
-    public static final int ZELLE_NAHRUNGSMITTELKATEGORIE = 3;
-    public static final int ZELLE_PREIS = 4;
-    public static final int ZELLE_VORRAT = 5;
+    public static final int ABSCHNITT_GEBINDEGROESSE = 0;
+    public static final int ABSCHNITT_EINHEIT = 1;
+    public static final int ABSCHNITT_NAHRUNGSMITTELNAME = 2;
+    public static final int ABSCHNITT_NAHRUNGSMITTELKATEGORIE = 3;
+    public static final int ABSCHNITT_PREIS = 4;
+    public static final int ABSCHNITT_VORRAT = 5;
     private final Lieferant lieferant;
     private NahrungsmittelVerwaltung nahrungsmittelVerwaltung = NahrungsmittelVerwaltung.getInstanz();
 
@@ -31,14 +33,13 @@ class PreisListenPositionErsteller {
      * Nahrungsmittels, Einheit, etc.
      *
      * @param preisListenPositionsZeile Eine Zeile der einzulesenden
-     * Preislisten-datei.
+     * Preislisten-datei, die nicht die Lieferanten-Zeile (sprich: erste Zeile
+     * der Liste) ist.
      * @param lieferant Lieferant, dessen Preisliste eingelsen wird.
      * @throws InvalidPropertiesFormatException Da für die
      * Nahrungsmittel-Kategorie und die Einheit Kürzel aus der Datei ins
      * Programm übersetzt werden, wird hier eine Exception geworfen, sobald die
-     * Kürzel dem Programm nicht bekannt sind. TODO auch hier möchte er liever
-     * switch case statt if TODO ich hab die Methode public gemacht, damit ich
-     * keine Fehlermeldung mehr habe, aber sie war ursprünglich private??
+     * Kürzel dem Programm nicht bekannt sind.
      *
      */
     public PreisListenPosition erstelle(String preisListenPositionsZeile) throws FehlerBeimErstellenEinerPreislistenPosition {
@@ -47,23 +48,44 @@ class PreisListenPositionErsteller {
 
     }
 
+    /**
+     * Diese Methode teilt die Preislisten-Positions-Zeilen (sprich Zeile 2 bis
+     * n der Preisliste) in ihre Abschnitte, die durch Kommata getrennt sind.
+     *
+     * @param preisListenPositionsZeile Eine Zeile der Preisliste, die nicht die
+     * Lieferanten-Zeile ist.
+     * @return Gibt die einzelnen Abschnitte der Zeile wider.
+     */
     private List<String> separiereZeile(String preisListenPositionsZeile) {
         CsvZeileSeparator csvSepp = new CsvZeileSeparator();
-        List<String> preisListenPositionsZellen = csvSepp.separiere(preisListenPositionsZeile);
-        return preisListenPositionsZellen;
+        List<String> preisListenPositionsAbschnitte = csvSepp.separiere(preisListenPositionsZeile);
+        return preisListenPositionsAbschnitte;
     }
 
-    private PreisListenPosition erstellePreisListenPosition(List<String> zellen) throws FehlerBeimErstellenEinerPreislistenPosition {
+    /**
+     * Diese Methode erstellt ein Objekt der Klasse PreislistenPosition anhand
+     * der Preislisten-Positions-Zeilen (sprich: Zeilen 2 bis n der Preisliste).
+     *
+     * @param abschnitte die durch Kommata getrennten Abschnitte einer
+     * Preislisten-Positions-Zeile.
+     * @return ein Objekt der Klasse PreislistenPosition
+     * @throws
+     * de.vawi.kuechenchefApp.lieferanten.PreisListenPositionErsteller.FehlerBeimErstellenEinerPreislistenPosition
+     * Kann eine Zeile nicht gelesen werden (bspw. weil der Syntax nicht stimmt)
+     * wird diese Exception geworfen. Das Programm wird nicht beendet, sonder
+     * läuft weiter.
+     */
+    private PreisListenPosition erstellePreisListenPosition(List<String> abschnitte) throws FehlerBeimErstellenEinerPreislistenPosition {
         PreisListenPosition preisListenPosition = new PreisListenPosition();
         try {
-            preisListenPosition.setGebindeGroesse(parseStringToDouble(zellen.get(ZELLE_GEBINDEGROESSE)));
-            preisListenPosition.setNahrungsmittel(findeNahrungsmittel(zellen));
-            preisListenPosition.setPreis(parseStringToDouble(zellen.get(ZELLE_PREIS)));
-            preisListenPosition.setVorratsBestand(parseStringToInteger(zellen.get(ZELLE_VORRAT)));
-            preisListenPosition.setNahrungsmittel(addiereVerfuegbareMenge(zellen,parseStringToInteger(zellen.get(ZELLE_VORRAT)), parseStringToInteger(zellen.get(ZELLE_GEBINDEGROESSE))));
+            preisListenPosition.setGebindeGroesse(parseStringToDouble(abschnitte.get(ABSCHNITT_GEBINDEGROESSE)));
+            preisListenPosition.setNahrungsmittel(findeNahrungsmittel(abschnitte));
+            preisListenPosition.setPreis(parseStringToDouble(abschnitte.get(ABSCHNITT_PREIS)));
+            preisListenPosition.setVorratsBestand(parseStringToInteger(abschnitte.get(ABSCHNITT_VORRAT)));
+            preisListenPosition.setNahrungsmittel(addiereVerfuegbareMenge(abschnitte, parseStringToInteger(abschnitte.get(ABSCHNITT_VORRAT)), parseStringToInteger(abschnitte.get(ABSCHNITT_GEBINDEGROESSE))));
             preisListenPosition.setLieferant(lieferant);
         } catch (Exception e) {
-            throw new FehlerBeimErstellenEinerPreislistenPosition(lieferant, zellen);
+            throw new FehlerBeimErstellenEinerPreislistenPosition(lieferant, abschnitte);
         }
 
         return preisListenPosition;
@@ -76,9 +98,13 @@ class PreisListenPositionErsteller {
     private int parseStringToInteger(String value) {
         return Parse.toInteger(value);
     }
-
+/**
+ * Diese Methode 
+ * @param zellen
+ * @return 
+ */
     private Nahrungsmittel findeNahrungsmittel(List<String> zellen) {
-        Nahrungsmittel nahrungsmittel = nahrungsmittelVerwaltung.findeDurchName(zellen.get(ZELLE_NAHRUNGSMITTELNAME));
+        Nahrungsmittel nahrungsmittel = nahrungsmittelVerwaltung.findeDurchName(zellen.get(ABSCHNITT_NAHRUNGSMITTELNAME));
         if (nahrungsmittel == null) {
             nahrungsmittel = erstelleNeuesNahrungsmittel(zellen);
             nahrungsmittelVerwaltung.fuegeHinzu(nahrungsmittel);
@@ -94,9 +120,9 @@ class PreisListenPositionErsteller {
     }
 
     private Nahrungsmittel addiereVerfuegbareMenge(List<String> zellen, int vorratsBestand, int gebindeGroesse) {
-        
-        Nahrungsmittel nahrungsmittel = nahrungsmittelVerwaltung.findeDurchName(zellen.get(ZELLE_NAHRUNGSMITTELNAME));
-        nahrungsmittel.setVerfuegbareGesamtMenge(nahrungsmittel.getVerfuegbareGesamtMenge() + (vorratsBestand * gebindeGroesse));       
+
+        Nahrungsmittel nahrungsmittel = nahrungsmittelVerwaltung.findeDurchName(zellen.get(ABSCHNITT_NAHRUNGSMITTELNAME));
+        nahrungsmittel.setVerfuegbareGesamtMenge(nahrungsmittel.getVerfuegbareGesamtMenge() + (vorratsBestand * gebindeGroesse));
         return nahrungsmittel;
     }
 

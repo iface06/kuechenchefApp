@@ -71,10 +71,16 @@ public class EinkaufslistenErsteller
                 bestellMenge = benoetigteMenge;
                 benoetigteMenge = 0.0;
                 }
+                
+                else {
+                findeLieferantenFuerDifferenz(differenz, positionsnummer, position.getNahrungsmittel(), vorhandeneMenge);
+                }
+                
+                // Vergiss diesen Code... anstattdessen wird oben ja die Fkt. findeLieferantenFuerDifferenz aufgerufen
+                /*
                 // wenn die Nachkommastelle größer als 0,75 ist, dann runde auf und bestell zu viel
                 else if (differenz > 0.75) {
                 // wenn diese Fkt umgesetzt ist, kann unten etwas gelöscht werden    
-                findeLieferantenFuerDifferenz(differenz, positionsnummer, position.getNahrungsmittel());
                 //positionsnummerfuerrest = positionsnummer + 1;
                 //   for (EinkaufslistenPosition position1 : liste)
                     
@@ -98,6 +104,8 @@ public class EinkaufslistenErsteller
                 }
                 
             }
+            /*/    
+                
             }
             // wenn weniger angeboten, als benoetigt wird, einfach alles bestellen, was benoetigt wird
             else {
@@ -107,6 +115,20 @@ public class EinkaufslistenErsteller
             positionsnummer = positionsnummer + 1;
             }
             
+ 
+            
+
+            
+            }
+            position.setLieferant(angebote.get(0).getLieferant());
+            position.setPreis(3850);
+        }
+    }
+    
+   private void fuegeLieferantInEinkaufsliste (double bestellMenge){
+            
+            /*/
+            // Dieser Teil sollte noch in eine Extramethode... die Methode wird immer dann aufgerufen, wenn Einkaufsliste upgedatet wird
             if (position.getLieferant() == null){
             // Füge Lieferant, Menge, Preis hinzu
             // benoetigteMenge = benoetigteMenge-Menge
@@ -115,45 +137,67 @@ public class EinkaufslistenErsteller
             // Erstelle neue Einkaufsposition mit Nahrungsmittel, Lieferant, Menge und Preis
             // benoetigteMenge = benoetigeMenge-Menge
             }
-            
-            }
-            position.setLieferant(angebote.get(0).getLieferant());
-            
-            //berechneBenoetigteAnzahlAnGebinden (benoetigteMenge/Gebindegroesse = Anzahl an zu bestellenden Gebinden (abrunden oder aufrunden?)
-            //Achtung! Falls abgerundet wird, muss Restmenge beachtet werden: 
-            //Entscheidung nötig: Lieber bei diesem Lieferanten zuviel bestellen oder bei einem anderen zusätzlich?
-            //vergleicheMitVorhandenerMenge und bestimmeBestellmengeFuerLieferanten
-            //updateVonEinkaufslistenposition
-            //wenn bestellMenge >= benoetigterMenge: nächste Position
-            //wenn bestellMenge < benoetigterMenge: nächster Lieferant
-            //berechneGesamtPreis();
-            position.setPreis(3850);
-        }
-    }
+            /*/
+   }
     
-    private void findeLieferantenFuerDifferenz(double differenz, int positionsnummeralt, Nahrungsmittel nahrungsmittel) {
+    private void findeLieferantenFuerDifferenz(double differenz, int positionsnummeralt, Nahrungsmittel nahrungsmittel, double vorhandeneMenge) {
         List<PreisListenPosition> angebote = lieferanten.findeDurchNahrungsmittel(nahrungsmittel);
-        int positionsnummerneu = positionsnummeralt;
+        int positionsnummerneu = positionsnummeralt +1;
         double benoetigteMenge = angebote.get(positionsnummeralt).getGebindeGroesse() * differenz;
         while (benoetigteMenge != 0){
-        positionsnummerneu = positionsnummerneu + 1;
-        if (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand() >= benoetigteMenge){
-            double anzahlBenoetigterGebindegroessen = benoetigteMenge / angebote.get(positionsnummerneu).getGebindeGroesse();
-            
-            // an dieser Stelle muss das gleiche passieren wie oben
-            // falls wert < 1: nächster Lieferant
-            // falls wert = 1: Preisvergleich und Entscheidung
-            // falls wert > 1: preis für abgerundete Menge zwischenspeichern und Preis vergleiche und Entscheidung, 
-            // menge verringern und differenz weitergeben, falls vorhandene menge ausreichend,
-            // selbe Methode wieder aufrufen, gleiche Prozedur, preis für abgerundete Menge zu vorläufigem preis hinzufügen, vergleichen und entscheiden, 
-            // falls menge nicht mehr ausreichend, aufrunden und Preis vergleichen und Entscheidung
-            // 
+        // Wenn die Gebindegroesse des neuen Lieferanten groesser oder gleich ist als die des alten kann er nicht preiswerter sein
+        if(angebote.get(positionsnummerneu).getGebindeGroesse() >= angebote.get(positionsnummeralt).getGebindeGroesse()) {
+            // wenn mit ignorieren des neuen Lieferanten die benötigte Menge nicht mehr erreicht werden kann, muss beim alten Lieferanten aufgerundet werden
+            if (benoetigteMenge > vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand())) {
+                // Bestell aufgerundete Menge von altem Lieferanten
+                benoetigteMenge = 0;
+            }
+            // wenn trotzdem noch genug vorhanden ist, dann wird der nächste Lieferant betrachtet
+            else {
+            // vorhandene Menge wird reduziert um Vorratsmenge des neuen Lieferanten
+            vorhandeneMenge = vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand());
+            positionsnummerneu = positionsnummerneu + 1;
+            }
+
+        }
+        // Wenn die Gebindegroesse kleiner ist dann wird der neue Lieferant interessant
+        else {
+        // Die benoetigte Anzahl an Gebinden fuer neuen Lieferanten wird berechnet
+        double anzahlBenoetigterGebindegroessen = benoetigteMenge / angebote.get(positionsnummerneu).getGebindeGroesse();
+        // Wenn der neue Lieferant genug auf Lager hat, dann vergleiche den Preis
+        if (angebote.get(positionsnummerneu).getVorratsBestand() > anzahlBenoetigterGebindegroessen) {
+            // An dieser Stelle müsste normalerweise wieder eine Differnzmenge betrachtet werden, wenn die Gebindegroesse nicht gerade ist
+            // Anstattdessen runde ich die Gebindegroesse nun auf und vergleiche den Preis
+            // Wenn Preis mit neuem Lieferanten teurer ist, kaufe mehr vom alten
+            if (angebote.get(positionsnummerneu).getPreis() * Math.ceil(anzahlBenoetigterGebindegroessen) > angebote.get(positionsnummeralt).getPreis()) {
+            // Bestell aufgerundete Menge von altem Lieferanten
+            benoetigteMenge = 0;
+            }
+            // Wenn der Preis kleiner ist, dann bestell die abgerundete Menge vom alten Lieferanten und die aufgerundete vom Neuen
+            else {
+            // Bestell abgerundete Menge von altem Lieferanten + aufgerundee Menge von neuem Lieferanten
+            benoetigteMenge = 0;
+            }
+        }
+        // Wenn der neue Lieferant nicht genug auf Lager hat dann vergleiche vorhande Menge mit benötigter Menge
+        else {
+            // Wenn benötigte Menge zu hoch, dann runde Menge des alten Lieferanten auf
+            if (benoetigteMenge > vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand())) {
+            // Bestell aufgerundete Menge von altem Lieferanten
+            benoetigteMenge = 0;
+            }
+            // benoetigte Menge < vorhandene
+            else {
+            vorhandeneMenge = vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand());
+            positionsnummerneu = positionsnummerneu + 1;
+            }
+        }
         }
         }
         }
     
-     private void ueberpruefeLieferkosten() {
-   
+    private void ueberpruefeLieferkosten() {
+    // hole alle 
     } 
   
     
@@ -177,14 +221,7 @@ public class EinkaufslistenErsteller
     }
      
     
-    /*/1. Methode zum Auffinden des Preiswertesten Angebots
-     2. Methode zum Vergleichen von benötigter Menge zu angbotener Menge
-        Wenn optimale Bestellung nicht möglich, vielleicht zu viel bestellen.
-        Preisunterschied mit nächstem Angeot vergleichen, dass bessere Gebindegrößen anbietet
-     3. Methode zum Update der Einkaufslistenposition
-        a) Neues Item für bestimmten Einkauf
-        b) Position ohne Lieferant runterzählen
-        c) Erneuter Aufruf von 1.
+    /*/
      4. Opmimieren der Einkaufsliste zur Minimierung von Lieferkosten
         a) Überprüfe jede Einkaufslistenposition und überprüfe, ob durch Bestellung bei anderem Lieferanten durch Einsparung von Liefer-
           kosten Einsparungen möglich sind
@@ -196,6 +233,5 @@ public class EinkaufslistenErsteller
     * - Vielleicht brauche ich eine Methode, die mir für eine bestimmte Zutat einen Lieferanten nennt, dessen Gebindegröße kleiner ist als die mir vorliegende
     *   Anschließend kann der Preisunterschied verglichen werden
     */
-
 
 }

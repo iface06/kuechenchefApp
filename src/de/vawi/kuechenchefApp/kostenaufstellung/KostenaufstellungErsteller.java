@@ -17,7 +17,6 @@ import java.util.List;
 public class KostenaufstellungErsteller
 {
     private Einkaufsliste liste;  
-    private List<Einkaufsliste> einkaufsListenPositionen = new ArrayList<>();
     
     /**
      * Setzt die Einkaufsliste. Diese ist die Basis für die Berechnung der Kostenaufstellung.
@@ -38,35 +37,40 @@ public class KostenaufstellungErsteller
 
     public double berechneGesamtKosten (){
         double gesamtKosten = 0.0;
-        for (Lieferant lieferant : zaehleLieferantenAuf()){
-            gesamtKosten += berechneGesamtKostenProLieferant(lieferant);
+       List<Kostenaufstellung> kostenaufstellungNachLieferant = kostenaufstellungNachLieferant();
+        for (Kostenaufstellung kostenaufstellung : kostenaufstellungNachLieferant){
+            gesamtKosten += kostenaufstellung.berechneGesamtKostenProLieferant();
         }
         return gesamtKosten;
     }
     
-    
-    public double berechneGesamtKostenProLieferant (Lieferant lieferant){
-        double einkaufsKosten = 0.0;
-        double lieferKosten = 0.0;
-        List<EinkaufslistenPosition> lieferantenFilter = filtereNachLieferanten(lieferant);
-        for (EinkaufslistenPosition position : lieferantenFilter){
-            einkaufsKosten += position.getPreis();
-        }
-        lieferKosten = lieferant.berechneLieferkosten(einkaufsKosten);        
-        return einkaufsKosten + lieferKosten;
-    }
-    
-    List<EinkaufslistenPosition> filtereNachLieferanten(Lieferant lieferant) {
+       
+    public Kostenaufstellung filtereNachLieferanten(Lieferant lieferant) {
         List<EinkaufslistenPosition> lieferantenFilter = new ArrayList<>();
         for (EinkaufslistenPosition position : liste.getPositionen()) {
             if (position.getLieferant().equals(lieferant)) {
                 lieferantenFilter.add(position);
             }
         }
-        return lieferantenFilter;
+        Kostenaufstellung kostenaufstellungProLieferanten = new Kostenaufstellung();
+        kostenaufstellungProLieferanten.setLieferant(lieferant);
+        kostenaufstellungProLieferanten.setEinkaufslistenPositionsListe(lieferantenFilter);
+        return kostenaufstellungProLieferanten;
     }
     
-    List<Lieferant> zaehleLieferantenAuf() {
+    public List<Kostenaufstellung> kostenaufstellungNachLieferant(){
+        List<Kostenaufstellung> kostenaufstellungNachLieferant = new ArrayList<>();
+        List<Lieferant> alleBeteiligtenLieferanten = zaehleLieferantenAuf();
+        int j = alleBeteiligtenLieferanten.size();
+        for (int i = 0; i < j; i++ ){
+            Lieferant lieferant = alleBeteiligtenLieferanten.get(i);
+            Kostenaufstellung temporäreSpeicherverschwendendeKostenaufstellungDamitSonjaEsVersteht = filtereNachLieferanten(lieferant);
+            kostenaufstellungNachLieferant.add(temporäreSpeicherverschwendendeKostenaufstellungDamitSonjaEsVersteht);
+    }
+        return kostenaufstellungNachLieferant;
+    }
+    
+    private List<Lieferant> zaehleLieferantenAuf() {
         List<Lieferant> lieferantenAuflistung = new ArrayList<>();
         for (EinkaufslistenPosition position : liste.getPositionen()) {
             Lieferant lieferant = position.getLieferant();

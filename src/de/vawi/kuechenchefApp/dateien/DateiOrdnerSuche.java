@@ -1,27 +1,24 @@
-package de.vawi.kuechenchefApp.lieferanten;
+package de.vawi.kuechenchefApp.dateien;
 
 import java.io.File;
 import java.util.*;
 import javax.swing.*;
 import java.lang.*;
 
-
-
 /**
  *
  * @author Sonja
  */
-public class PreisListenOrdnerSuche {
-
+public class DateiOrdnerSuche {
 
     /**
      * @param args the command line arguments
      * 
      */
-    public static String PreisListenOrdnerSuche() {
+    public static String dateiOrdnerSuche() {
        
         ImageIcon icon = new ImageIcon("bild.jpg"); 
-        JOptionPane.showMessageDialog(null, "Bitte Suchen Sie den Ordner, in dem Sie die Preislisten-Dateien abgelegt haben.", "KuechenChefApp", JOptionPane.INFORMATION_MESSAGE, icon);
+        JOptionPane.showMessageDialog(null, "Bitte Suchen Sie den Ordner, in dem Sie die Preislisten-Dateien, die Rezept-Datei und die Speisen-Datei abgelegt haben.", "KuechenChefApp", JOptionPane.INFORMATION_MESSAGE, icon);
         
         JFileChooser fc = new JFileChooser();
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

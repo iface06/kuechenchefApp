@@ -18,24 +18,18 @@ public class PreisListenImport {
     private LieferantenVerwaltung lieferantenVerwaltung = LieferantenVerwaltung.getInstanz();
 
     /**
-     * Importiert die Preislistedateien aus dem Ordner "Lieferanten" und
-     * erstellt die LieferantenListe mit allen Lieferanten und Angeboten.
-     *
-     * Die Dateien müssen nach folgender Konvention benannt werden:
-     * preisliste_[lfd. Nummer].csv [lfd. Nummer] = Aufeinander folgende Integer
-     * (1, 2, 3, ...) Beispiel: preisliste_1.csv, preisliste_2.csv usw.
-     *
-     * Werden keine Dateien gefunden oder enthält der Ordner keine Dateien, so
-     * wird eine FileNotFoundException geworfen und das Programm anschließend
+     * Diese Methode importiert die Preislistendateien.
+     * 
+     * Werden keine Preislisten-Dateien gefunden, so
+     * wird eine Exception geworfen und das Programm anschließend
      * beendet.
      *
-     * @return Gibt die LieferantenListe zurück.
      */
-    //TODO: habe den unten stehenden code nicht gebraucht.
+
     public void importFiles() {
         try {
             LieferantenVerwaltung verwaltung = LieferantenVerwaltung.getInstanz();
-            lesePreisListenDateien(PreisListenOrdnerSuche.PreisListenOrdnerSuche());
+            lesePreisListenDateien(DateiOrdnerSuche.dateiOrdnerSuche());
             
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -65,13 +59,18 @@ public class PreisListenImport {
     /**
      * Diese Methode liest die Preislisten-Dateien aus.
      *
-     * Achtung! die Methode macht zuviele Dinge...
      *
      * @param preisListenDateiName Name der Datei, die hier ausgelesen werden
      * soll.
      * @return Gbit ein Objekt der Klasse Lieferant, unterteilt in Großhändler
      * oder Bauer aus.
      */
+     
+     /**
+      * Diese Methode erstellt einer Liste an Preislistenpositionen pro Lieferant.
+      * @param preisListe 
+      * 
+      */
     private void erstelleLieferantUndPreisListenPositionen(PreisListe preisListe) {
         Lieferant lieferant = erstelleLieferant(preisListe);
         List<PreisListenPosition> positionen = erstellePreislistenPositionenZuLieferant(preisListe, lieferant);
