@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class DateiSchreiber {
     
-    private DateiManager dateiManager;
+    private DateiSchreiberManager dateiManager;
     private final Datei dateiName;
     
 
@@ -37,8 +37,8 @@ public class DateiSchreiber {
         
     }
     
-    protected DateiManager erzeugeDatei() {
-        return new DateiManager(dateiName.getDateinameMitPfad());
+    protected DateiSchreiberManager erzeugeDatei() {
+        return new VawiDateiManager(dateiName.getDateinameMitPfad());
     }
 
     private void oeffneDatei() {
@@ -56,7 +56,4 @@ public class DateiSchreiber {
     private void schliesseDatei() {
         dateiManager.closeOutFile();
     }
-
-    
-    
 }

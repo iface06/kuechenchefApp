@@ -1,56 +1,81 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package de.vawi.kuechenchefApp.speiseplan;
 
-import de.vawi.kuechenchefApp.IntegrationTest;
-import de.vawi.kuechenchefApp.dateien.Datei;
-import de.vawi.kuechenchefApp.dateien.DateiSchreiber;
-import java.util.ArrayList;
-import java.util.List;
+import de.vawi.kuechenchefApp.dateien.*;
+import de.vawi.kuechenchefApp.speisen.*;
+import java.io.IOException;
+import java.util.*;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.experimental.categories.Categories;
 
 /**
  *
  * @author Tatsch
  */
-@Categories(IntegrationTest.class)
 public class SpeiseplanExportTest {
-
-    private List<String> dateien = new ArrayList<>();
     
     @Test
-    public void testExportSpeiseplaene() {
-        
-        
-        
+    public void testExportSpeiseplanInDatei(){
+        Speise surfAndTurf = new DummySpeise().name("Surf and Turf").beliebtheit(1).mitZutat(DummyZutat.steaks()).mitZutat(DummyZutat.garnelen()).erstelle();
+        DummySpeiseplan dummy = new DummySpeiseplan();
+        dummy.fuerKantine(Kantine.ESSEN);
+        dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
+        dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
+        dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
+        dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
+        dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
+        Speiseplan plan = dummy.erstelle();
+        SpeiseplanExport exporter = new TetsableSpieseplanExport();
+        exporter.export(Arrays.asList(plan));
     }
     
-    class TestableExport extends SpeiseplanExport{
+    class TetsableSpieseplanExport extends SpeiseplanExport{
 
+        List<String> inhalt = new ArrayList<>();
         @Override
         protected DateiSchreiber erstelleSchreiberFuer(Speiseplan speiseplan) {
-            return super.erstelleSchreiberFuer(speiseplan);
-        }   
+            return new TestableDateiSchreiber(new Datei() {
+
+                @Override
+                public String getDateinameMitPfad() {
+                    return "speiseplan.txt";
+                }
+
+                @Override
+                public Iterator<String> iterator() {
+                    return inhalt.iterator();
+                }
+            });
+        }
     }
     
-    class TestableSchreiber extends DateiSchreiber{
+    class TestableDateiSchreiber extends DateiSchreiber{
 
-        public TestableSchreiber(Datei dateiName) {
+        public TestableDateiSchreiber(Datei dateiName) {
             super(dateiName);
         }
-
+        
         @Override
-        public void schreibe(String inhalt) {
-            dateien.add(inhalt);
-        }
+        protected DateiSchreiberManager erzeugeDatei() {
+            return new DateiSchreiberManager() {
 
-        @Override
-        protected DateiMangaer erzeugeDatei() {
-            return null;
+                @Override
+                public void openOutFile() throws IOException {
+                    
+                }
+
+                @Override
+                public void writeLine(String in_str) {
+                    System.out.println(in_str);
+                }
+
+                @Override
+                public void closeOutFile() {
+                    
+                }
+            };
         }
     }
+    
 }
+
+
