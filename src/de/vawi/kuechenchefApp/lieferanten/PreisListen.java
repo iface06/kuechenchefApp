@@ -6,11 +6,11 @@ import java.util.*;
 
 class PreisListen implements Iterable<PreisListe>{
 
-    private static final String ORDNER_PREISLISTEN = "importDatein";
+    
     private List<PreisListe> preisListen = new ArrayList<>();
     
-    void leseDateien() {
-        File preisListenOrdner = oeffneOrdner();
+    void leseDateien(String ordner) {
+        File preisListenOrdner = oeffneOrdner(ordner);
         List<String> dateiNamen = leseDateiNamenAusOrdner(preisListenOrdner);
         for (String dateiName : dateiNamen) {
             Datei preisliste = leseDatei(dateiName);
@@ -22,8 +22,8 @@ class PreisListen implements Iterable<PreisListe>{
         return preisListen.iterator();
     }
 
-    protected File oeffneOrdner() {
-        File preisListenOrdner = new File(ORDNER_PREISLISTEN);
+    protected File oeffneOrdner(String ordner) {
+        File preisListenOrdner = new File(ordner);
         return preisListenOrdner;
     }
 

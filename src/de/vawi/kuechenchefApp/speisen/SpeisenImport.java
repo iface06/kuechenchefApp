@@ -18,6 +18,13 @@ public class SpeisenImport
     private Datei hitliste;
     private CsvZeileSeparator separator = new CsvZeileSeparator();
     private SpeisenVerwaltung speisen = SpeisenVerwaltung.getInstanz();
+    String dateiOrdner;
+    
+    
+    // @todo Dieser Ordner muss noch irgendwo verwendet werden.
+    public SpeisenImport(String dateiOrdner) {
+        this.dateiOrdner = dateiOrdner;
+    }
     
     
     
