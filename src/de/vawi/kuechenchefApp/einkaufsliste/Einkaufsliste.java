@@ -41,6 +41,7 @@ public class Einkaufsliste implements Iterable<EinkaufslistenPosition>
         return position;
                 
     }
+    
 
     @Override
     public Iterator<EinkaufslistenPosition> iterator() {
