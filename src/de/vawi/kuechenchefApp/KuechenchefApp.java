@@ -30,7 +30,7 @@ public class KuechenchefApp
     public static void main(String[] args) throws Exception
     {
         String dateiOrdner = new DateiOrdnerSuche().dateiOrdnerSuche();
-        new SpeisenImport().importFiles();
+        new SpeisenImport(dateiOrdner).importFiles();
         new PreisListenImport(dateiOrdner).importFiles();
         
         ProzessSteuerung prozess = new ProzessSteuerung();
