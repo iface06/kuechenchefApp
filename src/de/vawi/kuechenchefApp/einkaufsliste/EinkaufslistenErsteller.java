@@ -149,6 +149,7 @@ public class EinkaufslistenErsteller
         if(angebote.get(positionsnummerneu).getGebindeGroesse() >= angebote.get(positionsnummeralt).getGebindeGroesse()) {
             // wenn mit ignorieren des neuen Lieferanten die benötigte Menge nicht mehr erreicht werden kann, muss beim alten Lieferanten aufgerundet werden
             if (benoetigteMenge > vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand())) {
+                
                 // Bestell aufgerundete Menge von altem Lieferanten
                 benoetigteMenge = 0;
             }
@@ -175,7 +176,7 @@ public class EinkaufslistenErsteller
             }
             // Wenn der Preis kleiner ist, dann bestell die abgerundete Menge vom alten Lieferanten und die aufgerundete vom Neuen
             else {
-            // Bestell abgerundete Menge von altem Lieferanten + aufgerundee Menge von neuem Lieferanten
+            // Bestell abgerundete Menge von altem Lieferanten + aufgerundete Menge von neuem Lieferanten
             benoetigteMenge = 0;
             }
         }
