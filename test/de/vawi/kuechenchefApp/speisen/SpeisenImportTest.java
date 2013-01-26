@@ -87,7 +87,7 @@ public class SpeisenImportTest {
     private void initializiereImporter() {
         Datei hitliste = new TestbareHitlisteDatei();
         Datei rezepte = new TestbareRezpeteDatei();
-        importer = new SpeisenImport();
+        importer = new SpeisenImport("ordnerName");
         importer.setHitliste(hitliste);
         importer.setRezepte(rezepte);
     }

@@ -1,8 +1,6 @@
 package de.vawi.kuechenchefApp.kostenaufstellung;
 
 import de.vawi.kuechenchefApp.einkaufsliste.*;
-import de.vawi.kuechenchefApp.lieferanten.*;
-import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import java.util.List;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -13,77 +11,61 @@ import static org.junit.Assert.*;
  */
 public class KostenaufstellungErstellerTest {
 
-    private static EinkaufslistenPosition ekPosition;
-
-    /**
-    @BeforeClass
-    public static void beforeClass() {
-        EinkaufslistenPosition ekPosition1 = erstelleDummyEKPosition();
-        EinkaufslistenPosition ekPosition2 = erstelleDummyEKPosition();
-    }
-
-  
-        Nahrungsmittel nahrungsmittel;
-        EinkaufslistenPosition ekPosition;
-
-
-    private KostenaufstellungErsteller ersteller;
+    private Einkaufsliste einkaufsliste;
+    
     @Before
-    public void before() {
-        nahrungsmittel = new Nahrungsmittel();
-        ekPosition = new EinkaufslistenPosition (nahrungsmittel);
+    public void initEinkaufsliste(){
+        einkaufsliste = erstelleEinkaufsliste(DummyEinkaufslistenPosition.eier(), DummyEinkaufslistenPosition.rinderhuefte());
     }
-
-
-
-    /**
-     * Test of berechneGesamtKosten method, of class KostenaufstellungErsteller.
-     */
+    
     @Test
     public void testBerechneGesamtKosten() {
-      
+ 
+        KostenaufstellungErsteller ersteller = new KostenaufstellungErsteller();
+        ersteller.setEinkaufsliste(einkaufsliste);
+        double gesamtkosten = ersteller.berechneGesamtKosten();
+        
+        assertEquals(850.0, gesamtkosten, 0.001);
     }
 
-    /**
-     * Test of berechneGesamtKostenProLieferant method, of class KostenaufstellungErsteller.
-     */
     @Test
-    public void testBerechneGesamtKostenProLieferant() {
-
+    public void testGruppierungNachLieferanten() {    
+        KostenaufstellungErsteller ersteller = new KostenaufstellungErsteller();
+        ersteller.setEinkaufsliste(einkaufsliste);
+        List<Kostenaufstellung> aufstellungen = ersteller.kostenaufstellungNachLieferant();
+        
+        assertEquals(2, aufstellungen.size());
+        assertEquals("Heinrich", aufstellungen.get(0).getLieferant().getName());
+        assertEquals("Otto Gourmet", aufstellungen.get(1).getLieferant().getName());
     }
-
-    /**
-     * Test of berechneEinkaufsKostenProLieferant method, of class KostenaufstellungErsteller.
-     */
+    
     @Test
     public void testBerechneEinkaufsKostenProLieferant() {
-
+        KostenaufstellungErsteller ersteller = new KostenaufstellungErsteller();
+        ersteller.setEinkaufsliste(einkaufsliste);
+        List<Kostenaufstellung> aufstellungen = ersteller.kostenaufstellungNachLieferant();
+        
+        assertEquals(2, aufstellungen.size());
+        assertEquals(500.0, aufstellungen.get(0).berechneEinkaufsKostenProLieferant(), 0.001);
+        assertEquals(300.0, aufstellungen.get(1).berechneEinkaufsKostenProLieferant(), 0.001);
     }
-
-    /**
-     * Test of berechneLieferKostenProLieferant method, of class KostenaufstellungErsteller.
-     */
+    
     @Test
     public void testBerechneLieferKostenProLieferant() {
-
+        KostenaufstellungErsteller ersteller = new KostenaufstellungErsteller();
+        ersteller.setEinkaufsliste(einkaufsliste);
+        List<Kostenaufstellung> aufstellungen = ersteller.kostenaufstellungNachLieferant();
+        
+        assertEquals(2, aufstellungen.size());
+        assertEquals(20.0, aufstellungen.get(0).berechneLieferKostenProLieferant(), 0.001);
+        assertEquals(30.0, aufstellungen.get(1).berechneLieferKostenProLieferant(), 0.001);
     }
 
-    /**
-     * Test of filtereNachLieferanten method, of class KostenaufstellungErsteller.
-     */
-    @Test
-    public void testFiltereNachLieferanten() {
-
+    private Einkaufsliste erstelleEinkaufsliste(EinkaufslistenPosition... positionen) {
+        Einkaufsliste liste = new Einkaufsliste();
+        for (EinkaufslistenPosition position : positionen) {
+            liste.hinzufügenEinkaufslistenPosition(position);            
+        }
+        return liste;
     }
-
-    /**
-     * Test of zaehleLieferantenAuf method, of class KostenaufstellungErsteller.
-     */
-    @Test
-    public void testZaehleLieferantenAuf() {
-
-    }
-
-
-    
 }
