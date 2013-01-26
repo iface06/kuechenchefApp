@@ -47,4 +47,19 @@ public class Einkaufsliste implements Iterable<EinkaufslistenPosition>
     public Iterator<EinkaufslistenPosition> iterator() {
         return positionen.iterator();
     }
+    
+    /**
+     * Gibt eine Liste an vorhandenen Lieferanten zurück
+     */
+    public void holeLieferanten() {
+    
+    }
+    
+    
+    /**
+     * Gibt eine Liste an Einkaufslistenpositionen eines bestimmten Lieferanten zurück
+     */
+    public void holeEinkaufslistenpositionenVonLieferant() {
+    
+    }
 }

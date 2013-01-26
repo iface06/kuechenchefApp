@@ -24,6 +24,7 @@ public class ZutatenKalkulator {
      * @param plan (erstellter Speiseplan)
      * @return 
      */
+    
     public Map<Nahrungsmittel, Double> berechneGesamtMengen(Speiseplan plan) {
         for (Tag tag : plan) {
             berechneSpeise(tag.getBeliebtesteSpeise(), plan.getKantine().berechneAnzahlFuerBeliebtestesGericht());
@@ -31,7 +32,6 @@ public class ZutatenKalkulator {
             berechneSpeise(tag.getDrittbeliebtesteSpeise(), plan.getKantine().berechneAnzahlFuerDrittBeliebtestesGericht());
         }
         return mengen;
-
     }
 
     private void berechneSpeise(Speise speise, int anzahlGerichte) {
