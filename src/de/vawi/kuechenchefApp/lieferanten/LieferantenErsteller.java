@@ -19,8 +19,8 @@ class LieferantenErsteller {
      * Diese Methode bestimmt, ob ein Lieferant als Großhändler, oder als Bauer
      * angelegt wird.
      *
-     * @param lieferantenZellen Die Zelle, aus der die Parameter für die
-     * Lieferanten ausgelesen werden.
+     * @param lieferantenZellen Die Zellen, aus der die Parameter für die
+     * Lieferanten ausgelesen werden (sprich: die erste Zeile der Preisliste).
      * @return Gibt den typisierten Lieferanten mit Name und dem Lieferkosensatz
      * bzw. Entfernung wider.
      * @throws de.vawi.kuechenchefApp.dateien.Parse.FehlerBeimParsen Wird

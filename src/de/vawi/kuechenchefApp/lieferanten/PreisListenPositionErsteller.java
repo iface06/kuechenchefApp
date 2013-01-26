@@ -53,7 +53,7 @@ class PreisListenPositionErsteller {
      * n der Preisliste) in ihre Abschnitte, die durch Kommata getrennt sind.
      *
      * @param preisListenPositionsZeile Eine Zeile der Preisliste, die nicht die
-     * Lieferanten-Zeile ist.
+     * Lieferanten-Zeile ist (Zeilen 2 bis n der Liste).
      * @return Gibt die einzelnen Abschnitte der Zeile wider.
      */
     private List<String> separiereZeile(String preisListenPositionsZeile) {
