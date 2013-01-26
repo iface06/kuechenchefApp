@@ -52,6 +52,7 @@ public class Einkaufsliste implements Iterable<EinkaufslistenPosition>
      * Gibt eine Liste an vorhandenen Lieferanten zurück
      */
     public void holeLieferanten() {
+    // List<Lieferant> lieferanten = new ArrayList<Lieferant>;
     
     }
     

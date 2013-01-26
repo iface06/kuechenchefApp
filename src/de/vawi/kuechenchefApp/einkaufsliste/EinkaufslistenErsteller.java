@@ -56,7 +56,7 @@ public class EinkaufslistenErsteller
             double benoetigteMenge = position.getMenge();
             // vorhandene Menge wird benoetigt, um zu prüfen, ob restliche Lieferanten genug auf Lager haben, falls bei einem Lieferanten nicht das komplette Angebot bestellt wird
             double vorhandeneMenge = position.getNahrungsmittel().getVerfuegbareGesamtMenge();
-            double bestellMenge = 0;
+            double bestellMenge;
             //Positionsnummer in der Angebotsliste, wird hochgezählt
             int positionsnummer = 0;
             // laufe bis benotigteMenge gleich 0 ist
