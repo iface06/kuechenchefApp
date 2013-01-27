@@ -191,15 +191,3 @@ public class EinkaufslistenErsteller
     }
 
 }
-
-    /*/
-    private void ueberpruefeLieferkosten() {
-    // hole Liste von Einkaufslistenpositionen des Lieferanten mit den höchsten Lieferkosten / Artikel
-        // diese Methode muss in Einkaufsliste hinzugefügt werden
-        // wird auch vom Drucker verwendet
-    // Bei Bauern: Versuche andere Lieferanten zu finden, höhere Preise dürfen gesparte Lieferkosten nicht überschreiten, außerdem muss für jedes
-    // Nahrungsmittel ein anderer Lieferant gefunden werden, sonst doch alles beim Bauern
-    
-    // Bei Großlieferanten: Finde anderen Lieferanten, vergleiche höheren Preis mit Ersparnis bei Lieferkosten
-    } 
-    */
