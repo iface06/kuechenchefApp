@@ -22,7 +22,7 @@ public class ZutatenKalkulator {
      * Auf Basis eines Speiseplans werden in dieser Methode für jede angebotene Speise die Anzahl benötigter Gerichte berechnet.
      * Diese Berechnung erfolgt auf Grundlage der Beliebtheit und der jeweiligen Anzahl der Mitarbeiter einer Kantine.
      * @param plan (erstellter Speiseplan)
-     * @return 
+     * @return benötigte Mengen
      */
     
     public Map<Nahrungsmittel, Double> berechneGesamtMengen(Speiseplan plan) {
