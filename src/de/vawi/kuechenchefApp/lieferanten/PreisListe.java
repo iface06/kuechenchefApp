@@ -5,7 +5,10 @@ package de.vawi.kuechenchefApp.lieferanten;
 import de.vawi.kuechenchefApp.dateien.Datei;
 import java.util.Iterator;
 
-
+/**
+ * 
+ * @author Sonja
+ */
 class PreisListe implements Datei{
     
     private Datei datei;

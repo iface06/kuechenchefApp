@@ -4,6 +4,7 @@ import de.vawi.kuechenchefApp.dateien.CsvZeileSeparator;
 import de.vawi.kuechenchefApp.dateien.Datei;
 import de.vawi.kuechenchefApp.dateien.DateiLeser;
 import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
+import java.io.File;
 import java.util.*;
 /**
  * Importiert die Dateien rezepte.csv und hitliste.csv aus dem Ordner "Rezepte". 
@@ -25,8 +26,7 @@ public class SpeisenImport
     public SpeisenImport(String dateiOrdner) {
         this.dateiOrdner = dateiOrdner;
     }
-    
-    
+   
     
     /**
      * Importiert die Dateien rezepte.csv und hitliste.csv aus dem Ordner "Rezepte". 
@@ -41,7 +41,6 @@ public class SpeisenImport
      * @return     Gibt die erstellte RezepteListe gekapselt in der Speisenverwaltung zurück. 
      */
     public void importFiles() {
-        
         fuegeSpeisenVonHitlisteInSpeisenverwaltungEin();
         fuegeZutatenZuSpeisenAusRezepteDateiHinzu();
         sortiereZutatenNachKategorie();
@@ -90,4 +89,6 @@ public class SpeisenImport
             });
         }
     }
+    
+
 }
