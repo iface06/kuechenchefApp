@@ -2,7 +2,7 @@ package de.vawi.kuechenchefApp.nahrungsmittel;
 
 
 /**
- * Mögliche Kategorien die einem Nahrungsmittel zugeordnet sein können.
+ * Mögliche Kategorien denen ein Nahrungsmittel zugeordnet sein kann.
  * 
  * @author Struebe
  * @version 30.12.2012
@@ -19,7 +19,13 @@ public enum SpeisenUndNahrungsmittelKategorie{
     public String getAbkuerzung() {
         return abkuerzung;
     }
-    
+    /**
+     * Diese Methode übersetzt die in der Datei angegebene Abkürzung einer
+     * Speisen- und Nahrungsmittelkategorie in eine vom Programm vorgegebene Einheit.
+     *
+     * @param abkuerzung die Abkürzung, die aus der Datei gelesen wird.
+     * @return Gibt die vom Programm vorgegebene Kategorie wider.
+     */
     public static SpeisenUndNahrungsmittelKategorie nachAbkuerzung(String abkuerzung){
         for (SpeisenUndNahrungsmittelKategorie kategorie : values()) {
             if(kategorie.getAbkuerzung().equals(abkuerzung)){

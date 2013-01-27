@@ -23,8 +23,12 @@ public class EinkaufslistenExport extends DateiExport<Einkaufsliste>
     public void export(Einkaufsliste exportant){
     }
     
-    // Hole Liste ein Nahrungsmitteln eines Lieferanten
-    // Erstelle Tabelle
-    // Exportiere Tabelle
+
+    // Hole Liste an Lieferanten
+    // Für jeden Lieferanten hole Nahrungsmittel
+    // Liste an Drucker
+    // String zurück vom Drucker
+    // String in Datei schreiben
+
     
 }

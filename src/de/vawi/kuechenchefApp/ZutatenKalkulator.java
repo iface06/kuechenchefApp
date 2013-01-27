@@ -22,8 +22,9 @@ public class ZutatenKalkulator {
      * Auf Basis eines Speiseplans werden in dieser Methode für jede angebotene Speise die Anzahl benötigter Gerichte berechnet.
      * Diese Berechnung erfolgt auf Grundlage der Beliebtheit und der jeweiligen Anzahl der Mitarbeiter einer Kantine.
      * @param plan (erstellter Speiseplan)
-     * @return 
+     * @return benötigte Mengen
      */
+    
     public Map<Nahrungsmittel, Double> berechneGesamtMengen(Speiseplan plan) {
         for (Tag tag : plan) {
             berechneSpeise(tag.getBeliebtesteSpeise(), plan.getKantine().berechneAnzahlFuerBeliebtestesGericht());
@@ -31,7 +32,6 @@ public class ZutatenKalkulator {
             berechneSpeise(tag.getDrittbeliebtesteSpeise(), plan.getKantine().berechneAnzahlFuerDrittBeliebtestesGericht());
         }
         return mengen;
-
     }
 
     private void berechneSpeise(Speise speise, int anzahlGerichte) {

@@ -3,6 +3,11 @@ package de.vawi.kuechenchefApp.kostenaufstellung;
 import de.vawi.kuechenchefApp.nahrungsmittel.Einheit;
 import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 
+/**
+ * Während des Programmierens ist aufgefallen, dass diese Klasse nicht benötigt wird.
+ * 
+ */
+
 
 /**
  * Enthält die Gesamtkosten zu einem Nahrungsmittel über eine Planungsperiode von 3 Wochen.
@@ -10,6 +15,8 @@ import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
  * @author Struebe 
  * @version (a version number or a date)
  */
+
+/*
 public class KostenPosition
 {
     private Nahrungsmittel nahrungsmittel;
@@ -23,6 +30,8 @@ public class KostenPosition
     /**
      * @return     Gesamtkosten eines Nahrungsmittels
      */
+
+/*
     public double getKosten() {
         return kosten;
     }
@@ -32,6 +41,8 @@ public class KostenPosition
      * 
      * @param  Gesamtkosten eines Nahrungsmittels.
      */
+
+/*
     public void plusKosten(double kosten) {
         this.kosten += kosten;
     }
@@ -39,6 +50,8 @@ public class KostenPosition
     /**
      * @return     Gesamtmenge eines Nahrungsmittel
      */
+
+/*
     public double getMenge() {
         return menge;
     }
@@ -48,6 +61,8 @@ public class KostenPosition
      * 
      * @param  menge des Nahrungsmittels
      */
+
+/*
     public void plusMenge(double menge) {
         this.menge += menge;
     }
@@ -55,6 +70,8 @@ public class KostenPosition
     /**
      * @return     Bezeichnung des Nahrungsmittels
      */
+
+/*
     public String getNahrungsmittel() {
         return this.nahrungsmittel.getName();
     }
@@ -62,7 +79,10 @@ public class KostenPosition
      /**
      * @return     Einheit zur Menge des Nahrungsmittels
      */
+
+/*
     public Einheit getEinheit(){
         return this.nahrungsmittel.getEinheit();
         }
 }
+*/

@@ -4,7 +4,7 @@ import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 
 /**
  * Diese Klasse stellt eine Position in der Preisliste des Lieferanten dar;
- * entspricht einer Zeile auf der eingelesenen Preisliste.
+ * Eine Preislistenposition entspricht einer Zeile auf der eingelesenen Preisliste.
  *
  * @author Struebe
  * @version 25.01.2013
@@ -18,14 +18,14 @@ public class PreisListenPosition {
     private Lieferant lieferant;
 
     /**
-     * @return Lieferant der Position
+     * @return Lieferant der Preislisten-Position
      */
     public Lieferant getLieferant() {
         return lieferant;
     }
 
     /**
-     * @param lieferant Lieferant der Position
+     * @param lieferant Lieferant der Preislisten-Position
      */
     public void setLieferant(Lieferant lieferant) {
         this.lieferant = lieferant;
