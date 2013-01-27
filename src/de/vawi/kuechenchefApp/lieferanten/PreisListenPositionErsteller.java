@@ -10,7 +10,7 @@ import java.util.*;
  * Zeilen der Preisliste.
  *
  * @author Struebe
- * @version 30.12.2012
+ * @version 27.01.2013
  */
 class PreisListenPositionErsteller {
 
@@ -91,49 +91,89 @@ class PreisListenPositionErsteller {
         return preisListenPosition;
     }
 
+    /**
+     * Wandelt Strings in Doubles um.
+     *
+     * @param value String, der in einen double-Wert umgewandelt werden soll.
+     * @return double-Wert
+     */
     private double parseStringToDouble(String value) {
         return Parse.toDouble(value);
     }
 
+    /**
+     * Wandelt Strings in Integers um.
+     *
+     * @param value String, der in einen integer-Wert umgewandelt werden soll.
+     * @return int-Wert
+     */
     private int parseStringToInteger(String value) {
         return Parse.toInteger(value);
     }
-/**
- * Diese Methode 
- * @param zellen
- * @return 
- */
-    private Nahrungsmittel findeNahrungsmittel(List<String> zellen) {
-        Nahrungsmittel nahrungsmittel = nahrungsmittelVerwaltung.findeDurchName(zellen.get(ABSCHNITT_NAHRUNGSMITTELNAME));
+
+    /**
+     * Diese Methode überprüft, ob das Nahrungsmittel, das in einer
+     * Preislisten-Position aufgelistet wird, bereits existiert. Falls nicht,
+     * wird es neu angelegt und ausgegeben.
+     *
+     * @param abschnitte Auflistung der Abschnitte einer Preislistenposition.
+     * @return Gibt das Nahrungsmittel wider, das entweder gefunden, oder neu
+     * angelegt wurde.
+     */
+    private Nahrungsmittel findeNahrungsmittel(List<String> abschnitte) {
+        Nahrungsmittel nahrungsmittel = nahrungsmittelVerwaltung.findeDurchName(abschnitte.get(ABSCHNITT_NAHRUNGSMITTELNAME));
         if (nahrungsmittel == null) {
-            nahrungsmittel = erstelleNeuesNahrungsmittel(zellen);
+            nahrungsmittel = erstelleNeuesNahrungsmittel(abschnitte);
             nahrungsmittelVerwaltung.fuegeHinzu(nahrungsmittel);
         }
 
         return nahrungsmittel;
     }
 
-    private Nahrungsmittel erstelleNeuesNahrungsmittel(List<String> zellen) {
+    /**
+     * Diese Methode erstellt ein neues Nahrungsmittel anhand der in der Liste
+     * angegebenen Auflistung von Abschnitten einer Preislistenposition.
+     *
+     * @param abschnitte Auflistung der Abschnitte einer PreislitenPosition.
+     * @return Gibt das neue erstellte Nahrungsmittel wider.
+     */
+    private Nahrungsmittel erstelleNeuesNahrungsmittel(List<String> abschnitte) {
         NahrungsmittelErsteller ersteller = new NahrungsmittelErsteller();
-        Nahrungsmittel mittel = ersteller.erstelle(zellen);
-        return mittel;
+        Nahrungsmittel nahrungsmittel = ersteller.erstelle(abschnitte);
+        return nahrungsmittel;
     }
 
-    private Nahrungsmittel addiereVerfuegbareMenge(List<String> zellen, int vorratsBestand, int gebindeGroesse) {
+    /**
+     * Diese Methode sucht aus der Preislistenposition das Nahrungsmittel und
+     * berechnet die verfügbare Menge desselben, indem sie die verfügbare Menge
+     * der einzelnen Lieferanten aufkummuliert.
+     *
+     * @param abschnitte Auflistung der Abschnitte einer PreislitenPosition.
+     * @param vorratsBestand der Vorratsbestand eines Nahrungsmittels bei einem
+     * Lieferanten.
+     * @param gebindeGroesse die Gebindegröße, in der das Nahrungsmittel beim
+     * Lieferanten verkauft wird.
+     * @return Gibt da Nahrungsmittel wider, dessen Menge aufkummuliert wurde.
+     */
+    private Nahrungsmittel addiereVerfuegbareMenge(List<String> abschnitte, int vorratsBestand, int gebindeGroesse) {
 
-        Nahrungsmittel nahrungsmittel = nahrungsmittelVerwaltung.findeDurchName(zellen.get(ABSCHNITT_NAHRUNGSMITTELNAME));
+        Nahrungsmittel nahrungsmittel = nahrungsmittelVerwaltung.findeDurchName(abschnitte.get(ABSCHNITT_NAHRUNGSMITTELNAME));
         nahrungsmittel.setVerfuegbareGesamtMenge(nahrungsmittel.getVerfuegbareGesamtMenge() + (vorratsBestand * gebindeGroesse));
         return nahrungsmittel;
     }
 
+    /**
+     * Gibt eine RuntimeException aus, wenn ein Fehler beim Erstellen einer
+     * Preislisten Position aufgetreten ist.
+     */
     public static class FehlerBeimErstellenEinerPreislistenPosition extends RuntimeException {
 
         Lieferant lieferant;
-        List<String> zelle;
+        List<String> abschnitte;
 
-        public FehlerBeimErstellenEinerPreislistenPosition(Lieferant lieferant, List<String> zelle) {
+        public FehlerBeimErstellenEinerPreislistenPosition(Lieferant lieferant, List<String> abschnitte) {
             this.lieferant = lieferant;
-            this.zelle = zelle;
+            this.abschnitte = abschnitte;
         }
     }
 }

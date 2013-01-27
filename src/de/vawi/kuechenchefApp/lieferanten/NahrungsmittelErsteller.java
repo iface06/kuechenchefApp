@@ -21,11 +21,11 @@ class NahrungsmittelErsteller {
      * Diese Methode erstellt ein Objekt vom Typ Nahrungsmittel aus den
      * einzelnen Positionen auf einer Liste von Preislisten-Positionen.
      *
-     * @param preisListenPosition eine Liste an Preislisten-Positionen.
+     * @param preisListenPositionen eine Liste an Preislisten-Positionen.
      * @return Gibt ein neu erstelltes Objekt vom Typ Nahrungsmittel wider.
      */
-    public Nahrungsmittel erstelle(List<String> preisListenPosition) {
-        Nahrungsmittel nahrungsmittel = erstelleNahrungsmittel(preisListenPosition);
+    public Nahrungsmittel erstelle(List<String> preisListenPositionen) {
+        Nahrungsmittel nahrungsmittel = erstelleNahrungsmittel(preisListenPositionen);
         return nahrungsmittel;
     }
 

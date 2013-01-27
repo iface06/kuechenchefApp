@@ -32,12 +32,24 @@ public class Kostenaufstellung {
         this.einkaufslistenPositionen = einkaufslistenPositionen;
     }
 
+    /**
+     * Diese Methode berechnet die Gesamtkosten (= Einkaufskoten + Lieferkosten)
+     * eines Leiferanten.
+     *
+     * @return Gibt die Gesamtkosten für einen Lieferanten wider.
+     */
     public double berechneGesamtKostenProLieferant() {
         double gesamtKostenProLieferant = 0.0;
         gesamtKostenProLieferant = berechneEinkaufsKostenProLieferant() + berechneLieferKostenProLieferant();
         return gesamtKostenProLieferant;
     }
 
+    /**
+     * Diese Methode berechnet die Einkaufskosten (= nur die Kosten für alle
+     * dort gekauften Nahrungsmittel) eines Leiferanten.
+     *
+     * @return Gibt die Einkaufskosten für einen Lieferanten wider.
+     */
     public double berechneEinkaufsKostenProLieferant() {
         double einkaufsKosten = 0.0;
 
@@ -47,6 +59,11 @@ public class Kostenaufstellung {
         return einkaufsKosten;
     }
 
+    /**
+     * Diese Methode berechnet die Lieferkosten eines Lieferanten.
+     *
+     * @return Gibt die Lieferkosten eines Lieferanten wider.
+     */
     public double berechneLieferKostenProLieferant() {
         double lieferKosten = 0.0;
         lieferKosten = lieferant.berechneLieferkosten(berechneEinkaufsKostenProLieferant());
