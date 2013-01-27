@@ -29,6 +29,10 @@ public class LieferantenVerwaltung {
         }
         return INSTANZ;
     }
+    
+    public int anzahlPreisListenPositionen(){
+        return preisListenPositionen.size();
+    }
 
     /**
      * Diese Methode stellt eine Liste an Preislistenpositionen eines
@@ -71,4 +75,6 @@ public class LieferantenVerwaltung {
     private void sortierePreisListenPositionenNachPreis(List<PreisListenPosition> positionen) {
         Collections.sort(positionen, new VergleichePreisListenPositionNachPreisProEinheit());
     }
+    
+    
 }

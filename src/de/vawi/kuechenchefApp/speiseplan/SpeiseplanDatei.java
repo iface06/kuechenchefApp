@@ -20,7 +20,7 @@ public class SpeiseplanDatei implements Datei{
     }
     
     @Override
-    public String getDateinameMitPfad() {
+    public String getDateiname() {
         return "speiseplan_" + kantine.name() + ".txt";
     }
 

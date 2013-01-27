@@ -18,9 +18,9 @@ public class EinkaufslistenErstellerTest {
 
     @BeforeClass
     public static void beforeClass() {
-        PreisListenPosition kartoffelAngebotA = createNahrungsmittel("Kartoffeln", 5.0, 1000.0, "Müller", 10000);
-        PreisListenPosition kartoffelAngebotB = createNahrungsmittel("Kartoffeln", 10.0, 1000.0, "Meier", 5000);
-        PreisListenPosition moehrenAngebot = createNahrungsmittel("Möhren", 1.0, 500.0, "Meier", 300);
+        PreisListenPosition kartoffelAngebotA = new DummyPreisListenPositionErsteller().nahrungsmittel("Kartoffeln", Einheit.GRAMM).lieferant("Müller", DummyPreisListenPositionErsteller.BAUER).angebot(5.0, 1000.0, 10000).erstelle();
+        PreisListenPosition kartoffelAngebotB = new DummyPreisListenPositionErsteller().nahrungsmittel("Kartoffeln", Einheit.GRAMM).lieferant("Meier", DummyPreisListenPositionErsteller.BAUER).angebot(10.0, 1000.0, 5000).erstelle();
+        PreisListenPosition moehrenAngebot = new DummyPreisListenPositionErsteller().nahrungsmittel("Möhren", Einheit.GRAMM).lieferant("Meier", DummyPreisListenPositionErsteller.BAUER).angebot(1.0, 500.0, 300).erstelle();
         verwaltung = LieferantenVerwaltung.getInstanz();
         verwaltung.hinzufuegenPreisListenPosition(Arrays.asList(kartoffelAngebotA, kartoffelAngebotB, moehrenAngebot));
     }
@@ -70,7 +70,7 @@ public class EinkaufslistenErstellerTest {
     
 
     @Test
-    public void testFindeGünstigsterGesamtPreisFuerEinkaufslistenposition() {
+    public void testFindeGünstigstenGesamtPreisFuerEinkaufslistenposition() {
         Einkaufsliste liste = ersteller.erzeuge();
         assertEquals(3850.0, liste.getPositionen().get(0).getPreis(), 0.001);
     }

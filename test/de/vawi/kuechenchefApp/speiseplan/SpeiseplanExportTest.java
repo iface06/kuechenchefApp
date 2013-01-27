@@ -36,7 +36,7 @@ public class SpeiseplanExportTest {
             return new TestableDateiSchreiber(new Datei() {
 
                 @Override
-                public String getDateinameMitPfad() {
+                public String getDateiname() {
                     return "speiseplan.txt";
                 }
 

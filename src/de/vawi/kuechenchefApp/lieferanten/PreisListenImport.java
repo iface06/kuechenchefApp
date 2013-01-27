@@ -111,8 +111,12 @@ public class PreisListenImport {
         Iterator<String> positionszeilen = preisliste.preisListenPositionenIterator();
         while (positionszeilen.hasNext()) {
             String zeile = positionszeilen.next();
-            PreisListenPosition position = ersteller.erstelle(zeile);
-            positionen.add(position);
+            try{
+                PreisListenPosition position = ersteller.erstelle(zeile);
+                positionen.add(position);                
+            } catch (PreisListenPositionErsteller.FehlerBeimErstellenEinerPreislistenPosition ex){
+                handleZeileKonnteNichtImportiertWerden(lieferant, zeile);
+            }
         }
 
         return positionen;
@@ -144,4 +148,9 @@ public class PreisListenImport {
         Lieferant lieferant = erstelleLieferantAusZellen(lieferantenZellen);
         return lieferant;
     }
+
+    protected void handleZeileKonnteNichtImportiertWerden(Lieferant lieferant, String zeile) {
+    }
+
+    
 }

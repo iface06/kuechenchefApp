@@ -23,8 +23,18 @@ public class CsvZeileSeperatorTest {
         assertEquals("", cells.get(3));
         assertEquals("5,42", cells.get(4));
         assertEquals("11", cells.get(5));
+    }
+    @Test
+    public void testZutatenZeileSeparieren() {
+        String zeile = "Kartoffeln mit Senfsauce und Ei,\"1,5\",,\"Ei\"";
+        CsvZeileSeparator seperator = new CsvZeileSeparator();
+        List<String> cells = seperator.separiere(zeile);
         
-        
+        assertEquals(4, cells.size());
+        assertEquals("Kartoffeln mit Senfsauce und Ei", cells.get(0));
+        assertEquals("1,5", cells.get(1));
+        assertEquals("", cells.get(2));
+        assertEquals("Ei", cells.get(3));
     }
 
 }

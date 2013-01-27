@@ -2,7 +2,7 @@
 
 package de.vawi.kuechenchefApp.speisen;
 
-import de.vawi.kuechenchefApp.dateien.CsvZeileSeparator;
+import de.vawi.kuechenchefApp.dateien.*;
 import de.vawi.kuechenchefApp.nahrungsmittel.*;
 import java.util.List;
 
@@ -27,7 +27,7 @@ class ZutatErsteller {
 
     private Zutat erstelleZutat(List<String> zellen) throws NumberFormatException {
         Zutat zutat = new Zutat();
-        zutat.setMenge(Integer.valueOf(zellen.get(MENGE)));
+        zutat.setMenge(Parse.toDouble(zellen.get(MENGE)));
         Nahrungsmittel nahrungsmittel = findeNahrungsmittelAusRezept(zellen);
         zutat.setNahrungsmittel(nahrungsmittel);
         return zutat;

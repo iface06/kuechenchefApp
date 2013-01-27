@@ -16,8 +16,8 @@ class PreisListe implements Datei{
     
 
     @Override
-    public String getDateinameMitPfad() {
-        return datei.getDateinameMitPfad();
+    public String getDateiname() {
+        return datei.getDateiname();
     }
 
     /**

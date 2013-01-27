@@ -75,7 +75,7 @@ public class DateiLeser {
         Datei datei = new Datei() {
 
             @Override
-            public String getDateinameMitPfad() {
+            public String getDateiname() {
                 return dateiName;
             }
 

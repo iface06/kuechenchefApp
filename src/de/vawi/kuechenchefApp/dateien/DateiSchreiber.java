@@ -38,7 +38,7 @@ public class DateiSchreiber {
     }
     
     protected DateiSchreiberManager erzeugeDatei() {
-        return new VawiDateiManager(dateiName.getDateinameMitPfad());
+        return new VawiDateiManager(dateiName.getDateiname());
     }
 
     private void oeffneDatei() {

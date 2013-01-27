@@ -60,7 +60,7 @@ public class DateiLeserTest {
         
         
         @Override
-        public String getDateinameMitPfad() {
+        public String getDateiname() {
             return pathname;
         }
 

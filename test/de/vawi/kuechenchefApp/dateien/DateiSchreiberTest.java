@@ -44,7 +44,7 @@ public class DateiSchreiberTest {
     class TestbareDatei implements Datei{
         
         @Override
-        public String getDateinameMitPfad() {
+        public String getDateiname() {
             return "testdatei";
         }   
 
