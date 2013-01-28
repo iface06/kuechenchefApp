@@ -31,7 +31,6 @@ public class EinkaufslistenErsteller {
     public Einkaufsliste erzeuge() {
         erstelleEinkaufslistePosition();
         findeGuenstigsteLieferanten();
-        // ueberpruefeLieferkosten?
         return liste;
     }
 
@@ -59,15 +58,15 @@ public class EinkaufslistenErsteller {
                 // Wenn mehr angeboten als benötigt wird, muss die Nachkommastelle beachtet werden
                 if (benoetigteAnzahlAnGebinden < angebote.get(positionsnummer).getVorratsBestand()) {
                     // Berechne Bestellmenge
-                    double differenz = benoetigteAnzahlAnGebinden - Math.floor(benoetigteAnzahlAnGebinden);
+//                    double differenz = benoetigteAnzahlAnGebinden - Math.floor(benoetigteAnzahlAnGebinden);
                     // wenn es keine Nachkommastelle gibt, dann bestell die benoetigte Menge
-                    if (differenz == 0) {
+//                    if (differenz == 0) {
                         bestellMenge = benoetigteAnzahlAnGebinden;
                         fuegeLieferantInEinkaufsliste(angebote.get(positionsnummer).getLieferant(), angebote.get(positionsnummer).getNahrungsmittel(), bestellMenge, angebote.get(positionsnummer).getPreis() * bestellMenge, position);
                         benoetigteMenge = 0.0;
-                    } else {
-                        findeLieferantenFuerDifferenz(differenz, positionsnummer, position.getNahrungsmittel(), vorhandeneMenge, benoetigteAnzahlAnGebinden, position);
-                    }
+//                    } else {
+//                        findeLieferantenFuerDifferenz(differenz, positionsnummer, position.getNahrungsmittel(), vorhandeneMenge, benoetigteAnzahlAnGebinden, position);
+//                    }
 
                 } // wenn weniger angeboten, als benoetigt wird, einfach alles bestellen, was benoetigt wird
                 else {
@@ -79,9 +78,6 @@ public class EinkaufslistenErsteller {
                 }
 
             }
-            // kann gelöscht werden! für Tests benötigt
-            position.setLieferant(angebote.get(0).getLieferant());
-            position.setPreis(3850);
         }
     }
 
