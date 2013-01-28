@@ -19,17 +19,19 @@ public class DummyLieferantenVerwaltungErsteller {
         return this;
     }
     
-    public DummyLieferantenVerwaltungErsteller kartoffeln(){
+    public DummyLieferantenVerwaltungErsteller mitKartoffeln(){
         PreisListenPosition kartoffelAngebotA = new DummyPreisListenPositionErsteller().nahrungsmittel("Kartoffeln", Einheit.GRAMM).lieferant("Müller", DummyPreisListenPositionErsteller.GROSSHAENDLER).angebot(5.0, 1000.0, 10000).erstelle();
-        PreisListenPosition kartoffelAngebotB = new DummyPreisListenPositionErsteller().nahrungsmittel("Kartoffeln", Einheit.GRAMM).lieferant("Meier", DummyPreisListenPositionErsteller.GROSSHAENDLER).angebot(10.0, 1000.0, 5000).erstelle();
+        PreisListenPosition kartoffelAngebotB = new DummyPreisListenPositionErsteller().nahrungsmittel("Kartoffeln", Einheit.GRAMM).lieferant("Meier", DummyPreisListenPositionErsteller.BAUER).angebot(10.0, 1000.0, 5000).erstelle();
         verwaltung.hinzufuegenPreisListenPosition(Arrays.asList(kartoffelAngebotA, kartoffelAngebotB));
         return this;
         
     }
     
-    public DummyLieferantenVerwaltungErsteller moehren(){
-        PreisListenPosition moehrenAngebot = new DummyPreisListenPositionErsteller().nahrungsmittel("Möhren", Einheit.STUECK).lieferant("Meier", DummyPreisListenPositionErsteller.BAUER).angebot(1.0, 500.0, 300).erstelle();
-        verwaltung.hinzufuegenPreisListenPosition(Arrays.asList(moehrenAngebot));
+    public DummyLieferantenVerwaltungErsteller mitMoehren(){
+        PreisListenPosition moehrenAngebotA = new DummyPreisListenPositionErsteller().nahrungsmittel("Möhren", Einheit.STUECK).lieferant("Meier", DummyPreisListenPositionErsteller.BAUER).angebot(1.0, 500.0, 300).erstelle();
+        PreisListenPosition moehrenAngebotB = new DummyPreisListenPositionErsteller().nahrungsmittel("Möhren", Einheit.STUECK).lieferant("Müller", DummyPreisListenPositionErsteller.GROSSHAENDLER).angebot(1.5, 1000.0, 100).erstelle();
+        verwaltung.hinzufuegenPreisListenPosition(Arrays.asList(moehrenAngebotA));
+        verwaltung.hinzufuegenPreisListenPosition(Arrays.asList(moehrenAngebotB));
         return this;
         
     }

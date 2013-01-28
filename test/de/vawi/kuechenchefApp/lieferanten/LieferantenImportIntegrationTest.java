@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 import org.junit.experimental.categories.Category;
 
 
+
 @Category(IntegrationTest.class)
 public class LieferantenImportIntegrationTest {
 

@@ -18,11 +18,7 @@ public class EinkaufslistenErstellerTest {
 
     @BeforeClass
     public static void beforeClass() {
-        PreisListenPosition kartoffelAngebotA = createNahrungsmittel("Kartoffeln", 5.0, 1000.0, "Müller", 10000);
-        PreisListenPosition kartoffelAngebotB = createNahrungsmittel("Kartoffeln", 10.0, 1000.0, "Meier", 5000);
-        PreisListenPosition moehrenAngebot = createNahrungsmittel("Möhren", 1.0, 500.0, "Meier", 300);
-        verwaltung = LieferantenVerwaltung.getInstanz();
-        verwaltung.hinzufuegenPreisListenPosition(Arrays.asList(kartoffelAngebotA, kartoffelAngebotB, moehrenAngebot));
+        verwaltung = new DummyLieferantenVerwaltungErsteller().mitKartoffeln().mitMoehren().erstelle();   
     }
     private EinkaufslistenErsteller ersteller;
     
@@ -124,51 +120,6 @@ public class EinkaufslistenErstellerTest {
     }
 
     private Speise erzeugeSpeise() {
-        Speise speise = new Speise();
-        Zutat zutat = erzeugeZutat();
-        speise.addZutat(zutat);
-        return speise;
+        return new DummySpeise().mit("Kartoffeln", 1).mitZutat("Kartoffeln", Einheit.STUECK, 1000.0, 100000).erstelle();
     }
-
-    private Zutat erzeugeZutat() {
-        Zutat zutat = new Zutat();
-        Nahrungsmittel nahrungsmittel = erzeugeNahrungsmittel(zutat);
-        zutat.setMenge(1000.0);
-        zutat.setNahrungsmittel(nahrungsmittel);
-        return zutat;
-    }
-
-    /*/ private Zutat berechneBenoetigteMenge() {
-        
-        
-     Zutat zutat = new Zutat();
-     Nahrungsmittel nahrungsmittel = erzeugeNahrungsmittel(zutat);
-     zutat.setMenge(1000.0);
-     zutat.setNahrungsmittel(nahrungsmittel);
-     return null;
-     }
-     //*/
-    private Nahrungsmittel erzeugeNahrungsmittel(Zutat zutat) {
-        Nahrungsmittel nahrungsmittel = new Nahrungsmittel();
-        nahrungsmittel.setName("Kartoffeln");
-        nahrungsmittel.setEinheit(Einheit.STUECK);
-        return nahrungsmittel;
-    }
-
-    private static PreisListenPosition createNahrungsmittel(String name, double preis, double gebindeGroesse, String lieferantenName, int vorratsMenge) {
-        PreisListenPosition position = new PreisListenPosition();
-        Nahrungsmittel kartoffel = new Nahrungsmittel();
-        kartoffel.setName(name);
-        position.setNahrungsmittel(kartoffel);
-        position.setGebindeGroesse(gebindeGroesse);
-        position.setPreis(preis);
-        Lieferant lieferant = new Grosshaendler();
-        lieferant.setName(lieferantenName);
-        position.setLieferant(lieferant);
-        position.setVorratsBestand(vorratsMenge);
-        return position;
-        
-    }
-
-    
 }
