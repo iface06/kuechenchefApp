@@ -24,7 +24,7 @@ public class DummyEinkaufslistenPosition {
     }
 
     public DummyEinkaufslistenPosition menge(double menge) {
-        position.setMenge(menge);
+        position.setAnzahlGebinde(menge);
         return this;
     }
 
