@@ -1,49 +1,31 @@
 package de.vawi.kuechenchefApp.einkaufsliste;
 
 import de.vawi.kuechenchefApp.export.AsciiTable;
+import de.vawi.kuechenchefApp.lieferanten.Lieferant;
+import java.util.List;
 
 /**
- * 
+ *
  * @author Matthias
  */
 public class EinkaufslisteDrucker {
-    
+
     private String ausdruck = new String();
-    
-    String drucke(Einkaufsliste einkaufslistejelieferant) {
-        ausdruck += "Einkaufsliste fuer Lieferanten X";
+
+    String drucke(Lieferant lieferant, List<EinkaufslistenPosition> positionen) {
+        ausdruck += "Einkaufsliste fuer Lieferanten " + lieferant.getName();
         ausdruck += "\n\n";
-        ausdruck += einkaufsListe(einkaufslistejelieferant);
-        
+        ausdruck += druckeEinkaufslisteZuLieferanten(positionen);
+
         return ausdruck;
     }
-    
-        private String einkaufsListe(Einkaufsliste einkaufsListe){
-        String tabelle = new String();
-            //tabelle += einkaufslisteFuerEinenLieferanten(einkaufsListe);
-            tabelle += "\n\n\n";
 
-        return tabelle;
-        }
-        
-    /*/    
-    private String einkaufslisteFuerEinenLieferanten(Einkaufsliste einkaufsListe) {
+    private String druckeEinkaufslisteZuLieferanten(List<EinkaufslistenPosition> positionen) {
         AsciiTable tabelle = new AsciiTable();
-        Row headRow = tabelle.row();
-        Row variante1 = tabelle.row();
-        Row variante2 = tabelle.row();
-        Row variante3 = tabelle.row();
-        Iterator<Tag> tage = plan.iterator();
-        int anzahlTage = 1;
-        while(tage.hasNext() && anzahlTage <= periode.getAnzahlTageProWoche()){
-            Tag tag = tage.next();
-            headRow.cell("Tag " + anzahlTage);
-            variante1.cell(tag.getBeliebtesteSpeise().getName());
-            variante2.cell(tag.getZweitbeliebtesteSpeise().getName());
-            variante3.cell(tag.getDrittbeliebtesteSpeise().getName());
-            anzahlTage++;
+        tabelle.row().cell("Nahrungsmittel").cell("Menge (in Gebinde)").cell("Preis (Euro)");
+        for (EinkaufslistenPosition position : positionen) {
+            tabelle.row().cell(position.getName()).cell(String.valueOf(position.getMenge())).cell(String.valueOf(position.getPreis()));
         }
         return tabelle.writeTable();
     }
-     /*/   
 }
