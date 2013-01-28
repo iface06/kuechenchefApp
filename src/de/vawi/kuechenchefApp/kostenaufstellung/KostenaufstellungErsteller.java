@@ -1,12 +1,8 @@
 package de.vawi.kuechenchefApp.kostenaufstellung;
 
-import de.vawi.kuechenchefApp.einkaufsliste.Einkaufsliste;
-import de.vawi.kuechenchefApp.einkaufsliste.EinkaufslistenPosition;
+import de.vawi.kuechenchefApp.einkaufsliste.*;
 import de.vawi.kuechenchefApp.lieferanten.Lieferant;
-import de.vawi.kuechenchefApp.lieferanten.PreisListenPosition;
-import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Erstellt anhand einer Einkaufsliste die entsprechende Kostenaufstellung.
@@ -17,6 +13,7 @@ import java.util.List;
 public class KostenaufstellungErsteller {
 
     private Einkaufsliste liste;
+    private KostenUebersicht uebersicht;
 
     /**
      * Setzt die Einkaufsliste. Diese ist die Basis für die Berechnung der
@@ -28,19 +25,29 @@ public class KostenaufstellungErsteller {
         this.liste = liste;
     }
 
+    public KostenUebersicht erstelle(){
+        uebersicht = new KostenUebersicht();
+        kostenaufstellungNachLieferant();
+        berechneGesamtKosten();
+        return uebersicht;
+    }
+    
     /**
      * Diese Methode berchnet die Gesamtkosten, indem sie die Kosten jedes
      * Lieferanten kumuliert.
      *
      * @return Gibt den Wert der Gesamtkosten wider.
      */
-    public double berechneGesamtKosten() {
+    public void berechneGesamtKosten() {
         double gesamtKosten = 0.0;
-        List<Kostenaufstellung> kostenaufstellungNachLieferant = kostenaufstellungNachLieferant();
-        for (Kostenaufstellung kostenaufstellung : kostenaufstellungNachLieferant) {
+        double lieferKosten = 0.0;
+        for (Kostenaufstellung kostenaufstellung : uebersicht.getKostenaufstellungenProLieferant()) {
             gesamtKosten += kostenaufstellung.berechneGesamtKostenProLieferant();
+            lieferKosten += kostenaufstellung.berechneLieferKostenProLieferant();
+            
         }
-        return gesamtKosten;
+        uebersicht.setGesamtKosten(gesamtKosten);
+        uebersicht.setLieferKostenGesamt(lieferKosten);
     }
 
     /**
@@ -70,7 +77,7 @@ public class KostenaufstellungErsteller {
      * @return Gibt eine Kostenaufstellung, die nach Lieferant sortiert ist
      * wider.
      */
-    public List<Kostenaufstellung> kostenaufstellungNachLieferant() {
+    private void kostenaufstellungNachLieferant() {
         List<Kostenaufstellung> kostenaufstellungNachLieferant = new ArrayList<>();
         List<Lieferant> alleBeteiligtenLieferanten = zaehleLieferantenAuf();
         int j = alleBeteiligtenLieferanten.size();
@@ -79,7 +86,7 @@ public class KostenaufstellungErsteller {
             Kostenaufstellung temporäreSpeicherverschwendendeKostenaufstellungDamitSonjaEsVersteht = filtereNachLieferanten(lieferant);
             kostenaufstellungNachLieferant.add(temporäreSpeicherverschwendendeKostenaufstellungDamitSonjaEsVersteht);
         }
-        return kostenaufstellungNachLieferant;
+        uebersicht.setKostenaufstellungenProLieferant(kostenaufstellungNachLieferant);   
     }
 
     /**

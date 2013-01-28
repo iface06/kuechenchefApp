@@ -10,7 +10,7 @@ import de.vawi.kuechenchefApp.kostenaufstellung.Kostenaufstellung;
  * @author Lepping 
  * @version (a version number or a date)
  */
-public class KostenaufstellungExport extends DateiExport<Kostenaufstellung>
+public class KostenaufstellungExport extends DateiExport<KostenUebersicht>
 {
     /**
      * Exportiert die Kostenaufstellung in eine Datei.
@@ -18,10 +18,8 @@ public class KostenaufstellungExport extends DateiExport<Kostenaufstellung>
      * 
      * @param  exportant    Kostenaufstellung
      */
-    public void export(Kostenaufstellung exportant) {
+    public void export(KostenUebersicht exportant) {
         
         
-        
-   
     }
 }

@@ -23,42 +23,42 @@ public class KostenaufstellungErstellerTest {
  
         KostenaufstellungErsteller ersteller = new KostenaufstellungErsteller();
         ersteller.setEinkaufsliste(einkaufsliste);
-        double gesamtkosten = ersteller.berechneGesamtKosten();
+        KostenUebersicht ubersicht = ersteller.erstelle();
         
-        assertEquals(850.0, gesamtkosten, 0.001);
+        assertEquals(850.0, ubersicht.getGesamtKosten(), 0.001);
     }
 
     @Test
     public void testGruppierungNachLieferanten() {    
         KostenaufstellungErsteller ersteller = new KostenaufstellungErsteller();
         ersteller.setEinkaufsliste(einkaufsliste);
-        List<Kostenaufstellung> aufstellungen = ersteller.kostenaufstellungNachLieferant();
+        KostenUebersicht ubersicht = ersteller.erstelle();
         
-        assertEquals(2, aufstellungen.size());
-        assertEquals("Heinrich", aufstellungen.get(0).getLieferant().getName());
-        assertEquals("Otto Gourmet", aufstellungen.get(1).getLieferant().getName());
+        assertEquals(2, ubersicht.getKostenaufstellungenProLieferant().size());
+        assertEquals("Heinrich", ubersicht.getKostenaufstellungenProLieferant().get(0).getLieferant().getName());
+        assertEquals("Otto Gourmet", ubersicht.getKostenaufstellungenProLieferant().get(1).getLieferant().getName());
     }
     
     @Test
     public void testBerechneEinkaufsKostenProLieferant() {
         KostenaufstellungErsteller ersteller = new KostenaufstellungErsteller();
         ersteller.setEinkaufsliste(einkaufsliste);
-        List<Kostenaufstellung> aufstellungen = ersteller.kostenaufstellungNachLieferant();
+        KostenUebersicht ubersicht = ersteller.erstelle();
         
-        assertEquals(2, aufstellungen.size());
-        assertEquals(500.0, aufstellungen.get(0).berechneEinkaufsKostenProLieferant(), 0.001);
-        assertEquals(300.0, aufstellungen.get(1).berechneEinkaufsKostenProLieferant(), 0.001);
+        assertEquals(2, ubersicht.getKostenaufstellungenProLieferant().size());
+        assertEquals(500.0, ubersicht.getKostenaufstellungenProLieferant().get(0).berechneEinkaufsKostenProLieferant(), 0.001);
+        assertEquals(300.0, ubersicht.getKostenaufstellungenProLieferant().get(1).berechneEinkaufsKostenProLieferant(), 0.001);
     }
     
     @Test
     public void testBerechneLieferKostenProLieferant() {
         KostenaufstellungErsteller ersteller = new KostenaufstellungErsteller();
         ersteller.setEinkaufsliste(einkaufsliste);
-        List<Kostenaufstellung> aufstellungen = ersteller.kostenaufstellungNachLieferant();
+        KostenUebersicht ubersicht = ersteller.erstelle();
         
-        assertEquals(2, aufstellungen.size());
-        assertEquals(20.0, aufstellungen.get(0).berechneLieferKostenProLieferant(), 0.001);
-        assertEquals(30.0, aufstellungen.get(1).berechneLieferKostenProLieferant(), 0.001);
+        assertEquals(2, ubersicht.getKostenaufstellungenProLieferant().size());
+        assertEquals(20.0, ubersicht.getKostenaufstellungenProLieferant().get(0).berechneLieferKostenProLieferant(), 0.001);
+        assertEquals(30.0, ubersicht.getKostenaufstellungenProLieferant().get(1).berechneLieferKostenProLieferant(), 0.001);
     }
 
     private Einkaufsliste erstelleEinkaufsliste(EinkaufslistenPosition... positionen) {
