@@ -9,15 +9,13 @@ import static org.junit.Assert.*;
 import org.junit.experimental.categories.*;
 
 @Category(IntegrationTest.class)
-public class ImportIntegrationTest {
-    
-   
+public class ImportIntegrationTest {   
     
     @Test
     public void testImportSpeisenVonDateiHitlisteUndRezepte() {
         importierePreislisten();
         importiereSpeisen();
-        assertEquals(109, SpeisenVerwaltung.getInstanz().size());
+        assertEquals(108, SpeisenVerwaltung.getInstanz().size());
     }
 
     private void importierePreislisten() {

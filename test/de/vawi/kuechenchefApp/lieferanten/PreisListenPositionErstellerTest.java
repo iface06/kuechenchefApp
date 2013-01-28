@@ -27,7 +27,7 @@ public class PreisListenPositionErstellerTest {
         PreisListenPosition position = ersteller.erstelle(zeile);
 
         assertEquals("Rinderhack", position.getNahrungsmittel().getName());
-        assertEquals(1000, position.getNahrungsmittel().getVerfuegbareGesamtMenge());
+        assertEquals(102000, position.getNahrungsmittel().getVerfuegbareGesamtMenge());
         assertEquals(SpeisenUndNahrungsmittelKategorie.FLEISCH, position.getNahrungsmittel().getKategorie());
         assertEquals(lieferant, position.getLieferant());
     }

@@ -121,11 +121,14 @@ class PreisListenPositionErsteller {
      * angelegt wurde.
      */
     private Nahrungsmittel findeNahrungsmittel(List<String> abschnitte) {
-        Nahrungsmittel nahrungsmittel = nahrungsmittelVerwaltung.findeDurchName(abschnitte.get(ABSCHNITT_NAHRUNGSMITTELNAME));
-        if (nahrungsmittel == null) {
-            nahrungsmittel = erstelleNeuesNahrungsmittel(abschnitte);
-            nahrungsmittelVerwaltung.fuegeHinzu(nahrungsmittel);
+        Nahrungsmittel nahrungsmittel;
+        try {
+            nahrungsmittel = nahrungsmittelVerwaltung.findeDurchName(abschnitte.get(ABSCHNITT_NAHRUNGSMITTELNAME));
+        } catch (NahrungsmittelVerwaltung.NahrungsmittelNichtGefunden ex) {
+            nahrungsmittel = erstelleNahrungsmittelWennNichtGefunden(abschnitte);
         }
+
+
 
         return nahrungsmittel;
     }
@@ -159,6 +162,12 @@ class PreisListenPositionErsteller {
 
         Nahrungsmittel nahrungsmittel = nahrungsmittelVerwaltung.findeDurchName(abschnitte.get(ABSCHNITT_NAHRUNGSMITTELNAME));
         nahrungsmittel.setVerfuegbareGesamtMenge(nahrungsmittel.getVerfuegbareGesamtMenge() + (vorratsBestand * gebindeGroesse));
+        return nahrungsmittel;
+    }
+
+    protected Nahrungsmittel erstelleNahrungsmittelWennNichtGefunden(List<String> abschnitte) {
+        Nahrungsmittel nahrungsmittel = erstelleNeuesNahrungsmittel(abschnitte);
+        nahrungsmittelVerwaltung.fuegeHinzu(nahrungsmittel);
         return nahrungsmittel;
     }
 

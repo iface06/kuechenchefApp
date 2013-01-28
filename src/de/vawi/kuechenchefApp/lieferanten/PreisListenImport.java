@@ -34,9 +34,7 @@ public class PreisListenImport {
      */
     public void importFiles() {
         try {
-            LieferantenVerwaltung verwaltung = LieferantenVerwaltung.getInstanz();
             lesePreisListenDateien();
-
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -149,7 +147,7 @@ public class PreisListenImport {
         return lieferant;
     }
 
-    protected void handleZeileKonnteNichtImportiertWerden(Lieferant lieferant, String zeile) {
+    protected void handleZeileKonnteNichtImportiertWerden(Lieferant lieferant, String zeile) { 
     }
 
     

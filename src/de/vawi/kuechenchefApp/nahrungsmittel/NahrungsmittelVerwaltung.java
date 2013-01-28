@@ -22,13 +22,13 @@ public class NahrungsmittelVerwaltung {
      * @return Gibt das Nahrungsmittel wider, das schon existiert. Existiert
      * noch kein Nahrungsmittel mit diesem Namen, wird Null wider gegeben.
      */
-    public Nahrungsmittel findeDurchName(String name) {
+    public Nahrungsmittel findeDurchName(String name) throws NahrungsmittelNichtGefunden {
         for (Nahrungsmittel nahrungsmittel1 : nahrungsmittels) {
             if (nahrungsmittel1.getName().contains(name)) {
                 return nahrungsmittel1;
             }
         }
-        return null;
+        throw new NahrungsmittelNichtGefunden();
     }
 
     /**
@@ -46,5 +46,9 @@ public class NahrungsmittelVerwaltung {
         }
         return INSTANZ;
 
+    }
+    
+    public class NahrungsmittelNichtGefunden extends RuntimeException{
+        
     }
 }

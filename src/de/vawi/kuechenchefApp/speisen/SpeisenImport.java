@@ -1,7 +1,7 @@
 package de.vawi.kuechenchefApp.speisen;
 
 import de.vawi.kuechenchefApp.dateien.*;
-import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
+import de.vawi.kuechenchefApp.nahrungsmittel.*;
 import de.vawi.kuechenchefApp.speisen.SpeisenVerwaltung.SpeiseNichtGefunden;
 import java.util.*;
 
@@ -18,6 +18,7 @@ public class SpeisenImport {
     private Datei hitliste;
     private CsvZeileSeparator separator = new CsvZeileSeparator();
     private SpeisenVerwaltung speisen = SpeisenVerwaltung.getInstanz();
+    private List<Speise> unvollstaendigeSpeisen = new ArrayList<>();
     String dateiOrdner;
 
     // @todo Dieser Ordner muss noch irgendwo verwendet werden.
@@ -46,6 +47,7 @@ public class SpeisenImport {
         leseDateien();
         fuegeSpeisenVonHitlisteInSpeisenverwaltungEin();
         fuegeZutatenZuSpeisenAusRezepteDateiHinzu();
+        loescheUnvollstaendigeSpeisen();
         sortiereZutatenNachKategorie();
     }
 
@@ -70,9 +72,17 @@ public class SpeisenImport {
         for (String zeile : rezepte) {
             try {
                 versucheZutatZuGenerieren(zeile);
+            } catch (SpeiseNichtGefunden ex) {
+                handhabeSpeiseNichtGefunden(ex, zeile);
             } catch (Exception ex) {
-                throw new RezepteDateiIstNichtValide(zeile);
+                handhabeRezepteDateiIstNichtValide(ex, zeile);
             }
+        }
+    }
+    
+    private void loescheUnvollstaendigeSpeisen() {
+        for (Speise speise : unvollstaendigeSpeisen) {
+            speisen.entferne(speise);
         }
     }
 
@@ -92,8 +102,12 @@ public class SpeisenImport {
     private void versucheZutatZuGenerieren(String zeile) throws SpeiseNichtGefunden {
         List<String> zellen = separator.separiere(zeile);
         Speise speise = speisen.findeSpeise(zellen.get(SPEISEN_NAME));
-        Zutat zutat = new ZutatErsteller().erstelle(zeile);
-        speise.addZutat(zutat);
+        try {
+            Zutat zutat = versucheNahrungsmittelZuErstellen(zeile);
+            speise.addZutat(zutat);
+        } catch (NahrungsmittelVerwaltung.NahrungsmittelNichtGefunden ex) {
+            handhabeNahrungsmittelZuZutatNichtVorhanden(speise);
+        }
     }
 
     private void leseDateien() {
@@ -103,6 +117,24 @@ public class SpeisenImport {
 
     protected Datei leseDatei(String dateiPfad) {
         return new DateiLeser(dateiPfad).leseDatei();
+    }
+
+    protected Zutat versucheNahrungsmittelZuErstellen(String zeile) {
+        Zutat zutat;
+        zutat = new ZutatErsteller().erstelle(zeile);
+        return zutat;
+    }
+
+    protected void handhabeNahrungsmittelZuZutatNichtVorhanden(Speise speise) {
+        unvollstaendigeSpeisen.add(speise);
+    }
+
+    protected void handhabeSpeiseNichtGefunden(SpeiseNichtGefunden ex, String zeile) {
+        throw ex;
+    }
+
+    protected void handhabeRezepteDateiIstNichtValide(Exception ex, String zeile) throws RezepteDateiIstNichtValide {
+        throw new RezepteDateiIstNichtValide(zeile);
     }
 
     public static class HitlisteDateiIstNichtValide extends RuntimeException {

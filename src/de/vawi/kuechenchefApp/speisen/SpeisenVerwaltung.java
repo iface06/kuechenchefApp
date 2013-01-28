@@ -53,8 +53,10 @@ public class SpeisenVerwaltung implements Iterable<Speise> {
         } 
         return beliebtesteSpeisen;
     }
-    
 
+    void entferne(Speise speise) {
+        speisen.remove(speise);
+    }
     
     class SpeiseNichtGefunden extends RuntimeException{
         

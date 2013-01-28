@@ -1,17 +1,13 @@
 package de.vawi.kuechenchefApp;
 
-import de.vawi.kuechenchefApp.einkaufsliste.EinkaufslistenErsteller;
-import de.vawi.kuechenchefApp.einkaufsliste.Einkaufsliste;
-import de.vawi.kuechenchefApp.kostenaufstellung.Kostenaufstellung;
-import de.vawi.kuechenchefApp.kostenaufstellung.KostenaufstellungErsteller;
-import de.vawi.kuechenchefApp.speiseplan.SpeiseplanErsteller;
-import de.vawi.kuechenchefApp.speiseplan.Speiseplan;
-import java.util.*;
+import de.vawi.kuechenchefApp.einkaufsliste.*;
+import de.vawi.kuechenchefApp.kostenaufstellung.*;
+import de.vawi.kuechenchefApp.speiseplan.*;
+import java.util.List;
 
 /**
  * Diese Klasse steuert den Prozess für die Erstellung der Speisepläne, Einkaufsliste und Kostenaufstellung.
  * @author Beer 
- * @version (a version number or a date)
  */
 public class ProzessSteuerung{
 
@@ -30,6 +26,7 @@ public class ProzessSteuerung{
      * 
      */
     public void setSpeiseplanErsteller(SpeiseplanErsteller ersteller){
+        this.speiseplanErsteller = ersteller;
     }
     
     /**
@@ -38,6 +35,7 @@ public class ProzessSteuerung{
      * @param  ersteller     Ersteller-Klasse für die Einkaufsliste
      */
     public void setEinkaufslistenErsteller(EinkaufslistenErsteller ersteller){
+        this.einkaufslistenErsteller = ersteller;
     }
     
     /**
@@ -46,14 +44,15 @@ public class ProzessSteuerung{
      * @param  ersteller  Ersteller-Klasse für die Kostenaufstellung
      */
     public void setKostenaufstellungErsteller(KostenaufstellungErsteller ersteller){
+        this.kostanaufstellungErsteller = ersteller;
     }
     
     /**
      * Organisiert den Ablauf der Erstellung der Speisepläne, der dazugehörigen Einkaufsliste und die daraus resultierende Kostenaufstellung.
      * Funktionert nur wenn vorher die entsprechenden Ersteller für die Speisepläne, Einkaufsliste und Kostenaufstellung gesetzt wurden.
      */
-    public void start()
-    {
+    public void start() {
+        
         
     }
     

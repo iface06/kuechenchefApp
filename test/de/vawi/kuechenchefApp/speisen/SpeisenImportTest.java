@@ -5,6 +5,7 @@ import de.vawi.kuechenchefApp.nahrungsmittel.*;
 import java.util.*;
 import org.junit.*;
 import static org.junit.Assert.*;
+import org.junit.experimental.theories.suppliers.TestedOn;
 
 public class SpeisenImportTest {
 
@@ -29,6 +30,7 @@ public class SpeisenImportTest {
     public void initHitlisteZeilen() {
         hitlisteZeilen.add("1,\"Bohneneintopf Mexiko\"");
         hitlisteZeilen.add("2,\"Falscher Hase\"");
+        
     }
 
     @Before
@@ -84,6 +86,17 @@ public class SpeisenImportTest {
     public void testFehlerhafteRezepteDatei() {
         rezepteZeilen.add("\"Falscher Hase\",,\"\",\"Eier\"");
         importer.importFiles();
+        fail();
+    }
+    
+    @Test(expected=SpeisenVerwaltung.SpeiseNichtGefunden.class)
+    public void testNahrungsmittelIstNichtVerfuegbar() {
+        hitlisteZeilen.add("3,\"Walfischstreifen auf Salat\"");
+        rezepteZeilen.add("\"Walfischstreifen auf Salat\",100,\"g\",\"Walfleisch\"");
+        importer.importFiles();
+        
+        assertEquals(2, speisen.size());
+        Speise walfisch = speisen.findeSpeise("Walfischstreifen auf Salat");
         fail();
     }
 

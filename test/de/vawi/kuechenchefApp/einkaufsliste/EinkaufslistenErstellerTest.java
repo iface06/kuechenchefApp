@@ -124,6 +124,7 @@ public class EinkaufslistenErstellerTest {
     }
 
     private Speise erzeugeSpeise() {
-        return new DummySpeise().mit("Kartoffeln", 1).mitZutat("Kartoffeln", Einheit.STUECK, 1000.0, 100000).erstelle();
+        Zutat zutat = new DummyZutat().name("Kartoffeln").einheit(Einheit.STUECK).menge(1000.0).kategorie(SpeisenUndNahrungsmittelKategorie.VEGETARISCH).erstelle();
+        return new DummySpeise().name("Bratkaroffeln").mitZutat(zutat).beliebtheit(1).erstelle();
     }
 }

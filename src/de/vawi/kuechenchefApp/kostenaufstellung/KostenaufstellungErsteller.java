@@ -50,7 +50,7 @@ public class KostenaufstellungErsteller {
      * @param lieferant der Lieferant, nach dem gefiltert werden soll.
      * @return Gibt die Kostenaufstellung für den gewünschten Lieferanten wider.
      */
-    public Kostenaufstellung filtereNachLieferanten(Lieferant lieferant) {
+    private Kostenaufstellung filtereNachLieferanten(Lieferant lieferant) {
         List<EinkaufslistenPosition> lieferantenFilter = new ArrayList<>();
         for (EinkaufslistenPosition position : liste.getPositionen()) {
             if (position.getLieferant().equals(lieferant)) {
