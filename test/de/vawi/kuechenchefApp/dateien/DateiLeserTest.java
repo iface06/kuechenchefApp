@@ -35,7 +35,7 @@ public class DateiLeserTest {
         
 
         @Override
-        protected DateiManager erstelleDateiManager() {
+        protected VawiDateiManager erstelleDateiManager() {
             TestableDateiManager manager = new TestableDateiManager(dateiName);
             manager.setDateiInhalt(zeilen);
             return manager;
@@ -60,7 +60,7 @@ public class DateiLeserTest {
         
         
         @Override
-        public String getDateinameMitPfad() {
+        public String getDateiname() {
             return pathname;
         }
 

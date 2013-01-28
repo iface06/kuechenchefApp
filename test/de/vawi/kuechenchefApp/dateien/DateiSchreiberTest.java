@@ -33,7 +33,7 @@ public class DateiSchreiberTest {
         }
 
         @Override
-        protected DateiManager erzeugeDatei() {
+        protected VawiDateiManager erzeugeDatei() {
             manager =  new TestableDateiManager("test");
             return manager;
         }
@@ -44,7 +44,7 @@ public class DateiSchreiberTest {
     class TestbareDatei implements Datei{
         
         @Override
-        public String getDateinameMitPfad() {
+        public String getDateiname() {
             return "testdatei";
         }   
 

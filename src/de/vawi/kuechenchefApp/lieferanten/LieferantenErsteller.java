@@ -7,7 +7,7 @@ import java.util.List;
  * Diese Klasse bestimmt anhand der Preislisten-Datei den Namen und Typ des
  * Lieferanten.
  *
- * @author Struebe (12.01.2013)
+ * @author Struebe (25.01.2013)
  */
 class LieferantenErsteller {
 
@@ -19,9 +19,10 @@ class LieferantenErsteller {
      * Diese Methode bestimmt, ob ein Lieferant als Großhändler, oder als Bauer
      * angelegt wird.
      *
-     * @param lieferantenZellen Die Zelle, aus der die Parameter für die
-     * Lieferanten ausgelesen werden.
-     * @return Gibt den typisierten Lieferanten mit Name und dem Lieferkosensatz bzw. Entfernung wider.
+     * @param lieferantenZellen Die Zellen, aus der die Parameter für die
+     * Lieferanten ausgelesen werden (sprich: die erste Zeile der Preisliste).
+     * @return Gibt den typisierten Lieferanten mit Name und dem Lieferkosensatz
+     * bzw. Entfernung wider.
      * @throws de.vawi.kuechenchefApp.dateien.Parse.FehlerBeimParsen Wird
      * geworfen, wenn aus einem Text kein Double generiert werden kann.
      */
@@ -39,12 +40,14 @@ class LieferantenErsteller {
 
         return lieferant;
     }
-/**
- * Diese Methode erstellt einen Lieferanten des Typs Großhändler.
- * @param name Name des Großhändlers.
- * @param lieferkosten Lieferkostensatz des Großhändlers.
- * @return Gibt einen Lieferanten vom Typ Großhändler wider.
- */
+
+    /**
+     * Diese Methode erstellt einen Lieferanten des Typs Großhändler.
+     *
+     * @param name Name des Großhändlers.
+     * @param lieferkosten Lieferkostensatz des Großhändlers.
+     * @return Gibt einen Lieferanten vom Typ Großhändler wider.
+     */
     private Lieferant erstelleGroßhaendler(String name, String lieferkosten) {
         Lieferant lieferant;
         lieferant = new Grosshaendler();
@@ -53,12 +56,14 @@ class LieferantenErsteller {
 
         return lieferant;
     }
-/**
- * Diese Methode erstellt einen Lieferanten des Typs Bauer.
- * @param name Name des Bauers.
- * @param lieferkosten Entfernung des Bauers in Kilometern.
- * @return  Gibt einen Lieferanten vom Typ Bauern wider.
- */
+
+    /**
+     * Diese Methode erstellt einen Lieferanten des Typs Bauer.
+     *
+     * @param name Name des Bauers.
+     * @param lieferkosten Entfernung des Bauers in Kilometern.
+     * @return Gibt einen Lieferanten vom Typ Bauern wider.
+     */
     private Lieferant erstelleBauer(String name, String lieferkosten) {
         Lieferant lieferant;
         lieferant = new Bauer();
@@ -67,6 +72,11 @@ class LieferantenErsteller {
         return lieferant;
     }
 
+    /**
+     * Diese Methode übergibt einen String-Wert in einen double-Wert.
+     * @param doubleValue String, der in einen double übergeben werden soll.
+     * @return Gibt den umgewandelten double-Wert wider.
+     */
     private double parseStringToDouble(String doubleValue) {
         return Parse.toDouble(doubleValue);
     }

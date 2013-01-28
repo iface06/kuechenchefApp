@@ -8,11 +8,11 @@ import static org.junit.Assert.*;
 public class PreisListenPositionErstellerTest {
 
     Lieferant lieferant = erstelleLieferant();
-    String zeile = "10,,\"Burgerbroetchen\",,\"5,91\",1000";
     PreisListenPositionErsteller ersteller = new PreisListenPositionErsteller(lieferant);
 
     @Test
-    public void testPreislistenPositionErstellen() {
+    public void testBurgerbroetchen() {
+        String zeile = "10,,\"Burgerbroetchen\",,\"5,91\",1000";
         PreisListenPosition position = ersteller.erstelle(zeile);
 
         assertEquals("Burgerbroetchen", position.getNahrungsmittel().getName());
@@ -21,9 +21,20 @@ public class PreisListenPositionErstellerTest {
         assertEquals(lieferant, position.getLieferant());
     }
 
+    @Test
+    public void testRinderhack() {
+        String zeile = "1000,\"g\",\"Rinderhack\",\"m\",\"7,96\",102";
+        PreisListenPosition position = ersteller.erstelle(zeile);
+
+        assertEquals("Rinderhack", position.getNahrungsmittel().getName());
+        assertEquals(1000, position.getNahrungsmittel().getVerfuegbareGesamtMenge());
+        assertEquals(SpeisenUndNahrungsmittelKategorie.FLEISCH, position.getNahrungsmittel().getKategorie());
+        assertEquals(lieferant, position.getLieferant());
+    }
+
     @Test(expected = FehlerBeimErstellenEinerPreislistenPosition.class)
     public void testPreislistenPositionErstellenFail() {
-        zeile = ",,,Bei einem Syntaxfehler wie diesem sollte ihr programm nicht abbrechen :-)";
+        String zeile = ",,,Bei einem Syntaxfehler wie diesem sollte ihr programm nicht abbrechen :-)";
         PreisListenPosition position = ersteller.erstelle(zeile);
         fail();
     }

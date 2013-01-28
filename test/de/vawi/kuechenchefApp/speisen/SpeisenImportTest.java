@@ -1,137 +1,161 @@
-
-
 package de.vawi.kuechenchefApp.speisen;
 
-import de.vawi.kuechenchefApp.speisen.Speise;
-import de.vawi.kuechenchefApp.speisen.Zutat;
-import de.vawi.kuechenchefApp.speisen.SpeisenImport;
 import de.vawi.kuechenchefApp.dateien.Datei;
 import de.vawi.kuechenchefApp.nahrungsmittel.*;
 import java.util.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 
-
 public class SpeisenImportTest {
+
     private SpeisenImport importer;
     private SpeisenVerwaltung speisen;
+    private List<String> hitlisteZeilen = new ArrayList<>();
+    private List<String> rezepteZeilen = new ArrayList<>();
 
     /**
-     * Speisen aus Hitliste importieren -> OK
-     * Zutaten aus Rezpete importieren -> OK
-     * Zutaten zu Speisen zuordnen -> OK
+     * Speisen aus Hitliste importieren -> OK Zutaten aus Rezpete importieren ->
+     * OK Zutaten zu Speisen zuordnen -> OK
      */
-    
     @Before
-    public void before(){
+    public void initRezepteZeilen() {
+        rezepteZeilen.add("\"Bohneneintopf Mexiko\",150,\"g\",\"Kartoffeln\"");
+        rezepteZeilen.add("\"Bohneneintopf Mexiko\",10,\"g\",\"Chilipulver\"");
+        rezepteZeilen.add("\"Falscher Hase\",10,\"g\",\"Hase\"");
+        rezepteZeilen.add("\"Falscher Hase\",10,\"g\",\"Chilipulver\"");
+    }
+
+    @Before
+    public void initHitlisteZeilen() {
+        hitlisteZeilen.add("1,\"Bohneneintopf Mexiko\"");
+        hitlisteZeilen.add("2,\"Falscher Hase\"");
+    }
+
+    @Before
+    public void before() {
         fuegeKartoffelUndChilipulvernInNahrungsmittelVerwaltungEin();
         initializiereImporter();
-        initizialisiereSpeisenVerwaltung();    
+        initizialisiereSpeisenVerwaltung();
     }
-    
+
     @Test
     public void testSpeisenImportAusHitliste() {
         importer.importFiles();
-        
+
         assertEquals(1, speisen.findeSpeise("Bohneneintopf Mexiko").getBeliebtheit());
         assertEquals(2, speisen.findeSpeise("Falscher Hase").getBeliebtheit());
     }
-    
+
     @Test
-    public void testZutatenAusRezepteZuSpeisenImportieren(){
+    public void testZutatenAusRezepteZuSpeisenImportieren() {
         importer.importFiles();
-        
+
         Speise speise = speisen.findeSpeise("Bohneneintopf Mexiko");
         List<Zutat> zutatenZuSpeise = speise.getZutaten();
+        assertEquals(2, zutatenZuSpeise.size());
         assertEquals("Kartoffeln", zutatenZuSpeise.get(0).getNahrungsmittel().getName());
-        assertEquals("Chilipulver", zutatenZuSpeise.get(1).getNahrungsmittel().getName());        
+        assertEquals("Chilipulver", zutatenZuSpeise.get(1).getNahrungsmittel().getName());
     }
-    
+
     @Test
-    public void testKategorisierungDerVegetarischenSpeisen(){
+    public void testKategorisierungDerVegetarischenSpeisen() {
         importer.importFiles();
-        
+
         Speise speise = speisen.findeSpeise("Bohneneintopf Mexiko");
         assertEquals(SpeisenUndNahrungsmittelKategorie.VEGETARISCH, speise.getKategorie());
     }
-    
+
     @Test
-    public void testKategorisierungDerFleischSpeisen(){
+    public void testKategorisierungDerFleischSpeisen() {
         importer.importFiles();
-        
+
         Speise speise = speisen.findeSpeise("Falscher Hase");
         assertEquals(SpeisenUndNahrungsmittelKategorie.FLEISCH, speise.getKategorie());
     }
+
+    @Test(expected=SpeisenImport.HitlisteDateiIstNichtValide.class)
+    public void testFehlerhafteHitliste() {
+        hitlisteZeilen.add(",\"Falscher Hase\"");        
+        importer.importFiles();
+        fail();
+    }
     
+    @Test(expected=SpeisenImport.RezepteDateiIstNichtValide.class)
+    public void testFehlerhafteRezepteDatei() {
+        rezepteZeilen.add("\"Falscher Hase\",,\"\",\"Eier\"");
+        importer.importFiles();
+        fail();
+    }
+
     private void fuegeKartoffelUndChilipulvernInNahrungsmittelVerwaltungEin() {
         Nahrungsmittel kartoffeln = new Nahrungsmittel();
         kartoffeln.setName("Kartoffeln");
         kartoffeln.setEinheit(Einheit.GRAMM);
         kartoffeln.setKategorie(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
-        
+
         Nahrungsmittel chilipulver = new Nahrungsmittel();
         chilipulver.setName("Chilipulver");
         chilipulver.setEinheit(Einheit.GRAMM);
         chilipulver.setKategorie(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
-        
+
         Nahrungsmittel hase = new Nahrungsmittel();
         hase.setName("Hase");
         hase.setEinheit(Einheit.GRAMM);
-        hase.setKategorie(SpeisenUndNahrungsmittelKategorie.FLEISCH);        
-        
+        hase.setKategorie(SpeisenUndNahrungsmittelKategorie.FLEISCH);
+
         NahrungsmittelVerwaltung.getInstanz().fuegeHinzu(kartoffeln);
         NahrungsmittelVerwaltung.getInstanz().fuegeHinzu(chilipulver);
         NahrungsmittelVerwaltung.getInstanz().fuegeHinzu(hase);
     }
 
     private void initializiereImporter() {
-        Datei hitliste = new TestbareHitlisteDatei();
-        Datei rezepte = new TestbareRezpeteDatei();
-        importer = new SpeisenImport();
-        importer.setHitliste(hitliste);
-        importer.setRezepte(rezepte);
+        importer = new TestbarerImport("ordnerName");
     }
 
     private void initizialisiereSpeisenVerwaltung() {
         speisen = SpeisenVerwaltung.getInstanz();
     }
 
-    private static class TestbareHitlisteDatei implements Datei {
+    private class TestbarerImport extends SpeisenImport{
 
-        private static List<String> zeilen = new ArrayList<>();
-        static{
-            zeilen.add("1,\"Bohneneintopf Mexiko\"");
-            zeilen.add("2,\"Falscher Hase\"");
+        public TestbarerImport(String dateiOrdner) {
+            super(dateiOrdner);
         }
 
+        
         @Override
-        public String getDateinameMitPfad() {
+        protected Datei leseDatei(String dateiPfad) {
+            if(dateiPfad.endsWith("hitliste.csv"))
+                return new TestbareHitlisteDatei();
+            else 
+                return new TestbareRezpeteDatei();
+        }
+        
+    }
+    
+    private class TestbareHitlisteDatei implements Datei {
+
+        @Override
+        public String getDateiname() {
             return "TestbareHitliste.csv";
         }
 
         @Override
         public Iterator<String> iterator() {
-            return zeilen.iterator();
+            return hitlisteZeilen.iterator();
         }
     }
-    private static class TestbareRezpeteDatei implements Datei {
 
-        private static List<String> zeilen = new ArrayList<>();
-        static{
-            zeilen.add("\"Bohneneintopf Mexiko\",150,\"g\",\"Kartoffeln\"");
-            zeilen.add("\"Bohneneintopf Mexiko\",10,\"g\",\"Chilipulver\"");
-            zeilen.add("\"Falscher Hase\",10,\"g\",\"Hase\"");
-            zeilen.add("\"Falscher Hase\",10,\"g\",\"Chilipulver\"");
-        }
+    private class TestbareRezpeteDatei implements Datei {
 
         @Override
-        public String getDateinameMitPfad() {
+        public String getDateiname() {
             return "TestbareHitliste.csv";
         }
 
         @Override
         public Iterator<String> iterator() {
-            return zeilen.iterator();
+            return rezepteZeilen.iterator();
         }
     }
 }

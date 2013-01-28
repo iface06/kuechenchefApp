@@ -1,5 +1,6 @@
 package de.vawi.kuechenchefApp.einkaufsliste;
 
+import de.vawi.kuechenchefApp.lieferanten.Lieferant;
 import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import java.util.*;
 /**
@@ -41,9 +42,33 @@ public class Einkaufsliste implements Iterable<EinkaufslistenPosition>
         return position;
                 
     }
+    
 
     @Override
     public Iterator<EinkaufslistenPosition> iterator() {
         return positionen.iterator();
+    }
+    ArrayList lieferanten = new ArrayList();
+    /**
+     * Gibt eine Liste an vorhandenen Lieferanten zurück
+     */
+    public List<EinkaufslistenPosition> holeLieferanten() {
+        for (EinkaufslistenPosition position : positionen)
+        if (lieferanten.contains(position.getLieferant())) {
+        // mache nichts
+        }
+        else {
+        lieferanten.add(position.getLieferant());
+        }   
+    return lieferanten;
+    }
+    
+    
+    /**
+     * Gibt eine Liste an Einkaufslistenpositionen eines bestimmten Lieferanten zurück
+     */
+    public List<EinkaufslistenPosition> holeEinkaufslistenpositionenVonLieferant(Lieferant lieferant) {
+    
+        return null;
     }
 }

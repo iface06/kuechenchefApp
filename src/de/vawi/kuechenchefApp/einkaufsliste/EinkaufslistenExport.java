@@ -1,3 +1,4 @@
+
 package de.vawi.kuechenchefApp.einkaufsliste;
 
 import de.vawi.kuechenchefApp.DateiExport;
@@ -21,4 +22,13 @@ public class EinkaufslistenExport extends DateiExport<Einkaufsliste>
      */
     public void export(Einkaufsliste exportant){
     }
+    
+
+    // Hole Liste an Lieferanten
+    // Für jeden Lieferanten hole Nahrungsmittel
+    // Liste an Drucker
+    // String zurück vom Drucker
+    // String in Datei schreiben
+
+    
 }

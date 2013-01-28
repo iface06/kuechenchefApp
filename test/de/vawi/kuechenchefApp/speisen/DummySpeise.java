@@ -1,35 +1,35 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package de.vawi.kuechenchefApp.speisen;
 
-import de.vawi.kuechenchefApp.nahrungsmittel.*;
-
-
+/**
+ *
+ * @author Tatsch
+ */
 public class DummySpeise {
     
     private Speise speise = new Speise();
     
-    public DummySpeise mit(String name, int beliebtheit){
+    
+    public DummySpeise beliebtheit(int beliebtheit){
         speise.setBeliebtheit(beliebtheit);
+        return this;
+    }
+    public DummySpeise name(String name){
         speise.setName(name);
         return this;
     }
     
-    public DummySpeise mitZutat(String name, Einheit einheit, double menge, int vorrat){
-        Zutat zutat = new Zutat();
-        zutat.setNahrungsmittel(erstelleNahrungsmittel(name, einheit, vorrat));
-        zutat.setMenge(menge);
+    public DummySpeise mitZutat(Zutat zutat){
         speise.addZutat(zutat);
         return this;
     }
-    
-    private Nahrungsmittel erstelleNahrungsmittel(String name, Einheit einheit, int vorrat){
-        Nahrungsmittel nahrungsmittel = new Nahrungsmittel();
-        nahrungsmittel.setName(name);
-        nahrungsmittel.setEinheit(einheit);
-        nahrungsmittel.setVerfuegbareGesamtMenge(vorrat);
-        return nahrungsmittel;
-    }
 
-    public Speise erstelle(){
+    public Speise erstelle() {
         return speise;
     }
+    
+    
 }

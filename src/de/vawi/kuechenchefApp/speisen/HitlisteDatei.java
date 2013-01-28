@@ -1,14 +1,17 @@
 
 package de.vawi.kuechenchefApp.speisen;
 
-import de.vawi.kuechenchefApp.dateien.*;
+import de.vawi.kuechenchefApp.dateien.Datei;
 import java.util.*;
 
-
-class RezepteDatei implements Datei {
-
+/**
+ *
+ * @author Tatsch
+ */
+public class HitlisteDatei implements Datei{
+    
     private List<String> zeilen = new ArrayList<>();
-    private final String dateiName = "rezepte.csv";
+    private final String dateiName = "hitliste.csv";
     
     @Override
     public String getDateiname() {
@@ -19,4 +22,5 @@ class RezepteDatei implements Datei {
     public Iterator<String> iterator() {
         return zeilen.iterator();
     }
+
 }

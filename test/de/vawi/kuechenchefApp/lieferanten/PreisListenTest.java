@@ -12,7 +12,7 @@ public class PreisListenTest {
     @Test
     public void leseDateien(){
         PreisListen listen = new PreisListen();
-        listen.leseDateien();
+        listen.leseDateien("importDatein");
         
         assertTrue(listen.iterator().hasNext());
     }

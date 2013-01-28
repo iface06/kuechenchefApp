@@ -18,6 +18,9 @@ public class EinkaufslistenPosition
     private Lieferant lieferant;
     private double preis;
 
+    public EinkaufslistenPosition() {
+    }
+    
     public EinkaufslistenPosition(Nahrungsmittel nahrungsmittel) {
         this.nahrungsmittel = nahrungsmittel;
     }
@@ -25,14 +28,14 @@ public class EinkaufslistenPosition
     
     
     /**
-     * @return     Ersteller-Klasse für den
+     * @return     Name des Lieferanten
      */
     public Lieferant getLieferant() {
         return lieferant;
     }
 
     /**
-     * @param  lieferant    Ersteller-Klasse für den
+     * @param  lieferant    Name des Lieferanten
      */
     public void setLieferant(Lieferant lieferant) {
         this.lieferant = lieferant;

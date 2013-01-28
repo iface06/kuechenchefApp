@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class DateiLeser {
 
     protected String dateiName;
-    private DateiManager manager;
+    private DateiLeserManager manager;
 
     public DateiLeser(String dateiName) {
         this.dateiName = dateiName;
@@ -24,8 +24,8 @@ public class DateiLeser {
         return datei;
     }
 
-    protected DateiManager erstelleDateiManager() {
-        return new DateiManager(dateiName);
+    protected VawiDateiManager erstelleDateiManager() {
+        return new VawiDateiManager(dateiName);
     }
     private void oeffneDatei() throws IOException {
         manager.openInFile();
@@ -75,7 +75,7 @@ public class DateiLeser {
         Datei datei = new Datei() {
 
             @Override
-            public String getDateinameMitPfad() {
+            public String getDateiname() {
                 return dateiName;
             }
 
