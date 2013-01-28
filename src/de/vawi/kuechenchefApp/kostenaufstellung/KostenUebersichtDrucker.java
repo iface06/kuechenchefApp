@@ -43,7 +43,7 @@ public class KostenUebersichtDrucker {
         AsciiTable positionen = new AsciiTable();
         positionen.row().cell("Nahrungsmittel").cell("Menge (Gebinde)").cell("Preis €");
         for (EinkaufslistenPosition position : einkaufslistenPositionsListe) {
-            positionen.row().cell(position.getName()).cell(String.valueOf(position.getMenge())).cell(String.valueOf(position.getPreis()));
+            positionen.row().cell(position.getName()).cell(String.valueOf(position.getAnzahlGebinde())).cell(String.valueOf(position.getPreis()));
         }
         
         return positionen.writeTable();
