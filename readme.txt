@@ -1,5 +1,5 @@
-Vorraussetzungen für einen erfolgreichen Import
-Folgende Dateien müssen vorhanden sein
+Vorraussetzungen fï¿½r einen erfolgreichen Import
+Folgende Dateien mï¿½ssen vorhanden sein
     - hitliste.csv
     - rezepte.csv
     - preisliste_X.csv (wobei das X eine ganze Zahl sein muss; 1, 2, 3...)
