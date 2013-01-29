@@ -5,7 +5,10 @@ import java.util.*;
 
 /**
  *
+ * Hitliste Datei aus Importordner
+ * 
  * @author Tatsch
+ * @version 29.01.2013
  */
 public class HitlisteDatei implements Datei {
 

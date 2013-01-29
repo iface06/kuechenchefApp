@@ -26,8 +26,8 @@ public class KuechenchefApp {
      * @param args Keine Argumente bislang notwendig!
      */
     public static void main(String[] args) throws Exception {
-        String dateiOrdner = importDateienOrdnerAbfragen();
-        importiereDateien(dateiOrdner);
+//        String dateiOrdner = importDateienOrdnerAbfragen();
+        importiereDateien("C:\\projects\\kuechenchefApp\\importDatein");
 
         ProzessSteuerung steuerung = erstelleProzessSteuerung();
         steuerung.start();

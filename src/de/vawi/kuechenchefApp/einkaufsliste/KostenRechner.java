@@ -4,6 +4,11 @@ import de.vawi.kuechenchefApp.lieferanten.Lieferant;
 import java.util.List;
 
 
+/**
+ *
+ * @author Lepping
+ * @version 29.01.2013
+ */
 public class KostenRechner {
 
     public double berechneGesamtkosten(Einkaufsliste liste){

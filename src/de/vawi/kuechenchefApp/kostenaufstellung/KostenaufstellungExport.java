@@ -1,6 +1,6 @@
 package de.vawi.kuechenchefApp.kostenaufstellung;
 
-import de.vawi.kuechenchefApp.DateiExport;
+import de.vawi.kuechenchefApp.export.DateiExport;
 import de.vawi.kuechenchefApp.dateien.DateiSchreiber;
 import de.vawi.kuechenchefApp.kostenaufstellung.Kostenaufstellung;
 

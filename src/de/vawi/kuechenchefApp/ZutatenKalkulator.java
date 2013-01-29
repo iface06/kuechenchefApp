@@ -8,9 +8,13 @@ import de.vawi.kuechenchefApp.speiseplan.Speiseplan;
 import de.vawi.kuechenchefApp.speiseplan.Tag;
 import java.util.*;
 
+
 /**
  *
- * @author Matthias
+ * 
+ * 
+ * @author Lepping
+ * @version 29.01.2013
  */
 public class ZutatenKalkulator {
 
