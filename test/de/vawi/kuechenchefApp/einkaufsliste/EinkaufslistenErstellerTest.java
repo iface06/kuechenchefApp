@@ -17,19 +17,20 @@ public class EinkaufslistenErstellerTest {
     private static LieferantenVerwaltung verwaltung;
 
     @BeforeClass
-    public static void beforeClass() {
-        PreisListenPosition kartoffelAngebotA = createNahrungsmittel("Kartoffeln", 5.0, 1000.0, "Müller", 10000);
-        PreisListenPosition kartoffelAngebotB = createNahrungsmittel("Kartoffeln", 10.0, 1000.0, "Meier", 5000);
-        PreisListenPosition moehrenAngebot = createNahrungsmittel("Möhren", 1.0, 500.0, "Meier", 300);
+    public static void initLieferantenVerwaltung() {
+        PreisListenPosition kartoffelAngebotA = new DummyPreisListenPositionErsteller().nahrungsmittel("Kartoffeln", Einheit.GRAMM).lieferant("Müller", DummyPreisListenPositionErsteller.BAUER).angebot(5.0, 1000.0, 10000).erstelle();
+        PreisListenPosition kartoffelAngebotB = new DummyPreisListenPositionErsteller().nahrungsmittel("Kartoffeln", Einheit.GRAMM).lieferant("Meier", DummyPreisListenPositionErsteller.BAUER).angebot(10.0, 1000.0, 5000).erstelle();
+        PreisListenPosition moehrenAngebotA = new DummyPreisListenPositionErsteller().nahrungsmittel("Möhren", Einheit.GRAMM).lieferant("Meier", DummyPreisListenPositionErsteller.BAUER).angebot(1.0, 500.0, 4).erstelle();
+        PreisListenPosition moehrenAngebotB = new DummyPreisListenPositionErsteller().nahrungsmittel("Möhren", Einheit.GRAMM).lieferant("Müller", DummyPreisListenPositionErsteller.BAUER).angebot(2.0, 500.0, 10).erstelle();
         verwaltung = LieferantenVerwaltung.getInstanz();
-        verwaltung.hinzufuegenPreisListenPosition(Arrays.asList(kartoffelAngebotA, kartoffelAngebotB, moehrenAngebot));
+        verwaltung.hinzufuegenPreisListenPosition(Arrays.asList(kartoffelAngebotA, kartoffelAngebotB, moehrenAngebotA, moehrenAngebotB));
     }
     private EinkaufslistenErsteller ersteller;
     
-    @Before
-    public void before() {
-        Speiseplan plan = erzeugeDummySpeiseplan();
-        Speiseplan plan1 = erzeugeDummySpeiseplan();
+    
+    public void initSpeiseplaene() {
+        Speiseplan plan = erzeugeDummySpeiseplan(Kantine.MUELHEIM_AN_DER_RUHR);
+        Speiseplan plan1 = erzeugeDummySpeiseplan(Kantine.ESSEN);
         ersteller = new EinkaufslistenErsteller();
         ersteller.add(plan);
         ersteller.add(plan1);
@@ -37,22 +38,23 @@ public class EinkaufslistenErstellerTest {
 
     @Test
     public void testErzeugeEinkauflistenPosition() {
-        
+        initSpeiseplaene();
         Einkaufsliste liste = ersteller.erzeuge();
         EinkaufslistenPosition position = liste.getPositionen().get(0);
 
+        assertEquals(1, liste.getPositionen().size());
         assertEquals("Kartoffeln", position.getName());
         assertEquals(Einheit.STUECK, position.getEinheit());
     }
 
     @Test
     public void testFuegeGleichesNahrungsmittelHinzu() {
-        
+        initSpeiseplaene();
         Einkaufsliste liste = ersteller.erzeuge();
         EinkaufslistenPosition position = liste.getPositionen().get(0);
 
         assertEquals(1, liste.getPositionen().size());
-        assertEquals(1502000.0, position.getMenge(), 0.0001);
+        assertEquals(3.0, position.getAnzahlGebinde(), 0.0001);
     }
 
     /*
@@ -64,50 +66,40 @@ public class EinkaufslistenErstellerTest {
      */
     @Test
     public void testFindePreiswertestenLieferantenFuerEinkaufslistenposition() {
+        initSpeiseplaene();
         Einkaufsliste liste = ersteller.erzeuge();
         assertEquals("Müller", liste.getPositionen().get(0).getLieferant().getName());
     }
     
 
     @Test
-    public void testFindeGünstigsterGesamtPreisFuerEinkaufslistenposition() {
+    public void testFindeGünstigstenGesamtPreisFuerEinkaufslistenposition() {
+        initSpeiseplaene();
         Einkaufsliste liste = ersteller.erzeuge();
-        assertEquals(3850.0, liste.getPositionen().get(0).getPreis(), 0.001);
+        assertEquals(15.0, liste.getPositionen().get(0).getPreis(), 0.001);
     }
     
-    
-    /*/
     @Test
-    public void testBerechneBenoetigteAnzahlAnGebinden() {
-        Einkaufsliste liste = ersteller.erzeuge();
-        assertEquals(100.0, liste.getPositionen().get(0).getMenge(), 0.0001);
-        
-    }
-    /*/
+    public void testGesamtmengeGroeßerAlsVoratsmengeEinesLieferanten() {
+        Zutat moehren = new DummyZutat().name("Möhren").einheit(Einheit.STUECK).menge(2.0).kategorie(SpeisenUndNahrungsmittelKategorie.VEGETARISCH).erstelle();
+        Speise speise = new DummySpeise().name("Buttermöhren").mitZutat(moehren).erstelle();
+        Speiseplan planEssen = new DummySpeiseplan().fuerKantine(Kantine.ESSEN).plusTag(speise, speise, speise).erstelle();
+        Speiseplan planMuehlheim = new DummySpeiseplan().fuerKantine(Kantine.MUELHEIM_AN_DER_RUHR).plusTag(speise, speise, speise).erstelle();
+        ersteller = new EinkaufslistenErsteller();
+        ersteller.add(planEssen);
+        ersteller.add(planMuehlheim);
     
-    /*/
-    @Test
-    public void testVergleicheAnzahlBenoetigterGebindeMitVorhandenerAnzahl() {
         Einkaufsliste liste = ersteller.erzeuge();
-        assertEquals(100.0, liste.getPositionen().get(0).getMenge(), 0.0001);
-        
-    }
-    /*/
-
-    /*/
-    @Test
-    public void testVergleicheAnzahlBenoetigterGebindeMitVorhandenerAnzahl() {
-        Einkaufsliste liste = ersteller.erzeuge();
-        assertEquals(100.0, liste.getPositionen().get(0).getMenge(), 0.0001);
-        
-    }
-    /*/    
+        assertEquals(2, liste.getPositionen().size());
+        assertEquals(4.0, liste.getPositionen().get(0).getAnzahlGebinde(), 0.001);
+        assertEquals(1.0, liste.getPositionen().get(1).getAnzahlGebinde(), 0.001);
+    }    
     
-    private Speiseplan erzeugeDummySpeiseplan() {
+    private Speiseplan erzeugeDummySpeiseplan(Kantine kantine) {
         List<Tag> tage = new ArrayList<Tag>();
         Tag tag = erzeugeTag();
         tage.add(tag);
-        Speiseplan plan = new Speiseplan(Kantine.ESSEN, tage);
+        Speiseplan plan = new Speiseplan(kantine, tage);
 
         return plan;
     }
@@ -124,51 +116,7 @@ public class EinkaufslistenErstellerTest {
     }
 
     private Speise erzeugeSpeise() {
-        Speise speise = new Speise();
-        Zutat zutat = erzeugeZutat();
-        speise.addZutat(zutat);
-        return speise;
+        Zutat kartoffeln = new DummyZutat().name("Kartoffeln").einheit(Einheit.STUECK).menge(2.0).kategorie(SpeisenUndNahrungsmittelKategorie.VEGETARISCH).erstelle();
+        return new DummySpeise().name("Bratkaroffeln").mitZutat(kartoffeln).beliebtheit(1).erstelle();
     }
-
-    private Zutat erzeugeZutat() {
-        Zutat zutat = new Zutat();
-        Nahrungsmittel nahrungsmittel = erzeugeNahrungsmittel(zutat);
-        zutat.setMenge(1000.0);
-        zutat.setNahrungsmittel(nahrungsmittel);
-        return zutat;
-    }
-
-    /*/ private Zutat berechneBenoetigteMenge() {
-        
-        
-     Zutat zutat = new Zutat();
-     Nahrungsmittel nahrungsmittel = erzeugeNahrungsmittel(zutat);
-     zutat.setMenge(1000.0);
-     zutat.setNahrungsmittel(nahrungsmittel);
-     return null;
-     }
-     //*/
-    private Nahrungsmittel erzeugeNahrungsmittel(Zutat zutat) {
-        Nahrungsmittel nahrungsmittel = new Nahrungsmittel();
-        nahrungsmittel.setName("Kartoffeln");
-        nahrungsmittel.setEinheit(Einheit.STUECK);
-        return nahrungsmittel;
-    }
-
-    private static PreisListenPosition createNahrungsmittel(String name, double preis, double gebindeGroesse, String lieferantenName, int vorratsMenge) {
-        PreisListenPosition position = new PreisListenPosition();
-        Nahrungsmittel kartoffel = new Nahrungsmittel();
-        kartoffel.setName(name);
-        position.setNahrungsmittel(kartoffel);
-        position.setGebindeGroesse(gebindeGroesse);
-        position.setPreis(preis);
-        Lieferant lieferant = new Grosshaendler();
-        lieferant.setName(lieferantenName);
-        position.setLieferant(lieferant);
-        position.setVorratsBestand(vorratsMenge);
-        return position;
-        
-    }
-
-    
 }

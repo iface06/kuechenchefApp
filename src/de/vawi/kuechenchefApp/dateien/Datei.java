@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface Datei extends Iterable<String> {
 
-    public String getDateinameMitPfad();
+    public String getDateiname();
     
     
 }

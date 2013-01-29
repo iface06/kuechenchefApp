@@ -27,29 +27,37 @@ public class ZutatErstellerTest {
     public void before() {
         fuegeKartoffelnInNahrungsmittelVerwaltungEin();
         erstelleErwartetesNahrungsmittel();
-        rezpetZeile = "\"Kartoffeln mit Senfsauce und Ei\",150,\"g\",\"Kartoffeln\"";
         ersteller = new ZutatErsteller();
     }
     
     @Test
-    public void testErstelleZutat() {
+    public void testErstelleZutatKartoffeln() {
+        rezpetZeile = "\"Kartoffeln mit Senfsauce und Ei\",150,\"g\",\"Kartoffeln\"";
         Zutat zutat = ersteller.erstelle(rezpetZeile);
         assertEquals(150.0, zutat.getMenge(), 0.0001);
     }
     
     @Test
-    public void testNahrungsmittelZurZutat(){
+    public void testNahrungsmittelZurZutatKartoffeln(){
+        rezpetZeile = "\"Kartoffeln mit Senfsauce und Ei\",150,\"g\",\"Kartoffeln\"";
         Zutat zutat = ersteller.erstelle(rezpetZeile);
         assertEquals(erwatetesNahrungsmittel, zutat.getNahrungsmittel());
     }
+    
+    @Test
+    public void testNahrungsmittelZurZutatEier(){
+        rezpetZeile = "Kartoffeln mit Senfsauce und Ei,\"1,5\",,\"Ei\"";
+        Zutat zutat = ersteller.erstelle(rezpetZeile);
+        assertEquals("Ei", zutat.getNahrungsmittel().getName());
+        assertEquals(Einheit.STUECK, zutat.getNahrungsmittel().getEinheit());
+    }
 
     private void fuegeKartoffelnInNahrungsmittelVerwaltungEin() {
-        Nahrungsmittel kartoffeln = new Nahrungsmittel();
-        kartoffeln.setName("Kartoffeln");
-        kartoffeln.setEinheit(Einheit.GRAMM);
-        kartoffeln.setKategorie(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
+        Nahrungsmittel kartoffeln = erstelleKartoffel();
+        Nahrungsmittel eier = erstelleEier();
         
         NahrungsmittelVerwaltung.getInstanz().fuegeHinzu(kartoffeln);
+        NahrungsmittelVerwaltung.getInstanz().fuegeHinzu(eier);
     }
 
     private void erstelleErwartetesNahrungsmittel() {
@@ -57,6 +65,22 @@ public class ZutatErstellerTest {
         erwatetesNahrungsmittel.setName("Kartoffeln");
         erwatetesNahrungsmittel.setEinheit(Einheit.GRAMM);
         erwatetesNahrungsmittel.setKategorie(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);   
+    }
+
+    private Nahrungsmittel erstelleKartoffel() {
+        Nahrungsmittel kartoffeln = new Nahrungsmittel();
+        kartoffeln.setName("Kartoffeln");
+        kartoffeln.setEinheit(Einheit.GRAMM);
+        kartoffeln.setKategorie(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
+        return kartoffeln;
+    }
+
+    private Nahrungsmittel erstelleEier() {
+        Nahrungsmittel eier = new Nahrungsmittel();
+        eier.setName("Ei");
+        eier.setEinheit(Einheit.STUECK);
+        eier.setKategorie(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
+        return eier;
     }
 
     

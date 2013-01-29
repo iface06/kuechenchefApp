@@ -24,6 +24,10 @@ public class SpeiseplanErstellerTest {
 
         
     }
-
+    @Test
+    public void teste() {
+        SpeiseplanErsteller ersteller = new SpeiseplanErsteller();
+//        ersteller.beliebtesteSpeisenPruefenUndAnpassen();
+    }
    
 }

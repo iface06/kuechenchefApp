@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-public class TestableDateiManager extends DateiManager{
+public class TestableDateiManager extends VawiDateiManager{
 
     private String dateiInhalt = "";
     StringWriter writer = new StringWriter();

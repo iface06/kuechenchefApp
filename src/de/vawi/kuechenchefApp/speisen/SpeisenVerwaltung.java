@@ -53,8 +53,24 @@ public class SpeisenVerwaltung implements Iterable<Speise> {
         } 
         return beliebtesteSpeisen;
     }
-    
 
+    void entferne(Speise speise) {
+        speisen.remove(speise);
+    }
+
+    public List<Speise> findeUnbeliebtesteSpeisen(PlanungsPeriode periode) {
+        
+        List<Speise> unbeliebtesteSpeisen = new ArrayList<Speise>();
+        
+        int anzahlBenötigteSpeisen = periode.berechneAnzahlBenötigterSpeisen();
+        
+        for(Speise speise : speisen) {
+            if(speise.getBeliebtheit() > anzahlBenötigteSpeisen) {
+                unbeliebtesteSpeisen.add(speise);
+            }
+        } 
+        return unbeliebtesteSpeisen;
+    }
     
     class SpeiseNichtGefunden extends RuntimeException{
         

@@ -1,6 +1,8 @@
 package de.vawi.kuechenchefApp.speiseplan;
 
 import de.vawi.kuechenchefApp.PlanungsPeriode;
+import de.vawi.kuechenchefApp.ZutatenKalkulator;
+import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
 import de.vawi.kuechenchefApp.speisen.*;
 import java.util.*;
@@ -17,9 +19,20 @@ public class SpeiseplanErsteller
     private List<Speise> beliebtesteSpeisen;
     //TODO uebrige Speisen muessen ermittelt werden evtl in der SpeisenVerwaltung
     private List<Speise> uebrigenSpeisen;
+    private List<Speise> speisenFuerEssen;
+    private List<Speise> uebrigeSpeiesenEssen;
+    private List<Speise> speisenFuerMuehlheim;
+    private List<Speise> uebrigeSpeisenMuehlheim;
+    
+    Speiseplan speiseplanEssen;
+    Speiseplan speiseplanMuehlheim;
     
     public SpeiseplanErsteller() {
         beliebtesteSpeisen = speisen.findeBeliebtesteSpeisenFuerPlanungsPeriode(new PlanungsPeriode());
+       System.out.println(speisen.size());
+        System.out.println(beliebtesteSpeisen.size());
+        uebrigenSpeisen = speisen.findeUnbeliebtesteSpeisen(new PlanungsPeriode());
+        System.out.println(uebrigenSpeisen.size());
     }
     
     /**
@@ -37,15 +50,22 @@ public class SpeiseplanErsteller
      */
     public Speiseplan erzeuge(Kantine kantine)
     {
-        return new Speiseplan(kantine, new ArrayList<Tag>());
+        beliebtesteSpeisenPruefenUndAnpassen();
+        erstelleSpeiseplaene();
+        pruefeVerfuegbarkeit();
+        if(kantine == Kantine.ESSEN) {
+            return speiseplanEssen;
+        } else {
+            return speiseplanMuehlheim;
+        }
+//        return new Speiseplan(kantine, new ArrayList<Tag>());
     }
     
-    private void beliebtesteSpeisenPruefenUndAnpassen() {
+    protected void beliebtesteSpeisenPruefenUndAnpassen() {
         if(beliebtesteSpeisenBeinhaltenGenugFischgerichte()) {
             if(beliebtesteSpeisenBeinhaltenGenugVegGerichte()) {
                 if(beliebtesteSpeisenBeinhaltenGenugFleischgerichte()) {
-                    pruefeVerfuegbarkeit();
-                    //else Zweig für "zu wenig Fleisch Gerichte in den beliebtesten Speisen"
+                    System.out.println("Ausgewählte Speisen erfüllen harte Kriterien!");
                 } else {
                     fuegeNeuesGerichtHinzu(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
                     beliebtesteSpeisenPruefenUndAnpassen();
@@ -164,16 +184,125 @@ public class SpeiseplanErsteller
         return beliebtestesGericht;
     }
 
-//    private void erstelleSpeiseplan(Kantine kantine) {
-//        List<Speise> speisenFuerSpeiseplan = beliebtesteSpeisen;
-//        List<Tag> tage = new ArrayList<Tag>();
-//        for(int i = 1; i <= new PlanungsPeriode().getAnzahlWochen(); i++) {
-//            verteileGerichtefuerEineWoche(tage, speisenFuerSpeiseplan);
-//        }
-//    }
-
-
     private void pruefeVerfuegbarkeit() {
+        ZutatenKalkulator kalkulator = new ZutatenKalkulator();
+        Map<Nahrungsmittel, Double> mengenEssen = kalkulator.berechneGesamtMengen(speiseplanEssen);
+        Map<Nahrungsmittel, Double> mengenMuehlheim = kalkulator.berechneGesamtMengen(speiseplanMuehlheim);
+        
+        List<Nahrungsmittel> problematischeNahrungsmittelEssen = new ArrayList<Nahrungsmittel>();
+        List<Nahrungsmittel> problematischeNahrungsmittelMuehl = new ArrayList<Nahrungsmittel>();
+        
+        for(Nahrungsmittel nahrungsmittel : mengenEssen.keySet()) {
+             
+            Double gesamtMenge = mengenEssen.get(nahrungsmittel) + (mengenMuehlheim.containsKey(nahrungsmittel) ? mengenMuehlheim.get(nahrungsmittel) : 0.0);
+            if(gesamtMenge > nahrungsmittel.getVerfuegbareGesamtMenge()) {
+                if(mengenEssen.get(nahrungsmittel) > nahrungsmittel.getVerfuegbareGesamtMenge()) {
+                    problematischeNahrungsmittelEssen.add(nahrungsmittel);
+                }
+                if((mengenMuehlheim.containsKey(nahrungsmittel) ? mengenMuehlheim.get(nahrungsmittel) : 0.0) > nahrungsmittel.getVerfuegbareGesamtMenge()) {
+                    problematischeNahrungsmittelMuehl.add(nahrungsmittel);
+                }
+            }
+        }
+        
+        if(problematischeNahrungsmittelEssen.size() != 0 || problematischeNahrungsmittelMuehl.size() != 0) {
+
+            System.out.println("Verfügbarkeit reicht nicht aus!");
+//            passeSpeisenDerVerfügbarkeitAn();            
+        }
+
+    }
+
+    private void erstelleSpeiseplaene() {
+        speisenFuerEssen = beliebtesteSpeisen;
+        uebrigeSpeiesenEssen = uebrigenSpeisen;
+        
+        speisenFuerMuehlheim = beliebtesteSpeisen;
+        uebrigeSpeisenMuehlheim = uebrigenSpeisen;
+        
+        speiseplanEssen = erstelleSpeiseplan(Kantine.ESSEN);
+        speiseplanMuehlheim = erstelleSpeiseplan(Kantine.MUELHEIM_AN_DER_RUHR);
+    }
+
+    private Speiseplan erstelleSpeiseplan(Kantine kantine) {
+        List<Speise> speisenFuerPlan;
+        if(kantine == Kantine.ESSEN) {
+            speisenFuerPlan = speisenFuerEssen;
+        } else {
+            speisenFuerPlan = speisenFuerMuehlheim;
+        }
+        List<Tag> tage = new ArrayList<Tag>();
+        PlanungsPeriode periode = new PlanungsPeriode();
+        //zuerst müssen die Fischtage erstellt werden!!
+        for (int i = 1; i <= periode.getAnzahlWochen(); i++) {
+            tage.add(erstelleFischTag(speisenFuerPlan, i * 5));
+        }
+        
+        //Dann die "normalen" Tage
+        for(int i = 1; i <= periode.getAnzahlWochen() * periode.getAnzahlTageProWoche(); i++) {
+            if ( (i % 5) != 0) {
+                tage.add(erstelleNormalenTag(speisenFuerPlan, i));
+            }
+        }
+        return new Speiseplan(kantine, tage);
+    }
+
+    private Tag erstelleNormalenTag(List<Speise> speisenFuerPlan, int nummer) {
+         Tag tag = new Tag(nummer);
+        List<Speise> tagesSpeisen = new ArrayList<Speise>();
+        tagesSpeisen.add(nimmEinGerichtAusListe(speisenFuerPlan, SpeisenUndNahrungsmittelKategorie.VEGETARISCH));
+        tagesSpeisen.add(nimmEinGerichtAusListe(speisenFuerPlan, SpeisenUndNahrungsmittelKategorie.FLEISCH));
+        tagesSpeisen.add(nimmEinGerichtAusListe(speisenFuerPlan, SpeisenUndNahrungsmittelKategorie.FLEISCH));
+        
+        return verteileSpeisenAufTag(tag, tagesSpeisen);
+    }
+
+    private Tag erstelleFischTag(List<Speise> speisenFuerPlan, int nummer) {
+        Tag tag = new Tag(nummer);
+        List<Speise> tagesSpeisen = new ArrayList<Speise>();
+        tagesSpeisen.add(nimmEinGerichtAusListe(speisenFuerPlan, SpeisenUndNahrungsmittelKategorie.FISCH));
+        tagesSpeisen.add(nimmEinGerichtAusListe(speisenFuerPlan, SpeisenUndNahrungsmittelKategorie.VEGETARISCH));
+        tagesSpeisen.add(nimmEinGerichtAusListe(speisenFuerPlan, SpeisenUndNahrungsmittelKategorie.FLEISCH));
+        
+        return verteileSpeisenAufTag(tag, tagesSpeisen);
+    }
+    
+    private Tag verteileSpeisenAufTag(Tag tag, List<Speise> tagesSpeisen) {
+        
+        tag.setBeliebtesteSpeise(findeBeliebtesteSpeise(tagesSpeisen));
+        tagesSpeisen.remove(findeBeliebtesteSpeise(tagesSpeisen));
+        tag.setZweitbeliebtesteSpeise(findeBeliebtesteSpeise(tagesSpeisen));
+        tagesSpeisen.remove(findeBeliebtesteSpeise(tagesSpeisen));
+        tag.setDrittbeliebtesteSpeise(findeBeliebtesteSpeise(tagesSpeisen));
+       
+        return tag;
+    }
+    
+    private Speise findeBeliebtesteSpeise(List<Speise> speisen) {
+        
+        Speise beliebtesteSpeise = new Speise();
+        beliebtesteSpeise.setBeliebtheit(new PlanungsPeriode().berechneAnzahlBenötigterSpeisen() + 1);
+        for(Speise speise : speisen) {
+            if(speise.getBeliebtheit() < beliebtesteSpeise.getBeliebtheit()) {
+                beliebtesteSpeise = speise;
+            }
+        }
+        return beliebtesteSpeise;
+    }
+    
+    private Speise nimmEinGerichtAusListe(List<Speise> speisen, SpeisenUndNahrungsmittelKategorie kategorie) {
+        
+        for(Speise speise : speisen) {
+            if(speise.getKategorie() == kategorie) {
+                speisen.remove(speise);
+                return speise;
+            }
+        }
+       if(kategorie == SpeisenUndNahrungsmittelKategorie.FLEISCH ) {
+           return nimmEinGerichtAusListe(speisen, SpeisenUndNahrungsmittelKategorie.FISCH);
+       } else {
+           return nimmEinGerichtAusListe(speisen, SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
+       }
         
     }
 

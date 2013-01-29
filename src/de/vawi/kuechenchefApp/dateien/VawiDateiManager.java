@@ -25,7 +25,7 @@ import java.io.PrintWriter;
  * @author Patrick Veith et al.
  * @version 2.1 on 11.10.2012
  */
-class DateiManager {
+class VawiDateiManager implements DateiLeserManager, DateiSchreiberManager{
     // Attribute der Klasse Datei
     // Name der Datei
     // - Der Name der Datei darf Pfadinformationen enthalten, die aber 
@@ -57,7 +57,7 @@ class DateiManager {
      *
      * @param in_name (String): Dateiname der benutzt werden soll.
      */
-    public DateiManager(String in_name) {
+    public VawiDateiManager(String in_name) {
         dateiName = new String(in_name);
         errorCode = 0;
         eof = false;

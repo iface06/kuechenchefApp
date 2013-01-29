@@ -27,27 +27,9 @@ public class ZutatenKalkulatorTest {
         kartoffeln.setName("Kartoffeln");
 
         assertEquals(1, mengen.size());
-        assertEquals(751000.0, mengen.get(kartoffeln), 0.0001);
+        assertEquals(1502.0, mengen.get(kartoffeln), 0.0001);
     }
-
-//    @Test
-//    public void testMengenBerechnung1() {
-//        Speise pellKartoffeln = new Speise();
-//        Zutat kartoffeln = new Zutat();
-//        Nahrungsmittel nahrungsmittel = new Nahrungsmittel();
-//        nahrungsmittel.setName("Kartoffeln");
-//        kartoffeln.setNahrungsmittel(nahrungsmittel);
-//        kartoffeln.setMenge(1000.0);
-//        pellKartoffeln.addZutat(kartoffeln);
-//        ZutatenKalkulator kalkulator = new ZutatenKalkulator(Kantine.ESSEN);
-//        Map<Nahrungsmittel, Double> mengen = kalkulator.berechneGesamtMengen(pellKartoffeln);
-//
-//        Nahrungsmittel kartoffeln1 = new Nahrungsmittel();
-//        kartoffeln1.setName("Kartoffeln");
-//        Double menge = mengen.get(kartoffeln1);
-//        
-//        assertEquals(1000.0, menge, 0.0001);
-//    }
+    
     private Speiseplan erzeugeDummySpeiseplan() {
         List<Tag> tage = new ArrayList<Tag>();
         Tag tag = erzeugeTag();
@@ -78,7 +60,7 @@ public class ZutatenKalkulatorTest {
     private Zutat erzeugeZutat() {
         Zutat zutat = new Zutat();
         Nahrungsmittel nahrungsmittel = erzeugeNahrungsmittel(zutat);
-        zutat.setMenge(1000.0);
+        zutat.setMenge(2.0);
         zutat.setNahrungsmittel(nahrungsmittel);
         return zutat;
     }

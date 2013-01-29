@@ -10,8 +10,12 @@ import java.util.*;
  */
 public class Speiseplan implements Iterable<Tag>
 {
-    private List<Tag> tageMitGerichten;
+    private List<Tag> tageMitGerichten = new ArrayList<>();
     private Kantine kantine;
+    
+    public Speiseplan(){
+        
+    }
     
     public Speiseplan(Kantine kantine, List<Tag> tageMitGerichten){
         this.kantine = kantine;
@@ -32,8 +36,17 @@ public class Speiseplan implements Iterable<Tag>
         return this.kantine;
     }
 
+    public void setKantine(Kantine kantine) {
+        this.kantine = kantine;
+    }
+    
+    public void fuegeTagHinzu(Tag tag){
+        this.tageMitGerichten.add(tag);
+    }
+    
     @Override
     public Iterator<Tag> iterator() {
         return tageMitGerichten.iterator();
     }
+
 }

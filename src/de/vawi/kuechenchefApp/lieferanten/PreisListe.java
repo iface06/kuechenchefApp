@@ -5,7 +5,10 @@ package de.vawi.kuechenchefApp.lieferanten;
 import de.vawi.kuechenchefApp.dateien.Datei;
 import java.util.Iterator;
 
-
+/**
+ * 
+ * @author Sonja
+ */
 class PreisListe implements Datei{
     
     private Datei datei;
@@ -16,11 +19,15 @@ class PreisListe implements Datei{
     
 
     @Override
-    public String getDateinameMitPfad() {
-        return datei.getDateinameMitPfad();
+    public String getDateiname() {
+        return datei.getDateiname();
     }
 
-    
+    /**
+     * Diese Methode
+     * 
+     * @return 
+     */
     public String getLieferantenZeile() {
         Iterator<String> iterator = iterator();
         if(iterator.hasNext()){
