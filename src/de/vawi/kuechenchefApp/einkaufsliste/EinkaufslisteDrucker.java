@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author Matthias
  */
-public class EinkaufslisteDrucker {
+class EinkaufslisteDrucker {
 
     private String ausdruck = new String();
 

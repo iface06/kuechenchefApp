@@ -4,7 +4,7 @@ import de.vawi.kuechenchefApp.dateien.Datei;
 import java.util.Iterator;
 
 
-public class EinkaufslistenDatei implements Datei{
+class EinkaufslistenDatei implements Datei{
 
     String lieferant;
 

@@ -11,7 +11,7 @@ import java.util.Iterator;
  *
  * @author Tatsch
  */
-public class SpeiseplanDatei implements Datei{
+class SpeiseplanDatei implements Datei{
 
     private Kantine kantine;
 

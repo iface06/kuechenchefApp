@@ -216,7 +216,8 @@ public class SpeiseplanErsteller {
         }
 
         if (problematischeNahrungsmittelEssen.size() != 0 || problematischeNahrungsmittelMuehl.size() != 0) {
-
+//das nächste beliebteste der gleichen kategorie aus übrige Speisen holen
+//neustart der Validierung
             System.out.println("Verfügbarkeit reicht nicht aus!");
 //            passeSpeisenDerVerfügbarkeitAn();            
         }

@@ -13,7 +13,7 @@ import java.util.Iterator;
  *
  * @author Tatsch
  */
-public class SpeiseplanDrucker {
+class SpeiseplanDrucker {
 
     private String ausdruck = new String();
     private PlanungsPeriode periode = new PlanungsPeriode();

@@ -1,6 +1,6 @@
 package de.vawi.kuechenchefApp.speiseplan;
 
-import de.vawi.kuechenchefApp.DateiExport;
+import de.vawi.kuechenchefApp.export.DateiExport;
 import de.vawi.kuechenchefApp.dateien.Datei;
 import de.vawi.kuechenchefApp.dateien.DateiSchreiber;
 import de.vawi.kuechenchefApp.speiseplan.Speiseplan;

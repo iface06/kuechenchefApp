@@ -4,7 +4,7 @@ import de.vawi.kuechenchefApp.lieferanten.Lieferant;
 import java.util.List;
 
 
-public class KostenRechner {
+class KostenRechner {
 
     public double berechneGesamtkosten(Einkaufsliste liste){
         return berechneGesamtkostenFuerNahrungsmittel(liste) + berechneGesamtkostenFuerLieferung(liste);
