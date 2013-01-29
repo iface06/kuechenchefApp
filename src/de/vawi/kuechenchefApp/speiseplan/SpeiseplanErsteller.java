@@ -53,7 +53,7 @@ public class SpeiseplanErsteller
         beliebtesteSpeisenPruefenUndAnpassen();
         erstelleSpeiseplaene();
         pruefeVerfuegbarkeit();
-        if(kantine == Kantine.ESSEN) {
+        if(kantine.equals(Kantine.ESSEN)) {
             return speiseplanEssen;
         } else {
             return speiseplanMuehlheim;
@@ -67,29 +67,47 @@ public class SpeiseplanErsteller
                 if(beliebtesteSpeisenBeinhaltenGenugFleischgerichte()) {
                     System.out.println("Ausgewählte Speisen erfüllen harte Kriterien!");
                 } else {
-                    fuegeNeuesGerichtHinzu(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
+                    System.out.println("Zu wenig Fleisch Gerichte an Bord!");
+                    fuegeNeuesGerichtHinzu(SpeisenUndNahrungsmittelKategorie.FLEISCH);
                     beliebtesteSpeisenPruefenUndAnpassen();
                 }
                 
                 //else Zweig für "zu wenig Vegetarische Gerichte in den beliebtesten Speisen"
             } else {
+                System.out.println("Zu wenig Vegetarische Gerichte an Bord!");
                 fuegeNeuesGerichtHinzu(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
                 beliebtesteSpeisenPruefenUndAnpassen();
             }
             //else Zweig für "zu wenig Fischgerichte in den beliebtesten Speisen"
         } else {
+            System.out.println("Zu wenig Fischgerichte Gerichte an Bord!");
             fuegeNeuesGerichtHinzu(SpeisenUndNahrungsmittelKategorie.FISCH);
             beliebtesteSpeisenPruefenUndAnpassen();
         }
     }
     
     private void fuegeNeuesGerichtHinzu(SpeisenUndNahrungsmittelKategorie speiseKategorie) {
-        Speise unbeliebtestesFleischGericht = ermittleUnbeliebtestesFleischGericht();
-        Speise neuesGericht = ermittlebeliebtestesGericht(speiseKategorie);
-        beliebtesteSpeisen.add(neuesGericht);
-        beliebtesteSpeisen.remove(unbeliebtestesFleischGericht);
-        uebrigenSpeisen.add(unbeliebtestesFleischGericht);
-        uebrigenSpeisen.remove(neuesGericht);
+        if(speiseKategorie.equals(SpeisenUndNahrungsmittelKategorie.FLEISCH)) {
+            Speise unbeliebtestesVegGericht = ermittleUnbeliebtestesVegGericht();
+            System.out.println("Unbeliebtestes Veggericht: " + unbeliebtestesVegGericht.getName());
+            Speise neuesFleischGericht = ermittlebeliebtestesGericht(speiseKategorie);
+            System.out.println("Neues Gericht: " + neuesFleischGericht.getName());            
+            beliebtesteSpeisen.add(neuesFleischGericht);
+            uebrigenSpeisen.add(unbeliebtestesVegGericht);
+            beliebtesteSpeisen.remove(unbeliebtestesVegGericht);
+            uebrigenSpeisen.remove(neuesFleischGericht);
+
+        } else {
+            Speise unbeliebtestesFleischGericht = ermittleUnbeliebtestesFleischGericht();
+            System.out.println("Unbeliebtestes Fleischgericht: " + unbeliebtestesFleischGericht.getName());
+            Speise neuesGericht = ermittlebeliebtestesGericht(speiseKategorie);
+            System.out.println("Neues Gericht: " + neuesGericht.getName());
+            beliebtesteSpeisen.add(neuesGericht);
+            beliebtesteSpeisen.remove(unbeliebtestesFleischGericht);
+            uebrigenSpeisen.add(unbeliebtestesFleischGericht);
+            uebrigenSpeisen.remove(neuesGericht);
+        }
+
     }
     
     private int mindestAnzahlBenoetigterFleischgerichte() {
@@ -104,10 +122,11 @@ public class SpeiseplanErsteller
     private boolean beliebtesteSpeisenBeinhaltenGenugFleischgerichte() {
         int counter = 0;
         for(Speise speise : beliebtesteSpeisen) {
-            if(speise.getKategorie() == SpeisenUndNahrungsmittelKategorie.FLEISCH) {
+            if(speise.getKategorie().equals(SpeisenUndNahrungsmittelKategorie.FLEISCH)) {
                 counter++;
             }
         }
+        System.out.println("Anzahl von Fleischgerichten: " + counter);
         if(counter >= mindestAnzahlBenoetigterFleischgerichte()) {
             return true;
         }
@@ -121,10 +140,11 @@ public class SpeiseplanErsteller
     private boolean beliebtesteSpeisenBeinhaltenGenugFischgerichte() {
         int counter = 0;
         for(Speise speise : beliebtesteSpeisen) {
-            if(speise.getKategorie() == SpeisenUndNahrungsmittelKategorie.FISCH) {
+            if(speise.getKategorie().equals(SpeisenUndNahrungsmittelKategorie.FISCH)) {
                 counter++;
             }
         }
+        System.out.println("Anzahl von Fischgerichten: " + counter);
         if(counter >= mindestAnzahlBenoetigterFischgerichte()) {
             return true;
         }
@@ -138,10 +158,11 @@ public class SpeiseplanErsteller
     private boolean beliebtesteSpeisenBeinhaltenGenugVegGerichte() {
         int counter = 0;
         for(Speise speise : beliebtesteSpeisen) {
-            if(speise.getKategorie() == SpeisenUndNahrungsmittelKategorie.VEGETARISCH) {
+            if(speise.getKategorie().equals(SpeisenUndNahrungsmittelKategorie.VEGETARISCH)) {
                 counter++;
             }
         }
+        System.out.println("Anzahl von Veggerichten: " + counter);
         if(counter >= mindestAnzahlBenoetigterVegGerichte()) {
             return true;
         }
@@ -162,8 +183,21 @@ public class SpeiseplanErsteller
         Speise unbeliebtesteSpeise = new Speise();
         unbeliebtesteSpeise.setBeliebtheit(0);
         for(Speise speise : beliebtesteSpeisen) {
-            if(speise.getKategorie() == SpeisenUndNahrungsmittelKategorie.FLEISCH) {
-                if(unbeliebtesteSpeise.getBeliebtheit() > unbeliebtesteSpeise.getBeliebtheit()) {
+            if(speise.getKategorie().equals(SpeisenUndNahrungsmittelKategorie.FLEISCH)) {
+                if(speise.getBeliebtheit() > unbeliebtesteSpeise.getBeliebtheit()) {
+                    unbeliebtesteSpeise = speise;
+                }
+            }
+        }
+        return unbeliebtesteSpeise;
+    }
+    
+       private Speise ermittleUnbeliebtestesVegGericht() {
+        Speise unbeliebtesteSpeise = new Speise();
+        unbeliebtesteSpeise.setBeliebtheit(0);
+        for(Speise speise : beliebtesteSpeisen) {
+            if(speise.getKategorie().equals(SpeisenUndNahrungsmittelKategorie.VEGETARISCH)) {
+                if(speise.getBeliebtheit() > unbeliebtesteSpeise.getBeliebtheit()) {
                     unbeliebtesteSpeise = speise;
                 }
             }
@@ -173,9 +207,9 @@ public class SpeiseplanErsteller
 
     private Speise ermittlebeliebtestesGericht(SpeisenUndNahrungsmittelKategorie speiseKategorie) {
         Speise beliebtestesGericht = new Speise();
-        beliebtestesGericht.setBeliebtheit(new PlanungsPeriode().berechneAnzahlBenötigterSpeisen() + 1);
+        beliebtestesGericht.setBeliebtheit(SpeisenVerwaltung.getInstanz().size());
         for(Speise speise : uebrigenSpeisen) {
-            if(speise.getKategorie() == speiseKategorie) {
+            if(speise.getKategorie().equals(speiseKategorie)) {
                 if(speise.getBeliebtheit() < beliebtestesGericht.getBeliebtheit()) {
                     beliebtestesGericht = speise;
                 }
@@ -226,7 +260,7 @@ public class SpeiseplanErsteller
 
     private Speiseplan erstelleSpeiseplan(Kantine kantine) {
         List<Speise> speisenFuerPlan;
-        if(kantine == Kantine.ESSEN) {
+        if(kantine.equals(Kantine.ESSEN)) {
             speisenFuerPlan = speisenFuerEssen;
         } else {
             speisenFuerPlan = speisenFuerMuehlheim;
@@ -293,12 +327,12 @@ public class SpeiseplanErsteller
     private Speise nimmEinGerichtAusListe(List<Speise> speisen, SpeisenUndNahrungsmittelKategorie kategorie) {
         
         for(Speise speise : speisen) {
-            if(speise.getKategorie() == kategorie) {
+            if(speise.getKategorie().equals(kategorie)) {
                 speisen.remove(speise);
                 return speise;
             }
         }
-       if(kategorie == SpeisenUndNahrungsmittelKategorie.FLEISCH ) {
+       if(kategorie.equals(SpeisenUndNahrungsmittelKategorie.FLEISCH)) {
            return nimmEinGerichtAusListe(speisen, SpeisenUndNahrungsmittelKategorie.FISCH);
        } else {
            return nimmEinGerichtAusListe(speisen, SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
