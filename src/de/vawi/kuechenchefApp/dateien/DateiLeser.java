@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
- * 
+ * Diese Klasse ist für das einlesen der Dateien zuständig.
+ *
  * @author Tatsch
  */
 public class DateiLeser {
@@ -13,20 +15,34 @@ public class DateiLeser {
     protected String dateiName;
     private DateiLeserManager manager;
 
+    /**
+     *
+     * @param dateiName Name der Datei
+     */
     public DateiLeser(String dateiName) {
         this.dateiName = dateiName;
     }
 
+    /**
+     * Diese Methode erstellt aus den eingelesenen Zeilen einer Datei ein Objekt
+     * vom Typ Datei.
+     *
+     * @return eine Datei aus den eingelesenen Zeilen
+     */
     public Datei leseDatei() {
         manager = erstelleDateiManager();
         List<String> zeilen = leseZeilenAusDatei();
         Datei datei = erstelleDatei(zeilen);
         return datei;
     }
-
+/**
+ * 
+ * @return Objekt der Klasse VawiDateiManager
+ */
     protected VawiDateiManager erstelleDateiManager() {
         return new VawiDateiManager(dateiName);
     }
+
     private void oeffneDatei() throws IOException {
         manager.openInFile();
     }
@@ -39,22 +55,25 @@ public class DateiLeser {
                 zeilen.add(zeile);
             }
         }
-        
+
         return zeilen;
     }
 
     private boolean istEndeDerDateiErreicht() {
         return manager.eof();
     }
-    
+
     private String leseNaechsteZeileEin() throws IOException {
         return manager.readLine();
     }
-    
+
     private void schliesseDatei() throws IOException {
         manager.closeInFile();
     }
-    
+/**
+ * 
+ * @param ex Gibt einen Log aus, wenn die IOException geworfen wird.
+ */
     protected void behandelFehlerfall(IOException ex) {
         Logger.getLogger(DateiLeser.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -73,7 +92,6 @@ public class DateiLeser {
 
     private Datei erstelleDatei(final List<String> zeilen) {
         Datei datei = new Datei() {
-
             @Override
             public String getDateiname() {
                 return dateiName;
@@ -83,7 +101,7 @@ public class DateiLeser {
             public Iterator<String> iterator() {
                 return zeilen.iterator();
             }
-        }; 
+        };
         return datei;
     }
 }
