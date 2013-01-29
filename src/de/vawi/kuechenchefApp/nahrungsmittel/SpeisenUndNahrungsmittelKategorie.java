@@ -1,5 +1,7 @@
 package de.vawi.kuechenchefApp.nahrungsmittel;
 
+import java.util.*;
+
 
 /**
  * Mögliche Kategorien denen ein Nahrungsmittel zugeordnet sein kann.
@@ -33,5 +35,15 @@ public enum SpeisenUndNahrungsmittelKategorie{
             }
         }
         return SpeisenUndNahrungsmittelKategorie.VEGETARISCH;
+    }
+    
+    public static List<SpeisenUndNahrungsmittelKategorie> holeAndereKategorien(SpeisenUndNahrungsmittelKategorie kategorie){
+        List<SpeisenUndNahrungsmittelKategorie> andereKategorien = new ArrayList<>();
+        for (SpeisenUndNahrungsmittelKategorie kategoriee : values()) {
+            if(!kategoriee.equals(kategorie)){
+                andereKategorien.add(kategoriee);
+            }
+        }
+        return andereKategorien;
     }
 }

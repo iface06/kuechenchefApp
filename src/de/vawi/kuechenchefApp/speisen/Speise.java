@@ -13,7 +13,7 @@ public class Speise implements Iterable<Zutat> {
 
     private String name;
     private int beliebtheit;
-    private Set<Zutat> zutaten = new HashSet<>();
+    private List<Zutat> zutaten = new ArrayList<>();
 
     /**
      * @return Beliebtheit bei den Gästen
