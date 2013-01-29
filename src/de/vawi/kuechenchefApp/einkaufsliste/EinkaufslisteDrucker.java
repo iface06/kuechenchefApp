@@ -5,8 +5,10 @@ import de.vawi.kuechenchefApp.lieferanten.Lieferant;
 import java.util.List;
 
 /**
- *
- * @author Matthias
+ * Diese Klasse schreibt die Einkaufslistenpositionen eines Lieferanten in einen String.
+ * 
+ * @author Lepping
+ * @version 29.01.2013
  */
 class EinkaufslisteDrucker {
 

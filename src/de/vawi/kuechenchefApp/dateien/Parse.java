@@ -3,9 +3,18 @@
 package de.vawi.kuechenchefApp.dateien;
 
 
+/**
+ * Klasse konvertiert Sting Werte in double bzw. integer
+ * @author Tatsch
+ */
 public class Parse {
 
     
+    /**
+     *
+     * @param value (Wert als String)
+     * @return Gibt den übergebenen String als double zurück
+     */
     public static double toDouble(String value){
         try {
             return Double.parseDouble(value.replace(',', '.'));
@@ -14,6 +23,11 @@ public class Parse {
         }
     }
 
+    /**
+     *
+     * @param value (Wert als String)
+     * @return Gibt den übergebenen String als Integer zurück
+     */
     public static int toInteger(String value) {
         try {
             return Integer.parseInt(value);
@@ -22,6 +36,9 @@ public class Parse {
         }
     }
     
+    /**
+     *  Ausnahme wenn Fehler beim Parsen
+     */
     public static class FehlerBeimParsen extends RuntimeException{
         
     }

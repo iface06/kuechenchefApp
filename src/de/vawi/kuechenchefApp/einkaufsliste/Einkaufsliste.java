@@ -8,7 +8,7 @@ import java.util.*;
  * Die Einkaufsliste für die Speisepläne der Planungsperiode
  *
  * @author Lepping
- * @version (a version number or a date)
+ * @version 29.01.2013
  */
 public class Einkaufsliste implements Iterable<EinkaufslistenPosition> {
 
@@ -30,7 +30,12 @@ public class Einkaufsliste implements Iterable<EinkaufslistenPosition> {
         return positionen;
     }
 
-    EinkaufslistenPosition findePositionDurchNahrungsmittel(Nahrungsmittel nahrungsmittel) {
+    /**
+     *
+     * @param nahrungsmittel
+     * @return
+     */
+    protected EinkaufslistenPosition findePositionDurchNahrungsmittel(Nahrungsmittel nahrungsmittel) {
         for (EinkaufslistenPosition position : positionen) {
             if (position.getName().equals(nahrungsmittel.getName())) {
                 return position;
@@ -43,13 +48,19 @@ public class Einkaufsliste implements Iterable<EinkaufslistenPosition> {
 
     }
 
+    /**
+     *
+     * @return Iterator über die Positionen der Einkaufsliste
+     */
     @Override
     public Iterator<EinkaufslistenPosition> iterator() {
         return positionen.iterator();
     }
 
+
     /**
-     * Gibt eine Liste an vorhandenen Lieferanten zurück
+     *
+     * @return Liste an Lieferanten (bei denen mindestens eine Zutat bestellt wird)
      */
     public Set<Lieferant> holeLieferanten() {
         Set<Lieferant> lieferanten = new HashSet<>();
@@ -59,8 +70,11 @@ public class Einkaufsliste implements Iterable<EinkaufslistenPosition> {
         return lieferanten;
     }
 
+
     /**
-     * Gibt eine Liste an Einkaufslistenpositionen eines bestimmten Lieferanten zurück
+     *
+     * @param lieferant
+     * @return Gibt die Liste an Einkaufslistenpositionen für einen bestimmten Lieferanten zurück
      */
     public List<EinkaufslistenPosition> holeEinkaufslistenpositionenVonLieferant(Lieferant lieferant) {
         List<EinkaufslistenPosition> positionenZuLieferant = new ArrayList<>();
