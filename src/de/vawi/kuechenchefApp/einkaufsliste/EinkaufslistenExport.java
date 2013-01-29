@@ -11,13 +11,13 @@ import java.util.*;
  * Diese Klasse ist für den Export der Einkaufsliste verantwortlich.
  * 
  * @author Lepping 
- * @version (a version number or a date)
+ * @version 29.01.2013
  */
 public class EinkaufslistenExport extends DateiExport<Einkaufsliste>
 {
     
     /**
-     * Exportiert die Einkaufsliste in eine Datei.
+     * Exportiert die Einkaufsliste je Lieferant in eine Datei.
      * Dateiname: Einkaufsliste_[Lieferantenname].txt;
      * 
      * @param  einkaufsliste    Einkaufsliste
@@ -44,6 +44,11 @@ public class EinkaufslistenExport extends DateiExport<Einkaufsliste>
         schreiber.schreibe(einkaufslisteZuLieferant);
     }
 
+    /**
+     *
+     * @param lieferant (Lieferant)
+     * @return 
+     */
     protected DateiSchreiber oeffneEinkaufslisteDatei(Lieferant lieferant) {
         DateiSchreiber schreiber = new DateiSchreiber(new EinkaufslistenDatei(lieferant.getName()));
         return schreiber;

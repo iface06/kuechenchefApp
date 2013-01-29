@@ -10,9 +10,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  *
- * @author Matthias
+ * 
+ * 
+ * @author Lepping
+ * @version 29.01.2013
  */
 public class ZutatenKalkulator {
 

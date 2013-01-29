@@ -9,7 +9,7 @@ import de.vawi.kuechenchefApp.lieferanten.Lieferant;
  * Postion für eine Einkaufsliste
  * 
  * @author Lepping
- * @version (a version number or a date)
+ * @version 29.01.2013
  */
 public class EinkaufslistenPosition
 {
