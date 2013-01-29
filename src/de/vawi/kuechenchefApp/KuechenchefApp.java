@@ -41,8 +41,8 @@ public class KuechenchefApp {
     }
 
     private static void importiereDateien(String dateiOrdner) {
-        importiereSpeisen(dateiOrdner);
         importierePreisListen(dateiOrdner);
+        importiereSpeisen(dateiOrdner);
     }
     
     private static void importiereSpeisen(String dateiOrdner) {
@@ -64,6 +64,6 @@ public class KuechenchefApp {
     private static void exportiereErgebnisse(ProzessSteuerung steuerung) {
         new SpeiseplanExport().export(steuerung.getSpeiseplaene());
         new EinkaufslistenExport().export(steuerung.getEinkaufsliste());
-        //new KostenaufstellungExport().export(steuerung.getKostenaufstellung());
+        new KostenaufstellungExport().export(steuerung.getKostenUbersicht());
     }
 }

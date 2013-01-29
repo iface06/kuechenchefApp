@@ -1,6 +1,7 @@
 package de.vawi.kuechenchefApp.kostenaufstellung;
 
 import de.vawi.kuechenchefApp.DateiExport;
+import de.vawi.kuechenchefApp.dateien.DateiSchreiber;
 import de.vawi.kuechenchefApp.kostenaufstellung.Kostenaufstellung;
 
 
@@ -16,10 +17,14 @@ public class KostenaufstellungExport extends DateiExport<KostenUebersicht>
      * Exportiert die Kostenaufstellung in eine Datei.
      * Dateiname: Kostenaufstellung.txt
      * 
-     * @param  exportant    Kostenaufstellung
+     * @param  kostenUebersicht    Kostenaufstellung
      */
-    public void export(KostenUebersicht exportant) {
+    public void export(KostenUebersicht kostenUebersicht) {
+        String kosten = new String();
+        KostenUebersichtDrucker drucker = new KostenUebersichtDrucker();
+        kosten += drucker.drucke(kostenUebersicht);
         
-        
+        DateiSchreiber schreiber = new DateiSchreiber(new KostenUebersichtDatei());
+        schreiber.schreibe(kosten);
     }
 }

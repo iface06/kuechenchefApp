@@ -3,7 +3,7 @@ package de.vawi.kuechenchefApp;
 import de.vawi.kuechenchefApp.einkaufsliste.*;
 import de.vawi.kuechenchefApp.kostenaufstellung.*;
 import de.vawi.kuechenchefApp.speiseplan.*;
-import java.util.List;
+import java.util.*;
 
 /**
  * Diese Klasse steuert den Prozess für die Erstellung der Speisepläne, Einkaufsliste und Kostenaufstellung.
@@ -16,8 +16,8 @@ public class ProzessSteuerung{
     private KostenaufstellungErsteller kostanaufstellungErsteller;
     
     private Einkaufsliste einkaufsliste;
-    private List<Speiseplan> speiseplaene;
-    private Kostenaufstellung kostenaufstellung;
+    private List<Speiseplan> speiseplaene = new ArrayList<>();
+    private KostenUebersicht kostenUbersicht;
     
     /**
      * Übergeben des SpeiseplanErsteller.
@@ -52,18 +52,24 @@ public class ProzessSteuerung{
      * Funktionert nur wenn vorher die entsprechenden Ersteller für die Speisepläne, Einkaufsliste und Kostenaufstellung gesetzt wurden.
      */
     public void start() {
+        erzeugeSpeiseplaene();
+        erzeugeEinkaufsliste();
+        erzeugeKostenUbersicht();
+        
         
         
     }
+
     
     /**
      * Nach dem Ausführung der Methode "start", kann hier die Kostenaufstellung geholt werden.
      * 
      * @return     Kostenaufstellung
      */
-    public Kostenaufstellung getKostenaufstellung(){
-        return this.kostenaufstellung;
+    public KostenUebersicht getKostenUbersicht() {
+        return kostenUbersicht;
     }
+    
     
     /**
      * Nach dem Ausführung der Methode "start", können hier die Speisepläne geholt werden.
@@ -81,6 +87,22 @@ public class ProzessSteuerung{
      */
     public Einkaufsliste getEinkaufsliste(){
         return this.einkaufsliste;
+    }
+
+    private void erzeugeSpeiseplaene() {
+        speiseplaene.add(speiseplanErsteller.erzeuge(Kantine.ESSEN));
+        speiseplaene.add(speiseplanErsteller.erzeuge(Kantine.MUELHEIM_AN_DER_RUHR));
+    }
+
+    private void erzeugeEinkaufsliste() {
+        einkaufslistenErsteller.add(speiseplaene.get(0));
+        einkaufslistenErsteller.add(speiseplaene.get(1));
+        this.einkaufsliste = einkaufslistenErsteller.erzeuge();
+    }
+
+    private void erzeugeKostenUbersicht() {
+        kostanaufstellungErsteller.setEinkaufsliste(einkaufsliste);
+        kostenUbersicht = kostanaufstellungErsteller.erstelle();
     }
     
     
