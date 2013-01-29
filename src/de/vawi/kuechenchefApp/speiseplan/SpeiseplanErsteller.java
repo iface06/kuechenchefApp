@@ -15,7 +15,7 @@ public class SpeiseplanErsteller
     // Ich benötige insgesamt 3 * 15 = 45 Gerichte also 
     private SpeisenVerwaltung speisen = SpeisenVerwaltung.getInstanz();
     private List<Speise> beliebtesteSpeisen;
-    //TODO uerige Speisen muessen ermittelt werden evtl in der SpeisenVerwaltung
+    //TODO uebrige Speisen muessen ermittelt werden evtl in der SpeisenVerwaltung
     private List<Speise> uebrigenSpeisen;
     
     public SpeiseplanErsteller() {
@@ -44,8 +44,7 @@ public class SpeiseplanErsteller
         if(beliebtesteSpeisenBeinhaltenGenugFischgerichte()) {
             if(beliebtesteSpeisenBeinhaltenGenugVegGerichte()) {
                 if(beliebtesteSpeisenBeinhaltenGenugFleischgerichte()) {
-                    // Do nothing alles ok bzw. dann weiter zur Verfügbarkeitsprüfung
-                    
+                    pruefeVerfuegbarkeit();
                     //else Zweig für "zu wenig Fleisch Gerichte in den beliebtesten Speisen"
                 } else {
                     fuegeNeuesGerichtHinzu(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
@@ -163,6 +162,19 @@ public class SpeiseplanErsteller
             }
         }
         return beliebtestesGericht;
+    }
+
+//    private void erstelleSpeiseplan(Kantine kantine) {
+//        List<Speise> speisenFuerSpeiseplan = beliebtesteSpeisen;
+//        List<Tag> tage = new ArrayList<Tag>();
+//        for(int i = 1; i <= new PlanungsPeriode().getAnzahlWochen(); i++) {
+//            verteileGerichtefuerEineWoche(tage, speisenFuerSpeiseplan);
+//        }
+//    }
+
+
+    private void pruefeVerfuegbarkeit() {
+        
     }
 
 
