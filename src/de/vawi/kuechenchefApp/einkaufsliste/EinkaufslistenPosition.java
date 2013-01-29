@@ -83,7 +83,12 @@ public class EinkaufslistenPosition
         this.preis = preis;
     }
 
-    Nahrungsmittel getNahrungsmittel() {
+    /**
+     * Gibt Nahrungsmittel zurück
+     * 
+     * @return Nahrungsmittel
+     */
+    protected Nahrungsmittel getNahrungsmittel() {
         return nahrungsmittel;
     }
 }
