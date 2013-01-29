@@ -109,8 +109,11 @@ public class SpeisenImport {
 
     /**
      * Diese Methode sortiert die Zutaten, die zu einer Speise gehören, nach
-     * Kategorie. Es gibt derzeit 3 Kategorien, daher genügt es nach den ersten
-     * beiden Kategorien zu sortieren.
+     * Kategorie. Es gibt derzeit 3 Kategorien, wobei im Enum
+     * SpeisenUndNahrungsmittelKategorie Fleisch prioritär angelegt ist, gefolgt
+     * von Fisch, gefolgt von vegetarisch. Dies hilft später, um festzustellen,
+     * ob eine Speise als Fleisch-Gericht, Fisch-Gericht oder vegetarisches
+     * Gericht eingestuft und ausgewählt wird.
      */
     private void sortiereZutatenNachKategorie() {
         for (Speise speise : speisen) {
