@@ -6,13 +6,22 @@ import de.vawi.kuechenchefApp.dateien.*;
 import de.vawi.kuechenchefApp.nahrungsmittel.*;
 import java.util.List;
 
-
+/**
+ * Diese Klasse erstellt Zutaten.
+ * 
+ * @author Tatsch
+ * @version 29.01.2013
+ */
 class ZutatErsteller {
     public static final int MENGE = 1;
     public static final int NAHRUNGSMITTEL_NAME = 3;
     NahrungsmittelVerwaltung nahrungsmittels = NahrungsmittelVerwaltung.getInstanz();
-
-    Zutat erstelle(String rezeptZeile){
+/**
+ * Diese Methode erstellt eine Zuzaz aus einer Zeile der rezepte-Datei.
+ * @param rezeptZeile Eine Zeile der Rezepte-Datei.
+ * @return Gibt die neu erstellte Zutat wieder.
+ */
+    protected Zutat erstelle(String rezeptZeile){
         List<String> zellen = separiereRezeptZeile(rezeptZeile);
         Zutat zutat = erstelleZutat(zellen);
         

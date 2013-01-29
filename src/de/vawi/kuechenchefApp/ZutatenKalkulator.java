@@ -19,12 +19,14 @@ public class ZutatenKalkulator {
     private Map<Nahrungsmittel, Double> mengen = new HashMap<>();
 
     /**
-     * Auf Basis eines Speiseplans werden in dieser Methode für jede angebotene Speise die Anzahl benötigter Gerichte berechnet.
-     * Diese Berechnung erfolgt auf Grundlage der Beliebtheit und der jeweiligen Anzahl der Mitarbeiter einer Kantine.
+     * Auf Basis eines Speiseplans werden in dieser Methode für jede angebotene
+     * Speise die Anzahl benötigter Gerichte berechnet. Diese Berechnung erfolgt
+     * auf Grundlage der Beliebtheit und der jeweiligen Anzahl der Mitarbeiter
+     * einer Kantine.
+     *
      * @param plan (erstellter Speiseplan)
      * @return benötigte Mengen
      */
-    
     public Map<Nahrungsmittel, Double> berechneGesamtMengen(Speiseplan plan) {
         for (Tag tag : plan) {
             berechneSpeise(tag.getBeliebtesteSpeise(), plan.getKantine().berechneAnzahlFuerBeliebtestesGericht());
@@ -47,7 +49,7 @@ public class ZutatenKalkulator {
         // double berechneteMenge = zutat.getMenge();
         // Menge muss noch mit Sicherheitsfaktor multipliziert werden und anschließend gerundet werden
         Double gesamtMenge = mengen.get(nahrungsmittel);
-        if(gesamtMenge == null){
+        if (gesamtMenge == null) {
             gesamtMenge = 0.0;
         }
         return gesamtMenge;
