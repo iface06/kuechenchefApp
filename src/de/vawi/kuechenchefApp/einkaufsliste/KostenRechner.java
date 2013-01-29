@@ -9,7 +9,7 @@ import java.util.List;
  * @author Lepping
  * @version 29.01.2013
  */
-public class KostenRechner {
+class KostenRechner {
 
     public double berechneGesamtkosten(Einkaufsliste liste){
         return berechneGesamtkostenFuerNahrungsmittel(liste) + berechneGesamtkostenFuerLieferung(liste);

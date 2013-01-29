@@ -11,7 +11,7 @@ import java.util.Iterator;
  * @author Lepping
  * @version 29.01.2013
  */
-public class EinkaufslistenDatei implements Datei{
+class EinkaufslistenDatei implements Datei{
 
     String lieferant;
 
