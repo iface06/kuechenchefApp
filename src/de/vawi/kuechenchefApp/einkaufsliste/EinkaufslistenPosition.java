@@ -44,14 +44,14 @@ public class EinkaufslistenPosition
     /**
      * @return     anzahlGebinde des eingekauften Nahrungsmittel
      */
-    public double getAnzahlGebinde() {
+    public double getMenge() {
         return anzahlGebinde;
     }
 
     /**
      * @param  anzahlGebinde   Menge des eingekauften Nahrungsmittel
      */
-    public void setAnzahlGebinde(double anzahlGebinde) {
+    public void setMenge(double anzahlGebinde) {
         this.anzahlGebinde = anzahlGebinde;
     }
 

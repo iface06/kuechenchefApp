@@ -1,5 +1,6 @@
 package de.vawi.kuechenchefApp.lieferanten;
 
+import de.vawi.kuechenchefApp.einkaufsliste.EinkaufslistenPosition;
 import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import java.util.*;
 
@@ -74,6 +75,16 @@ public class LieferantenVerwaltung {
      */
     private void sortierePreisListenPositionenNachPreis(List<PreisListenPosition> positionen) {
         Collections.sort(positionen, new VergleichePreisListenPositionNachPreisProEinheit());
+    }
+
+    public PreisListenPosition findeAngebotFuerNahrungsmittelVonLieferant(Nahrungsmittel nahrungsmittel, Lieferant lieferant) {
+        for (PreisListenPosition position : preisListenPositionen) {
+            if(position.getLieferant().equals(lieferant) && position.getNahrungsmittel().equals(nahrungsmittel)){
+                return position;
+            }
+        }
+        
+        return null;
     }
     
     

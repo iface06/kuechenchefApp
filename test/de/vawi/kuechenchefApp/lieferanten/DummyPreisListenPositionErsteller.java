@@ -23,13 +23,23 @@ public class DummyPreisListenPositionErsteller {
         return this;
     }
     
-    public DummyPreisListenPositionErsteller lieferant(String name, int typ){
-        Lieferant lieferant = erstelleLieferant(typ);
+    public DummyPreisListenPositionErsteller bauer(String name, double entfernung){
+        Lieferant lieferant = new Bauer();
         lieferant.setName(name);
-        lieferant.setLieferKostenFaktor(1.1);
+        lieferant.setLieferKostenFaktor(entfernung);
         position.setLieferant(lieferant);
         return this;
     }
+    
+    public DummyPreisListenPositionErsteller grosshaendler(String name, double lieferkostenSatz){
+        Lieferant lieferant = new Grosshaendler();
+        lieferant.setName(name);
+        lieferant.setLieferKostenFaktor(lieferkostenSatz);
+        position.setLieferant(lieferant);
+        return this;
+    }
+    
+    
     
     public DummyPreisListenPositionErsteller angebot(double preis, double gebinde, int vorat){
         position.setGebindeGroesse(gebinde);
@@ -40,13 +50,5 @@ public class DummyPreisListenPositionErsteller {
     
     public PreisListenPosition erstelle(){
         return position;
-    }
-
-    private Lieferant erstelleLieferant(int typ) {
-        if(typ == GROSSHAENDLER){
-            return new Grosshaendler();
-        } else {
-            return new Bauer();
-        }
     }
 }

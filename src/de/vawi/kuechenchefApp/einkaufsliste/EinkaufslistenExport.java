@@ -4,7 +4,7 @@ package de.vawi.kuechenchefApp.einkaufsliste;
 import de.vawi.kuechenchefApp.DateiExport;
 import de.vawi.kuechenchefApp.dateien.DateiSchreiber;
 import de.vawi.kuechenchefApp.lieferanten.Lieferant;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -25,7 +25,7 @@ public class EinkaufslistenExport extends DateiExport<Einkaufsliste>
     public void export(Einkaufsliste einkaufsliste){
         
         
-        List<Lieferant> lieferanten = einkaufsliste.holeLieferanten();
+        Set<Lieferant> lieferanten = einkaufsliste.holeLieferanten();
         EinkaufslisteDrucker drucker = new EinkaufslisteDrucker();
         for (Lieferant lieferant : lieferanten) {
             String einkaufslisteZuLieferant  = erstelleEinkaufslisteAlsString(einkaufsliste, lieferant, drucker);

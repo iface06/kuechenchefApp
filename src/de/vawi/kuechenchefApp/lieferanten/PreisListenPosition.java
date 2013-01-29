@@ -106,4 +106,32 @@ public class PreisListenPosition {
     public double berechnePreisProEinheit() {
         return preis / gebindeGroesse;
     }
+    
+    
+    /**
+     *Berechne benötigte Gebinde für die übergebene Menge
+     *
+     * @return Anzahl Gebinde für Menge
+     */
+    public double berechneAnzahlGebindeFuerMenge(double menge){
+        return Math.ceil(menge / gebindeGroesse);
+    }
+    
+    /**
+     * Berechne Preis indem Anzahl benötigter Gebinde * Preis pro Gebinde
+     * Berechnung der benötigten Gebinde durch Methode berechneAnzahlGebindeFuerMenge()
+     *
+     * @return Berechneter Preis für die Menge
+     */
+    public double berechnePreisFuerMenge(double menge){
+        return berechneAnzahlGebindeFuerMenge(menge) * preis;
+    }
+    
+    /**
+     * Gesamtmenge = Voratsbestand in Gebinde * Gebindegröße
+     * @return Voratsbestand in Gebinde * Gebindegröße
+     */
+    public double getGesamtMenge(){
+        return vorratsBestand * gebindeGroesse;
+    }
 }

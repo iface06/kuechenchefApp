@@ -22,6 +22,27 @@ public class PreisListenPositionTest {
         double preis = position.berechnePreisProEinheit();
         assertEquals(0.01, preis, 0.0001);
     }
+    
+    @Test
+    public void testBerechneBenoetigteGebinde() {
+        PreisListenPosition position = new PreisListenPosition();
+        position.setPreis(10.0);
+        position.setGebindeGroesse(1000.0);
+        
+        double preis = position.berechneAnzahlGebindeFuerMenge(2000.0);
+        assertEquals(2.0, preis, 0.0001);
+    }
+    
+    @Test
+    public void testBerechnePreisFuerMenge() {
+        PreisListenPosition position = new PreisListenPosition();
+        position.setPreis(10.0);
+        position.setGebindeGroesse(1000.0);
+        
+        double preis = position.berechnePreisFuerMenge(2000.0);
+        assertEquals(20.0, preis, 0.0001);
+    }
+    
 
     
 }

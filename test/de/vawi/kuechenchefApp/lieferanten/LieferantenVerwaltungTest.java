@@ -2,9 +2,10 @@
 
 package de.vawi.kuechenchefApp.lieferanten;
 
+import de.vawi.kuechenchefApp.nahrungsmittel.Einheit;
 import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import java.util.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import org.junit.*;
 
 
@@ -13,9 +14,9 @@ public class LieferantenVerwaltungTest {
     
     @BeforeClass
     public static void beforeClass() {
-        PreisListenPosition kartoffelAngebotA = createNahrungsmittel("Kartoffeln", 5.0, 1000.0);
-        PreisListenPosition kartoffelAngebotB = createNahrungsmittel("Kartoffeln", 10.0, 1000.0);
-        PreisListenPosition moehrenAngebot = createNahrungsmittel("Möhren", 1.0, 500.0);
+        PreisListenPosition kartoffelAngebotA = new DummyPreisListenPositionErsteller().nahrungsmittel("Kartoffeln", Einheit.GRAMM).grosshaendler("Schmidt", 5).angebot(5.0, 100.0, 1000).erstelle();
+        PreisListenPosition kartoffelAngebotB = new DummyPreisListenPositionErsteller().nahrungsmittel("Kartoffeln", Einheit.GRAMM).bauer("Meier", 5).angebot(10.0, 100.0, 1000).erstelle();
+        PreisListenPosition moehrenAngebot = new DummyPreisListenPositionErsteller().nahrungsmittel("Möhren", Einheit.GRAMM).bauer("Huber", 5).angebot(1.0, 100.0, 500).erstelle();
         verwaltung = LieferantenVerwaltung.getInstanz();
         verwaltung.hinzufuegenPreisListenPosition(Arrays.asList(kartoffelAngebotA, kartoffelAngebotB, moehrenAngebot));
     }
@@ -40,7 +41,20 @@ public class LieferantenVerwaltungTest {
         assertEquals(1, positionen.size());
     }
     
-    private static PreisListenPosition createNahrungsmittel(String name, double preis, double gebindeGroesse) {
+    @Test
+    public void testFindeMoehrenVonHuber(){
+        Nahrungsmittel moehren = new Nahrungsmittel();
+        moehren.setName("Möhren");
+        Lieferant lieferant = new Bauer();
+        lieferant.setName("Huber");
+        PreisListenPosition positionen = verwaltung.findeAngebotFuerNahrungsmittelVonLieferant(moehren, lieferant);
+        
+        assertNotNull(positionen);
+        assertEquals(lieferant, positionen.getLieferant());
+        assertEquals(moehren, positionen.getNahrungsmittel());
+    }
+    
+    private static PreisListenPosition erstelleAngebot(String name, double preis, double gebindeGroesse) {
         PreisListenPosition position = new PreisListenPosition();
         Nahrungsmittel kartoffel = new Nahrungsmittel();
         kartoffel.setName(name);

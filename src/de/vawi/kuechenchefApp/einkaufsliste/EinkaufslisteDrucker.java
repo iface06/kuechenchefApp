@@ -24,7 +24,7 @@ public class EinkaufslisteDrucker {
         AsciiTable tabelle = new AsciiTable();
         tabelle.row().cell("Nahrungsmittel").cell("Menge (in Gebinde)").cell("Preis (Euro)");
         for (EinkaufslistenPosition position : positionen) {
-            tabelle.row().cell(position.getName()).cell(String.valueOf(position.getAnzahlGebinde())).cell(String.valueOf(position.getPreis()));
+            tabelle.row().cell(position.getName()).cell(String.valueOf(position.getMenge())).cell(String.valueOf(position.getPreis()));
         }
         return tabelle.writeTable();
     }

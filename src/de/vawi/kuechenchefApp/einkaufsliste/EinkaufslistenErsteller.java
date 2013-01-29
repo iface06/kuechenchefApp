@@ -20,6 +20,15 @@ public class EinkaufslistenErsteller {
     private List<EinkaufslistenPosition> zusaetzlichePositionen = new ArrayList<>();
 
     /**
+     * Hinzufügen eines Speiseplans, der zur Erzeugung der Einkaufsliste berücksichtigt werden soll.
+     *
+     * @param plan Speiseplan
+     */
+    public void add(Speiseplan plan) {
+        this.speiseplaene.add(plan);
+    }
+
+    /**
      * Erzeugt eine Einkaufsliste anhand der hinzugefügten Speisepläne, nach folgdenden Regeln:
      *
      * 1. entsprechende Bestellmenge bei ausreichend Lieferanten vorhanden.
@@ -31,10 +40,10 @@ public class EinkaufslistenErsteller {
      */
     public Einkaufsliste erzeuge() {
         erstelleEinkaufslistePosition();
-        findeGuenstigsteLieferanten();
-        for (EinkaufslistenPosition einkaufslistenPosition : zusaetzlichePositionen) {
-            liste.hinzufügenEinkaufslistenPosition(einkaufslistenPosition);
-        }
+        fuegeGünstigsteLieferantenInEinkaufslisteEin();
+        optimiereEinkaufslisteHinsichtlichLieferkosten();
+
+
         return liste;
     }
 
@@ -45,122 +54,55 @@ public class EinkaufslistenErsteller {
         }
     }
 
-    private void findeGuenstigsteLieferanten() {
+    private void fuegeGünstigsteLieferantenInEinkaufslisteEin() {
         for (EinkaufslistenPosition position : liste) {
-            List<PreisListenPosition> angebote = lieferanten.findeDurchNahrungsmittel(position.getNahrungsmittel());
-            // benoetigte Menge wird zwischengepeichert und auf 0 gesetzt, sobald die benoetigte Menge bestellt ist
-            double benoetigteMenge = position.getAnzahlGebinde();
-            // vorhandene Menge wird benoetigt, um zu prüfen, ob restliche Lieferanten genug auf Lager haben, falls bei einem Lieferanten nicht das komplette Angebot bestellt wird
-            double vorhandeneMenge = position.getNahrungsmittel().getVerfuegbareGesamtMenge();
-            double bestellMenge;
-            //Positionsnummer in der Angebotsliste, wird hochgezählt
-            int positionsnummer = 0;
-            // laufe bis benotigteMenge gleich 0 ist
-            while (benoetigteMenge != 0.0) {
-                // Berechne Anzahl an benoetigten Gebinden    
-                double benoetigteAnzahlAnGebinden = benoetigteMenge / angebote.get(positionsnummer).getGebindeGroesse();
-                // Wenn mehr angeboten als benötigt wird, muss die Nachkommastelle beachtet werden
-                if (benoetigteAnzahlAnGebinden < angebote.get(positionsnummer).getVorratsBestand()) {
-                    // Berechne Bestellmenge
-//                    double differenz = benoetigteAnzahlAnGebinden - Math.floor(benoetigteAnzahlAnGebinden);
-                    // wenn es keine Nachkommastelle gibt, dann bestell die benoetigte Menge
-//                    if (differenz == 0) {
-                        bestellMenge = Math.ceil(benoetigteAnzahlAnGebinden);
-                        fuegeLieferantInEinkaufsliste(angebote.get(positionsnummer).getLieferant(), angebote.get(positionsnummer).getNahrungsmittel(), bestellMenge, angebote.get(positionsnummer).getPreis() * bestellMenge, position);
-                        benoetigteMenge = 0.0;
-//                    } else {
-//                        findeLieferantenFuerDifferenz(differenz, positionsnummer, position.getNahrungsmittel(), vorhandeneMenge, benoetigteAnzahlAnGebinden, position);
-//                    }
-
-                } // wenn weniger angeboten, als benoetigt wird, einfach alles bestellen, was benoetigt wird
-                else {
-                    bestellMenge = angebote.get(positionsnummer).getVorratsBestand();
-                    fuegeLieferantInEinkaufsliste(angebote.get(positionsnummer).getLieferant(), angebote.get(positionsnummer).getNahrungsmittel(), bestellMenge, angebote.get(positionsnummer).getPreis() * bestellMenge, position);
-                    benoetigteMenge = benoetigteMenge - angebote.get(positionsnummer).getVorratsBestand() * angebote.get(positionsnummer).getGebindeGroesse();
-                    vorhandeneMenge = vorhandeneMenge - angebote.get(positionsnummer).getVorratsBestand() * angebote.get(positionsnummer).getGebindeGroesse();
-                    positionsnummer = positionsnummer + 1;
-                }
-
-            }
+            findeGuenstigestenLieferantFuer(position);
         }
+
+        for (EinkaufslistenPosition einkaufslistenPosition : zusaetzlichePositionen) {
+            liste.hinzufügenEinkaufslistenPosition(einkaufslistenPosition);
+        }
+
     }
 
-    private void findeLieferantenFuerDifferenz(double differenz, int positionsnummeralt, Nahrungsmittel nahrungsmittel, double vorhandeneMenge, double anzahlGebindeAlt, EinkaufslistenPosition position) {
-        List<PreisListenPosition> angebote = lieferanten.findeDurchNahrungsmittel(nahrungsmittel);
-        int positionsnummerneu = positionsnummeralt + 1;
-        double benoetigteMenge = angebote.get(positionsnummeralt).getGebindeGroesse() * differenz;
-        while (benoetigteMenge != 0) {
-            // Wenn die Gebindegroesse des neuen Lieferanten groesser oder gleich ist als die des alten kann er nicht preiswerter sein
-            if (angebote.get(positionsnummerneu).getGebindeGroesse() >= angebote.get(positionsnummeralt).getGebindeGroesse()) {
-                // wenn mit ignorieren des neuen Lieferanten die benötigte Menge nicht mehr erreicht werden kann, muss beim alten Lieferanten aufgerundet werden
-                if (benoetigteMenge > vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand())) {
-                    fuegeLieferantInEinkaufsliste(angebote.get(positionsnummeralt).getLieferant(), nahrungsmittel, Math.ceil(anzahlGebindeAlt), angebote.get(positionsnummeralt).getPreis() * Math.ceil(anzahlGebindeAlt), position);
-                    benoetigteMenge = 0;
-                } // wenn trotzdem noch genug vorhanden ist, dann wird der nächste Lieferant betrachtet
-                else {
-                    // vorhandene Menge wird reduziert um Vorratsmenge des neuen Lieferanten
-                    vorhandeneMenge = vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand());
-                    positionsnummerneu = positionsnummerneu + 1;
-                }
-
-            } // Wenn die Gebindegroesse kleiner ist dann wird der neue Lieferant interessant
+    private void findeGuenstigestenLieferantFuer(EinkaufslistenPosition position) {
+        List<PreisListenPosition> angebote = findeAngeboteZuNahrungsmittel(position);
+        // benoetigte Menge wird zwischengepeichert und auf 0 gesetzt, sobald die benoetigte Menge bestellt ist
+        double benoetigteMenge = position.getMenge();
+        double bestellteAnzahlGebinde;
+        //Positionsnummer in der Angebotsliste, wird hochgezählt
+        int positionsNummer = 0;
+        // laufe bis benotigteMenge gleich 0 ist
+        while (benoetigteMenge != 0.0) {
+            PreisListenPosition guenstigstesAngebot = angebote.get(positionsNummer);
+            // Berechne Anzahl an benoetigten Gebinden    
+            double benoetigteAnzahlAnGebinden = benoetigteMenge / guenstigstesAngebot.getGebindeGroesse();
+            // Wenn mehr angeboten als benötigt wird, muss die Nachkommastelle beachtet werden
+            if (benoetigteAnzahlAnGebinden < guenstigstesAngebot.getVorratsBestand()) {
+                // Berechne Bestellmenge
+                bestellteAnzahlGebinde = Math.ceil(benoetigteAnzahlAnGebinden);
+                benoetigteMenge = 0.0;
+            } // wenn weniger angeboten, als benoetigt wird, einfach alles bestellen, was benoetigt wird
             else {
-                // Die benoetigte Anzahl an Gebinden fuer neuen Lieferanten wird berechnet
-                double anzahlBenoetigterGebindegroessen = benoetigteMenge / angebote.get(positionsnummerneu).getGebindeGroesse();
-                // Wenn der neue Lieferant genug auf Lager hat, dann vergleiche den Preis
-                if (angebote.get(positionsnummerneu).getVorratsBestand() > anzahlBenoetigterGebindegroessen) {
-                    // Wenn Preis mit neuem Lieferanten teurer ist, kaufe mehr vom alten
-                    if (angebote.get(positionsnummerneu).getPreis() * Math.ceil(anzahlBenoetigterGebindegroessen) > angebote.get(positionsnummeralt).getPreis()) {
-                        // Bestell aufgerundete Menge von altem Lieferanten
-                        fuegeLieferantInEinkaufsliste(angebote.get(positionsnummeralt).getLieferant(), nahrungsmittel, Math.ceil(anzahlGebindeAlt), angebote.get(positionsnummeralt).getPreis() * Math.ceil(anzahlGebindeAlt), position);
-                        benoetigteMenge = 0;
-                    } // Wenn der Preis kleiner ist, dann bestell die abgerundete Menge vom alten Lieferanten und die aufgerundete vom Neuen
-                    else {
-                        // Bestell abgerundete Menge von altem Lieferanten + aufgerundete Menge von neuem Lieferanten
-                        fuegeLieferantInEinkaufsliste(angebote.get(positionsnummeralt).getLieferant(), nahrungsmittel, Math.floor(anzahlGebindeAlt), angebote.get(positionsnummeralt).getPreis() * Math.floor(anzahlGebindeAlt), position);
-                        fuegeLieferantInEinkaufsliste(angebote.get(positionsnummerneu).getLieferant(), nahrungsmittel, Math.ceil(anzahlBenoetigterGebindegroessen), angebote.get(positionsnummerneu).getPreis() * Math.ceil(anzahlBenoetigterGebindegroessen), position);
-                        benoetigteMenge = 0;
-                    }
-                } // Wenn der neue Lieferant nicht genug auf Lager hat dann vergleiche vorhande Menge mit benötigter Menge
-                else {
-                    // Wenn benötigte Menge zu hoch, dann runde Menge des alten Lieferanten auf
-                    if (benoetigteMenge > vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand())) {
-                        // Bestell aufgerundete Menge von altem Lieferanten
-                        fuegeLieferantInEinkaufsliste(angebote.get(positionsnummeralt).getLieferant(), nahrungsmittel, Math.ceil(anzahlGebindeAlt), angebote.get(positionsnummeralt).getPreis() * Math.ceil(anzahlGebindeAlt), position);
-                        benoetigteMenge = 0;
-                    } // benoetigte Menge < vorhandene
-                    else {
-                        vorhandeneMenge = vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand());
-                        positionsnummerneu = positionsnummerneu + 1;
-                    }
-                }
+                bestellteAnzahlGebinde = angebote.get(positionsNummer).getVorratsBestand();
+                benoetigteMenge = benoetigteMenge - guenstigstesAngebot.getVorratsBestand() * guenstigstesAngebot.getGebindeGroesse();
             }
+            fuegeLieferantInEinkaufsliste(angebote.get(positionsNummer).getLieferant(), angebote.get(positionsNummer).getNahrungsmittel(), guenstigstesAngebot.getGebindeGroesse() * bestellteAnzahlGebinde, angebote.get(positionsNummer).getPreis() * bestellteAnzahlGebinde, position);
+            positionsNummer++;
         }
     }
 
-    private void fuegeLieferantInEinkaufsliste(Lieferant lieferant, Nahrungsmittel nahrungsmittel, double bestellMenge, double preis, EinkaufslistenPosition position) {
+    private void fuegeLieferantInEinkaufsliste(Lieferant lieferant, Nahrungsmittel nahrungsmittel, double anzahlGebinde, double preis, EinkaufslistenPosition position) {
 
         if (position.getLieferant() == null) {
             position.setLieferant(lieferant);
-            position.setAnzahlGebinde(bestellMenge);
+            position.setMenge(anzahlGebinde);
             position.setPreis(preis);
         } else {
-            EinkaufslistenPosition neuePosition = new EinkaufslistenPosition(nahrungsmittel);
-            neuePosition.setLieferant(lieferant);
-            neuePosition.setAnzahlGebinde(bestellMenge);
-            neuePosition.setPreis(preis);
+            EinkaufslistenPosition neuePosition = erstelleNeueEinkaufslistenPostion(nahrungsmittel, lieferant, anzahlGebinde, preis);
             zusaetzlichePositionen.add(neuePosition);
         }
 
-    }
-
-    /**
-     * Hinzufügen eines Speiseplans, der zur Erzeugung der Einkaufsliste berücksichtigt werden soll.
-     *
-     * @param plan Speiseplan
-     */
-    public void add(Speiseplan plan) {
-        this.speiseplaene.add(plan);
     }
 
     private void fuegeMengenInEinkaufslisteEin(Map<Nahrungsmittel, Double> mengen) {
@@ -168,8 +110,73 @@ public class EinkaufslistenErsteller {
             // double berechneteMenge = zutat.getMenge();
             // Menge muss noch mit Sicherheitsfaktor multipliziert werden und anschließend gerundet werden
             EinkaufslistenPosition position = liste.findePositionDurchNahrungsmittel(nahrungsmittel);
-            Double gesamtMenge = position.getAnzahlGebinde() + mengen.get(nahrungsmittel);
-            position.setAnzahlGebinde(gesamtMenge);
+            Double gesamtMenge = position.getMenge() + mengen.get(nahrungsmittel);
+            position.setMenge(gesamtMenge);
         }
+    }
+
+    private EinkaufslistenPosition erstelleNeueEinkaufslistenPostion(Nahrungsmittel nahrungsmittel, Lieferant lieferant, double bestellMenge, double preis) {
+        EinkaufslistenPosition neuePosition = new EinkaufslistenPosition(nahrungsmittel);
+        neuePosition.setLieferant(lieferant);
+        neuePosition.setMenge(bestellMenge);
+        neuePosition.setPreis(preis);
+        return neuePosition;
+    }
+
+    private void optimiereEinkaufslisteHinsichtlichLieferkosten() {
+        for (Lieferant alternativLieferant : liste.holeLieferanten()) {
+            for (EinkaufslistenPosition aktuellesAngebot : liste) {
+
+                Lieferant aktuellerLieferant = aktuellesAngebot.getLieferant();
+                if (aktuellerLieferantHatNurEinePositionInDerEinkaufsliste(aktuellerLieferant)
+                        && beideSindBauern(aktuellerLieferant, alternativLieferant)
+                        && istNichtDerGleicheBauer(aktuellerLieferant, alternativLieferant)
+                        && hatGuenstigereLieferkosten(aktuellerLieferant, alternativLieferant)) {
+
+                    PreisListenPosition alternativAngebot = lieferanten.findeAngebotFuerNahrungsmittelVonLieferant(aktuellesAngebot.getNahrungsmittel(), alternativLieferant);
+                    if (alternativAngebot != null
+                            && neuesAngebotHatAusreichendMenge(alternativAngebot, aktuellesAngebot)
+                            && istGuenstiger(alternativAngebot, aktuellesAngebot)) {
+
+                        aktuellesAngebot.setLieferant(alternativAngebot.getLieferant());
+                        aktuellesAngebot.setPreis(alternativAngebot.berechnePreisFuerMenge(aktuellesAngebot.getMenge()));
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean istNichtDerGleicheBauer(Lieferant aktueller, Lieferant alternative) {
+        return !aktueller.equals(alternative);
+    }
+
+    private boolean hatGuenstigereLieferkosten(Lieferant aktueller, Lieferant alternative) {
+        return aktueller.getLieferKostenFaktor() > alternative.getLieferKostenFaktor();
+    }
+
+    private boolean beideSindBauern(Lieferant aktuellerLieferant, Lieferant alternativLieferant) {
+        return aktuellerLieferant.getClass().isInstance(alternativLieferant);
+    }
+
+    private boolean neuesAngebotHatAusreichendMenge(PreisListenPosition ersatzPosition, EinkaufslistenPosition position) {
+        return ersatzPosition.getGesamtMenge() >= position.getMenge();
+    }
+
+    private boolean istGuenstiger(PreisListenPosition alternativAngebot, EinkaufslistenPosition aktuellesAngebot) {
+        double gesparteLieferkosten = aktuellesAngebot.getLieferant().berechneLieferkosten(0) - alternativAngebot.getLieferant().berechneLieferkosten(0);
+        double neuerPreis = alternativAngebot.berechnePreisFuerMenge(aktuellesAngebot.getMenge());
+        double alterPreis = aktuellesAngebot.getPreis();
+        double mehrkosten = neuerPreis - alterPreis;
+        return gesparteLieferkosten > mehrkosten;
+
+    }
+
+    private boolean aktuellerLieferantHatNurEinePositionInDerEinkaufsliste(Lieferant aktuellerLieferant) {
+        return liste.holeEinkaufslistenpositionenVonLieferant(aktuellerLieferant).size() == 1;
+    }
+
+    private List<PreisListenPosition> findeAngeboteZuNahrungsmittel(EinkaufslistenPosition position) {
+        List<PreisListenPosition> angebote = lieferanten.findeDurchNahrungsmittel(position.getNahrungsmittel());
+        return angebote;
     }
 }
