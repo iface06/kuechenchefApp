@@ -13,7 +13,7 @@ import de.vawi.kuechenchefApp.lieferanten.Lieferant;
  */
 public class EinkaufslistenPosition
 {
-    private double menge;
+    private double anzahlGebinde;
     private Nahrungsmittel nahrungsmittel;
     private Lieferant lieferant;
     private double preis;
@@ -42,17 +42,17 @@ public class EinkaufslistenPosition
     }
 
     /**
-     * @return     Menge des eingekauften Nahrungsmittel
+     * @return     anzahlGebinde des eingekauften Nahrungsmittel
      */
-    public double getMenge() {
-        return menge;
+    public double getAnzahlGebinde() {
+        return anzahlGebinde;
     }
 
     /**
-     * @param  menge   Menge des eingekauften Nahrungsmittel
+     * @param  anzahlGebinde   Menge des eingekauften Nahrungsmittel
      */
-    public void setMenge(double menge) {
-        this.menge = menge;
+    public void setAnzahlGebinde(double anzahlGebinde) {
+        this.anzahlGebinde = anzahlGebinde;
     }
 
     /**

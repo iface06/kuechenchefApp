@@ -15,8 +15,9 @@ import java.util.*;
 public class EinkaufslistenErsteller {
 
     private Einkaufsliste liste = new Einkaufsliste();
-    private List<Speiseplan> speiseplaene = new ArrayList<Speiseplan>();
+    private List<Speiseplan> speiseplaene = new ArrayList<>();
     private LieferantenVerwaltung lieferanten = LieferantenVerwaltung.getInstanz();
+    private List<EinkaufslistenPosition> zusaetzlichePositionen = new ArrayList<>();
 
     /**
      * Erzeugt eine Einkaufsliste anhand der hinzugefügten Speisepläne, nach folgdenden Regeln:
@@ -31,6 +32,9 @@ public class EinkaufslistenErsteller {
     public Einkaufsliste erzeuge() {
         erstelleEinkaufslistePosition();
         findeGuenstigsteLieferanten();
+        for (EinkaufslistenPosition einkaufslistenPosition : zusaetzlichePositionen) {
+            liste.hinzufügenEinkaufslistenPosition(einkaufslistenPosition);
+        }
         return liste;
     }
 
@@ -45,7 +49,7 @@ public class EinkaufslistenErsteller {
         for (EinkaufslistenPosition position : liste) {
             List<PreisListenPosition> angebote = lieferanten.findeDurchNahrungsmittel(position.getNahrungsmittel());
             // benoetigte Menge wird zwischengepeichert und auf 0 gesetzt, sobald die benoetigte Menge bestellt ist
-            double benoetigteMenge = position.getMenge();
+            double benoetigteMenge = position.getAnzahlGebinde();
             // vorhandene Menge wird benoetigt, um zu prüfen, ob restliche Lieferanten genug auf Lager haben, falls bei einem Lieferanten nicht das komplette Angebot bestellt wird
             double vorhandeneMenge = position.getNahrungsmittel().getVerfuegbareGesamtMenge();
             double bestellMenge;
@@ -61,7 +65,7 @@ public class EinkaufslistenErsteller {
 //                    double differenz = benoetigteAnzahlAnGebinden - Math.floor(benoetigteAnzahlAnGebinden);
                     // wenn es keine Nachkommastelle gibt, dann bestell die benoetigte Menge
 //                    if (differenz == 0) {
-                        bestellMenge = benoetigteAnzahlAnGebinden;
+                        bestellMenge = Math.ceil(benoetigteAnzahlAnGebinden);
                         fuegeLieferantInEinkaufsliste(angebote.get(positionsnummer).getLieferant(), angebote.get(positionsnummer).getNahrungsmittel(), bestellMenge, angebote.get(positionsnummer).getPreis() * bestellMenge, position);
                         benoetigteMenge = 0.0;
 //                    } else {
@@ -138,14 +142,14 @@ public class EinkaufslistenErsteller {
 
         if (position.getLieferant() == null) {
             position.setLieferant(lieferant);
-            position.setMenge(bestellMenge);
+            position.setAnzahlGebinde(bestellMenge);
             position.setPreis(preis);
         } else {
             EinkaufslistenPosition neuePosition = new EinkaufslistenPosition(nahrungsmittel);
             neuePosition.setLieferant(lieferant);
-            neuePosition.setMenge(bestellMenge);
+            neuePosition.setAnzahlGebinde(bestellMenge);
             neuePosition.setPreis(preis);
-            liste.hinzufügenEinkaufslistenPosition(neuePosition);
+            zusaetzlichePositionen.add(neuePosition);
         }
 
     }
@@ -164,8 +168,8 @@ public class EinkaufslistenErsteller {
             // double berechneteMenge = zutat.getMenge();
             // Menge muss noch mit Sicherheitsfaktor multipliziert werden und anschließend gerundet werden
             EinkaufslistenPosition position = liste.findePositionDurchNahrungsmittel(nahrungsmittel);
-            Double gesamtMenge = position.getMenge() + mengen.get(nahrungsmittel);
-            position.setMenge(gesamtMenge);
+            Double gesamtMenge = position.getAnzahlGebinde() + mengen.get(nahrungsmittel);
+            position.setAnzahlGebinde(gesamtMenge);
         }
     }
 }
