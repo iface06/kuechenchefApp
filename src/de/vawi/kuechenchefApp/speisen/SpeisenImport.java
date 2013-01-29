@@ -22,7 +22,6 @@ public class SpeisenImport {
     private List<Speise> unvollstaendigeSpeisen = new ArrayList<>();
     String dateiOrdner;
 
-    // @todo Dieser Ordner muss noch irgendwo verwendet werden.
     public SpeisenImport(String dateiOrdner) {
         this.dateiOrdner = dateiOrdner;
     }
@@ -50,6 +49,8 @@ public class SpeisenImport {
     }
 
     /**
+     * Diese Methode liest die Speisen aus der Hitliste in die SpeisenVerwaltung
+     * ein.
      *
      * @throws
      * de.vawi.kuechenchefApp.speisen.SpeisenImport.HitlisteDateiIstNichtValide
@@ -66,6 +67,12 @@ public class SpeisenImport {
         }
     }
 
+    /**
+     * Erstellt eine Speise aus der Zeile der Hitlisten-Datei.
+     *
+     * @param zeile eine Zeile aus der Hitlisten-Datei.
+     * @return Gibt eine Speise aus.
+     */
     private Speise erstelleSpeise(String zeile) {
         SpeisenErsteller ersteller = new SpeisenErsteller();
         Speise speise = ersteller.erstelle(zeile);
@@ -73,7 +80,10 @@ public class SpeisenImport {
     }
 
     /**
-     * Diese Methode fängt den Versuch, Zutaten
+     * Diese Methode fängt den Versuch, Zutaten zu generieren auf: Eine
+     * Exception wird geworfen, wenn - entweder keine Speise in der Zeile der
+     * Rezept-Datei gefunden wird, oder - die Rezept-Datei nicht valide ist und
+     * nicht gelesen werden kann.
      */
     private void fuegeZutatenZuSpeisenAusRezepteDateiHinzu() {
         for (String zeile : rezepte) {
@@ -87,12 +97,21 @@ public class SpeisenImport {
         }
     }
 
+    /**
+     * Löscht alle Speisen, die zuvor gesammelt wurden, da ihre Zutaten nicht
+     * vollständig als Nahrungsmittel im Programm verfügbar sind.
+     */
     private void loescheUnvollstaendigeSpeisen() {
         for (Speise speise : unvollstaendigeSpeisen) {
             speisen.entferne(speise);
         }
     }
 
+    /**
+     * Diese Methode sortiert die Zutaten, die zu einer Speise gehören, nach
+     * Kategorie. Es gibt derzeit 3 Kategorien, daher genügt es nach den ersten
+     * beiden Kategorien zu sortieren.
+     */
     private void sortiereZutatenNachKategorie() {
         for (Speise speise : speisen) {
             Collections.sort(speise.getZutaten(), new Comparator<Zutat>() {
@@ -138,32 +157,71 @@ public class SpeisenImport {
         rezepte = leseDatei(dateiOrdner + "/" + "rezepte.csv");
     }
 
+    /**
+     * Diese Methode kann Dateien aus einem Ordner einlesen.
+     *
+     * @param dateiPfad Der Pfad zu der Datei, die eingelesen werden soll.
+     * @return Gibt die eingelesene Datei vom Typ Datei wider.
+     */
     protected Datei leseDatei(String dateiPfad) {
         return new DateiLeser(dateiPfad).leseDatei();
     }
-/**
- * 
- * @param zeile
- * @return 
- */
+
+    /**
+     * Diese Methode erstellt ein Nahrungsmittel aus einer Zeile der
+     * rezepte-Datei.
+     *
+     * @param zeile Eine Zeile der Rezepte-Datei.
+     * @return Gibt die Zutat wider, wenn sie erstellt werden konnte.
+     */
     protected Zutat versucheNahrungsmittelZuErstellen(String zeile) {
         Zutat zutat;
         zutat = new ZutatErsteller().erstelle(zeile);
         return zutat;
     }
 
+    /**
+     * Falls eine Zutat keinem Nahrungsmittel zugeordnet werden kann, wird die
+     * gesamte Speise in der unvollstaendigeSpeisen-Liste gesammelt.
+     *
+     * @param speise Die Speise, deren Zutat nicht unter Nahrungsmittel gefunden
+     * wurde.
+     */
     protected void handhabeNahrungsmittelZuZutatNichtVorhanden(Speise speise) {
         unvollstaendigeSpeisen.add(speise);
     }
 
+    /**
+     * Diese Methode greift, wenn in der Zeile der rezepte-Datei keine Speise
+     * gefunden wird.
+     *
+     * @param ex
+     * @param zeile Eine Zeile der rezepte-Datei.
+     */
     protected void handhabeSpeiseNichtGefunden(SpeiseNichtGefunden ex, String zeile) {
         throw ex;
     }
 
+    /**
+     * Diese Methode greift, wenn die rezepte-Datei nicht valide, bzw. nicht
+     * lesbar ist.
+     *
+     * @param ex Exception, die in dem Fall geworfen wird.
+     * @param zeile Die Zeile in der rezepte-Datei, die nicht gelsesen werden
+     * kann.
+     * @throws
+     * de.vawi.kuechenchefApp.speisen.SpeisenImport.RezepteDateiIstNichtValide
+     * Wirft die Exception, dass die Rezepte-Datei in einer bestimmten Zeile
+     * nicht lesbar ist.
+     */
     protected void handhabeRezepteDateiIstNichtValide(Exception ex, String zeile) throws RezepteDateiIstNichtValide {
         throw new RezepteDateiIstNichtValide(zeile);
     }
 
+    /**
+     * Diese Methode greift, wenn die Hitlisten-Datei in einer bestimmten Zeile
+     * nicht eingelsen werden kann.
+     */
     public static class HitlisteDateiIstNichtValide extends RuntimeException {
 
         public HitlisteDateiIstNichtValide(String zeile) {
@@ -171,6 +229,10 @@ public class SpeisenImport {
         }
     }
 
+    /**
+     * Diese Methode greift, wenn die rezepte-Datei in einer bestimmten Zeile
+     * nicht eingelesen werden kann.
+     */
     public static class RezepteDateiIstNichtValide extends RuntimeException {
 
         public RezepteDateiIstNichtValide(String zeile) {
