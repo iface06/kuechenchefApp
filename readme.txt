@@ -1,5 +1,5 @@
-Vorraussetzungen für einen erfolgreichen Import
-Folgende Dateien müssen vorhanden sein
+Vorraussetzungen fï¿½r einen erfolgreichen Import
+Folgende Dateien mï¿½ssen vorhanden sein
     - hitliste.csv
     - rezepte.csv
     - preisliste_X.csv (wobei das X eine ganze Zahl sein muss; 1, 2, 3...)
@@ -13,3 +13,10 @@ rezepte.csv
 Zeilenformat: 
 Der Name des Rezepts muss in der rezepte.csv und der hitliste.csv gleich sein.
 Wird eine Zutat zu einem Rezept nicht von mindestens einen Lieferant angeboten, so wird das Rezept nicht importiert
+
+Starte Unit Tests
+java -cp /usr/share/java/junit.jar org.junit.runner.JUnitCore 
+
+Starte Component Tests
+
+Starte Integration Tests

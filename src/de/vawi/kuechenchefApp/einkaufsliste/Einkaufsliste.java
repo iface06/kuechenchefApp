@@ -51,12 +51,10 @@ public class Einkaufsliste implements Iterable<EinkaufslistenPosition> {
     /**
      * Gibt eine Liste an vorhandenen Lieferanten zurück
      */
-    public List<Lieferant> holeLieferanten() {
-        List<Lieferant> lieferanten = new ArrayList<>();
+    public Set<Lieferant> holeLieferanten() {
+        Set<Lieferant> lieferanten = new HashSet<>();
         for (EinkaufslistenPosition position : positionen) {
-            if (!lieferanten.contains(position.getLieferant())) {
-                lieferanten.add(position.getLieferant());
-            } 
+            lieferanten.add(position.getLieferant());
         }
         return lieferanten;
     }
@@ -67,7 +65,7 @@ public class Einkaufsliste implements Iterable<EinkaufslistenPosition> {
     public List<EinkaufslistenPosition> holeEinkaufslistenpositionenVonLieferant(Lieferant lieferant) {
         List<EinkaufslistenPosition> positionenZuLieferant = new ArrayList<>();
         for (EinkaufslistenPosition position : this.positionen) {
-            if(position.getLieferant().equals(lieferant)){
+            if (position.getLieferant().equals(lieferant)) {
                 positionenZuLieferant.add(position);
             }
         }
