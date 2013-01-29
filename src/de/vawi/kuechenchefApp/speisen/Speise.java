@@ -6,7 +6,7 @@ import java.util.*;
  * Speisen aus der Rezeptedatei. Erweitert um die Bliebtheit aus der Hitliste.
  * 
  * @author Tatsch 
- * @version (a version number or a date)
+ * @version 28.01.2013
  */
 public class Speise implements Iterable<Zutat>
 {
@@ -47,7 +47,10 @@ public class Speise implements Iterable<Zutat>
     public List<Zutat> getZutaten() {
         return new ArrayList<Zutat>(this.zutaten);
     }
-
+/**
+ * 
+ * @param zutat Zutat einer Speise
+ */
     public void addZutat(Zutat zutat){
         zutaten.add(zutat);
     }
@@ -62,7 +65,10 @@ public class Speise implements Iterable<Zutat>
     public int hashCode() {
         return this.name.hashCode();
     }
-
+/**
+ * Diese Methode geht die Zutaten einer Sp
+ * @return 
+ */
     public SpeisenUndNahrungsmittelKategorie getKategorie() {
         Iterator<Zutat> iterator = zutaten.iterator();
         return iterator.hasNext() ? iterator.next().getKategorie() : SpeisenUndNahrungsmittelKategorie.VEGETARISCH;

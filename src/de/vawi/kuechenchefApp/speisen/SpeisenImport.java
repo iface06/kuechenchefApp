@@ -6,10 +6,11 @@ import de.vawi.kuechenchefApp.speisen.SpeisenVerwaltung.SpeiseNichtGefunden;
 import java.util.*;
 
 /**
- * Importiert die Dateien rezepte.csv und hitliste.csv aus dem Ordner "Rezepte".
+ * Importiert die Dateien rezepte.csv und hitliste.csv aus einem vom Anwender
+ * vorgegebenen Ordner.
  *
  * @author Tatsch
- * @version (a version number or a date)
+ * @version 28.01.2013
  */
 public class SpeisenImport {
 
@@ -27,21 +28,18 @@ public class SpeisenImport {
     }
 
     /**
-     * Importiert die Dateien rezepte.csv und hitliste.csv aus dem Ordner
-     * "Rezepte". Auf Basis dieser Dateien wird die SpeisenVerwaltung für den
-     * SpeiseplanErsteller erstellt.
+     * Importiert die Dateien rezepte.csv und hitliste.csv aus dem vom Anwender
+     * angegebenen Ordner. Auf Basis dieser Dateien wird die SpeisenVerwaltung
+     * für den SpeiseplanErsteller erstellt.
      *
-     * Die Datei mit den Rezepten muss den namen "rezepte.csv" haben und im
-     * Ordner "Rezepte" liegen.
+     * Die Datei mit den Rezepten muss den namen "rezepte.csv" haben.
      *
      * Die Datei mit den beliebtesten Rezepten muss den Namen "hitliste.csv"
-     * haben und im Ordner "Rezepte" liegen.
+     * haben.
      *
      * Sind diese Dateien nicht vorhanden wird eine FileNotFoundException
      * geworfen. Anschließend wird das Programm mit der Fehlermeldung beendet.
      *
-     * @return Gibt die erstellte RezepteListe gekapselt in der
-     * Speisenverwaltung zurück.
      */
     public void importFiles() {
         leseDateien();
@@ -51,6 +49,12 @@ public class SpeisenImport {
         sortiereZutatenNachKategorie();
     }
 
+    /**
+     *
+     * @throws
+     * de.vawi.kuechenchefApp.speisen.SpeisenImport.HitlisteDateiIstNichtValide
+     * Wird geworfen, wenn die hitliste-Datei nicht gelsen werden kann.
+     */
     private void fuegeSpeisenVonHitlisteInSpeisenverwaltungEin() throws HitlisteDateiIstNichtValide {
         for (String zeile : hitliste) {
             try {
@@ -68,6 +72,9 @@ public class SpeisenImport {
         return speise;
     }
 
+    /**
+     * Diese Methode fängt den Versuch, Zutaten
+     */
     private void fuegeZutatenZuSpeisenAusRezepteDateiHinzu() {
         for (String zeile : rezepte) {
             try {
@@ -79,7 +86,7 @@ public class SpeisenImport {
             }
         }
     }
-    
+
     private void loescheUnvollstaendigeSpeisen() {
         for (Speise speise : unvollstaendigeSpeisen) {
             speisen.entferne(speise);
@@ -99,6 +106,17 @@ public class SpeisenImport {
         }
     }
 
+    /**
+     * Diese Methode liest aus einer Zeile der rezepte-Datei den Speisennamen
+     * heraus, und überprüft, ob die daneben stehende Zutat als Nahrungsmittel
+     * angelegt wurde und vom Programm weiter verwendet werden kann.
+     *
+     * @param zeile eine Zeile der rezepte-Datei.
+     * @throws
+     * de.vawi.kuechenchefApp.speisen.SpeisenVerwaltung.SpeiseNichtGefunden wird
+     * geworfen, wenn die Speise nicht gefunden wurde, sprich nicht aus der
+     * hitliste generiert wurde.
+     */
     private void versucheZutatZuGenerieren(String zeile) throws SpeiseNichtGefunden {
         List<String> zellen = separator.separiere(zeile);
         Speise speise = speisen.findeSpeise(zellen.get(SPEISEN_NAME));
@@ -110,6 +128,11 @@ public class SpeisenImport {
         }
     }
 
+    /**
+     * Liest die Hitliste und die Rezepte aus dem vom Anwender angegebenen
+     * Ordner ein. Hierbei müssen die Dateien hitliste.csv und rezepte.csv
+     * heißen.
+     */
     private void leseDateien() {
         hitliste = leseDatei(dateiOrdner + "/" + "hitliste.csv");
         rezepte = leseDatei(dateiOrdner + "/" + "rezepte.csv");
@@ -118,7 +141,11 @@ public class SpeisenImport {
     protected Datei leseDatei(String dateiPfad) {
         return new DateiLeser(dateiPfad).leseDatei();
     }
-
+/**
+ * 
+ * @param zeile
+ * @return 
+ */
     protected Zutat versucheNahrungsmittelZuErstellen(String zeile) {
         Zutat zutat;
         zutat = new ZutatErsteller().erstelle(zeile);
