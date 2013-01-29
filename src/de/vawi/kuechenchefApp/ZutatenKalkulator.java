@@ -6,9 +6,7 @@ import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import de.vawi.kuechenchefApp.speiseplan.Kantine;
 import de.vawi.kuechenchefApp.speiseplan.Speiseplan;
 import de.vawi.kuechenchefApp.speiseplan.Tag;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *

@@ -47,7 +47,7 @@ public class Speise implements Iterable<Zutat> {
      * @return Alle Zutaten einer Speise
      */
     public List<Zutat> getZutaten() {
-        return new ArrayList<Zutat>(this.zutaten);
+        return this.zutaten;
     }
 
     /**
