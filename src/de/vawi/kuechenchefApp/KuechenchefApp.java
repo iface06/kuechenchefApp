@@ -2,39 +2,36 @@ package de.vawi.kuechenchefApp;
 
 import de.vawi.kuechenchefApp.dateien.DateiOrdnerSuche;
 import de.vawi.kuechenchefApp.einkaufsliste.*;
-import de.vawi.kuechenchefApp.kostenaufstellung.KostenaufstellungErsteller;
-import de.vawi.kuechenchefApp.kostenaufstellung.KostenaufstellungExport;
+import de.vawi.kuechenchefApp.kostenaufstellung.*;
 import de.vawi.kuechenchefApp.lieferanten.PreisListenImport;
 import de.vawi.kuechenchefApp.speisen.SpeisenImport;
-import de.vawi.kuechenchefApp.speiseplan.SpeiseplanErsteller;
-import de.vawi.kuechenchefApp.speiseplan.SpeiseplanExport;
-
+import de.vawi.kuechenchefApp.speiseplan.*;
 
 /**
  * Diese Klasse ist der Einstiegspunkt der Anwendung KüchenchefApp.
- * 
- * @author Tatsch 
- * @version Beta
- * 
- * 
+ *
+ * @author Tatsch
+ * @version 30.01.2013
+ *
+ *
  */
 public class KuechenchefApp {
-    
+
     /**
-     * Diese Methode ist der Einstiegspunkt der Anwendung KüchenchefApp. 
-     * 
+     * Diese Methode ist der Einstiegspunkt der Anwendung KüchenchefApp.
+     *
      * @param args Keine Argumente bislang notwendig!
      */
     public static void main(String[] args) throws Exception {
-//        String dateiOrdner = importDateienOrdnerAbfragen();
-        importiereDateien("C:\\Users\\Max\\Dropbox\\WS-12-Java-Gruppe\\TL2\\Beispiel Eingabedateien");
-
-        ProzessSteuerung steuerung = erstelleProzessSteuerung();
-        steuerung.start();
-        
-        exportiereErgebnisse(steuerung);
+        String dateiOrdner = importDateienOrdnerAbfragen();
+        if (dateiOrdner != null && !dateiOrdner.isEmpty()) {
+            starteProgramm(dateiOrdner);
+        } else {
+            System.out.println("Kein Ordner für Importdateien ausgewählt! -> Programm beendet");
+        }
+        System.out.println("Die Speisepläne, Einkaufslisten und Kostenaufstellung befinden sich im Ordner \"exportDateien\"");
     }
-    
+
     private static String importDateienOrdnerAbfragen() {
         String dateiOrdner = new DateiOrdnerSuche().dateiOrdnerSuche();
         return dateiOrdner;
@@ -44,7 +41,7 @@ public class KuechenchefApp {
         importierePreisListen(dateiOrdner);
         importiereSpeisen(dateiOrdner);
     }
-    
+
     private static void importiereSpeisen(String dateiOrdner) {
         new SpeisenImport(dateiOrdner).importFiles();
     }
@@ -65,5 +62,14 @@ public class KuechenchefApp {
         new SpeiseplanExport().export(steuerung.getSpeiseplaene());
         new EinkaufslistenExport().export(steuerung.getEinkaufsliste());
         new KostenaufstellungExport().export(steuerung.getKostenUbersicht());
+    }
+
+    protected static void starteProgramm(String dateiOrdner) {
+        importiereDateien(dateiOrdner);
+
+        ProzessSteuerung steuerung = erstelleProzessSteuerung();
+        steuerung.start();
+
+        exportiereErgebnisse(steuerung);
     }
 }

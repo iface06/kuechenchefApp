@@ -1,6 +1,8 @@
 package de.vawi.kuechenchefApp.speisen;
 
 import de.vawi.kuechenchefApp.PlanungsPeriode;
+import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
+import static de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie.*;
 import java.util.*;
 
 /**
@@ -11,8 +13,9 @@ import java.util.*;
  */
 public class SpeisenVerwaltung implements Iterable<Speise> {
 
-    private static SpeisenVerwaltung INSTANZ;
+    static SpeisenVerwaltung INSTANZ;
     private Set<Speise> speisen = new HashSet<>();
+    private PlanungsPeriode planungsperiode = new PlanungsPeriode();
 
     SpeisenVerwaltung() {
     }
@@ -77,7 +80,7 @@ public class SpeisenVerwaltung implements Iterable<Speise> {
 
         List<Speise> beliebtesteSpeisen = new ArrayList<Speise>();
 
-        int anzahlBenötigteSpeisen = periode.berechneAnzahlBenötigterSpeisen();
+        int anzahlBenötigteSpeisen = periode.berechneAnzahlBenoetigterSpeisen();
 
         for (Speise speise : speisen) {
             if (speise.getBeliebtheit() <= anzahlBenötigteSpeisen) {
@@ -102,7 +105,7 @@ public class SpeisenVerwaltung implements Iterable<Speise> {
 
         List<Speise> unbeliebtesteSpeisen = new ArrayList<Speise>();
 
-        int anzahlBenötigteSpeisen = periode.berechneAnzahlBenötigterSpeisen();
+        int anzahlBenötigteSpeisen = periode.berechneAnzahlBenoetigterSpeisen();
 
         for (Speise speise : speisen) {
             if (speise.getBeliebtheit() > anzahlBenötigteSpeisen) {
@@ -111,6 +114,42 @@ public class SpeisenVerwaltung implements Iterable<Speise> {
         }
         return unbeliebtesteSpeisen;
     }
+
+    
+    /**
+     * Prüft ob genügend Speisen für die Erstellung eines Speiseplans vorhanden ist.
+     * Basis dafür ist die Werte aus der PlanungsPeriode-Klasse
+     * @return
+     */
+    public boolean sindAusreichendSpeisenFuerSpeiseplanErstellungVorhanden() {
+        if(sindAusreichendSpeisenVorhanden() && sindAusreichendSpeisenFuerKategorie(FISCH, planungsperiode.berechneAnzahlBenoetigterFischSpeisen()) 
+                && sindAusreichendSpeisenFuerKategorie(FLEISCH, planungsperiode.berechneAnzahlBenoetigteFleischSpeisen())
+                && sindAusreichendSpeisenFuerKategorie(VEGETARISCH, planungsperiode.berechneAnzahlBenoetigteVegetarischeSpeisen())){
+            return true;
+        } 
+        return false;
+    }
+
+    private boolean sindAusreichendSpeisenVorhanden() {
+        return speisen.size() >= planungsperiode.berechneAnzahlBenoetigterSpeisen();
+    }
+
+    private boolean sindAusreichendSpeisenFuerKategorie(SpeisenUndNahrungsmittelKategorie kategorie, int benoetigeAnzahlSpeisen) {
+        int anzahlSpeisen = zaehleSpeisenNachKategorie(kategorie);
+        return anzahlSpeisen >= benoetigeAnzahlSpeisen;
+    }
+    
+    
+    private int zaehleSpeisenNachKategorie(SpeisenUndNahrungsmittelKategorie kategorie){
+        int zaehler = 0;
+        for (Speise speise : speisen) {
+            if(speise.getKategorie().equals(kategorie)){
+                zaehler++;
+            }
+        }
+        return zaehler;
+    }
+
 
     class SpeiseNichtGefunden extends RuntimeException {
     }

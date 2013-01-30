@@ -5,13 +5,16 @@ import de.vawi.kuechenchefApp.dateien.*;
 import de.vawi.kuechenchefApp.speisen.*;
 import java.io.IOException;
 import java.util.*;
-import org.junit.Test;
+import org.junit.*;
+import static org.junit.Assert.*;
 
 /**
  *
  * @author Tatsch
  */
 public class SpeiseplanExportTest {
+    
+    private String speisePlan;
     
     @Test
     public void testExportSpeiseplanInDatei(){
@@ -23,9 +26,22 @@ public class SpeiseplanExportTest {
         dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
         dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
         dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
+        dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
+        dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
+        dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
+        dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
+        dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
+        dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
+        dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
+        dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
+        dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
+        dummy.plusTag(surfAndTurf, surfAndTurf, surfAndTurf);
         Speiseplan plan = dummy.erstelle();
         SpeiseplanExport exporter = new TetsableSpieseplanExport();
         exporter.export(Arrays.asList(plan));
+        
+        assertNotNull(speisePlan);
+        assertFalse(speisePlan.isEmpty());
     }
     
     class TetsableSpieseplanExport extends SpeiseplanExport{
@@ -65,7 +81,7 @@ public class SpeiseplanExportTest {
 
                 @Override
                 public void writeLine(String in_str) {
-                    System.out.println(in_str);
+                    speisePlan = in_str;
                 }
 
                 @Override

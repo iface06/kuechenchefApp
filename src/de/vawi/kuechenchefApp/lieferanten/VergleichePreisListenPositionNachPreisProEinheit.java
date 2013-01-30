@@ -4,7 +4,8 @@ import java.util.Comparator;
 
 /**
  *
- * @author Matthias
+ * @author Lepping
+ * @version 30.01.2013
  */
 class VergleichePreisListenPositionNachPreisProEinheit implements Comparator<PreisListenPosition> {
 

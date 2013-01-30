@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
+import org.junit.Ignore;
 
+@Ignore
 public class TestableDateiManager extends VawiDateiManager{
 
     private String dateiInhalt = "";

@@ -21,7 +21,7 @@ class SpeiseplanDatei implements Datei{
     
     @Override
     public String getDateiname() {
-        return "speiseplan_" + kantine.name() + ".txt";
+        return "exportDateien/speiseplan_" + kantine.name() + ".txt";
     }
 
     @Override

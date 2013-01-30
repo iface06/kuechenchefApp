@@ -4,11 +4,16 @@ import de.vawi.kuechenchefApp.dateien.Datei;
 import java.util.Iterator;
 
 
+/**
+ *
+ * @author Tatsch
+ * @version 30.01.2013
+ */
 public class KostenUebersichtDatei implements Datei{
 
     @Override
     public String getDateiname() {
-        return "kostenUebersicht.txt";
+        return "exportDateien/kostenUebersicht.txt";
     }
 
     @Override

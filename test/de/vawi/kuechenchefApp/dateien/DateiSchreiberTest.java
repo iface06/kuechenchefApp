@@ -45,7 +45,7 @@ public class DateiSchreiberTest {
         
         @Override
         public String getDateiname() {
-            return "testdatei";
+            return "test/de/vawi/kuechenchefApp/dateien/testdatei.txt";
         }   
 
         @Override

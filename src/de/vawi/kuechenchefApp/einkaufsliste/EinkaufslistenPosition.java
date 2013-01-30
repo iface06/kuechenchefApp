@@ -18,8 +18,6 @@ public class EinkaufslistenPosition
     private Lieferant lieferant;
     private double preis;
 
-    public EinkaufslistenPosition() {
-    }
     
     /**
      *

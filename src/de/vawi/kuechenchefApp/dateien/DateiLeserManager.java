@@ -9,6 +9,7 @@ import java.io.IOException;
 /**
  *
  * @author Tatsch
+ * @version 30.01.2013
  */
 public interface DateiLeserManager {
     

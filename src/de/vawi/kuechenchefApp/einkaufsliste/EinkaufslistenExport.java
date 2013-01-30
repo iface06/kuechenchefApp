@@ -26,8 +26,8 @@ public class EinkaufslistenExport extends DateiExport<Einkaufsliste>
         
         
         Set<Lieferant> lieferanten = einkaufsliste.holeLieferanten();
-        EinkaufslisteDrucker drucker = new EinkaufslisteDrucker();
         for (Lieferant lieferant : lieferanten) {
+            EinkaufslisteDrucker drucker = new EinkaufslisteDrucker();
             String einkaufslisteZuLieferant  = erstelleEinkaufslisteAlsString(einkaufsliste, lieferant, drucker);
             schreibeEinkaufslisteInDatei(lieferant, einkaufslisteZuLieferant);
         }
@@ -45,7 +45,7 @@ public class EinkaufslistenExport extends DateiExport<Einkaufsliste>
     }
 
     /**
-     *
+     * Startet Dateischreiber
      * @param lieferant (Lieferant)
      * @return schreiber
      */

@@ -22,8 +22,8 @@ public class SpeiseplanExport extends DateiExport<List<Speiseplan>>
     * @param  exportants    Liste von Speisepläne
    */
    public void export(List<Speiseplan> exportants){
-       SpeiseplanDrucker drucker = new SpeiseplanDrucker();
        for (Speiseplan speiseplan : exportants) {
+           SpeiseplanDrucker drucker = new SpeiseplanDrucker();
            String plan = drucker.drucke(speiseplan);
            DateiSchreiber schreiber = erstelleSchreiberFuer(speiseplan);
            schreiber.schreibe(plan);

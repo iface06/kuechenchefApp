@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class LieferantenVerwaltung {
 
-    private static LieferantenVerwaltung INSTANZ;
+    static LieferantenVerwaltung INSTANZ;
     private List<PreisListenPosition> preisListenPositionen = new ArrayList<>();
 
     LieferantenVerwaltung() {

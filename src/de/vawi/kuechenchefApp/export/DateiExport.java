@@ -5,7 +5,7 @@ package de.vawi.kuechenchefApp.export;
  * Gibt den Ablauf vor wie ein Exportant in eine Datei exportiert wird.
  * 
  * @author Lepping
- * @version (version number or date here)
+ * @version 30.01.2013
  */
 public abstract class DateiExport<T>
 {

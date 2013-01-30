@@ -9,7 +9,7 @@ import de.vawi.kuechenchefApp.kostenaufstellung.Kostenaufstellung;
  * Diese Klasse ist für den Export der Kostenaufstellung verantwortlich. 
  * 
  * @author Lepping 
- * @version (a version number or a date)
+ * @version 30.01.2013
  */
 public class KostenaufstellungExport extends DateiExport<KostenUebersicht>
 {
