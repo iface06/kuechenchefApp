@@ -16,11 +16,11 @@ class ZutatErsteller {
     public static final int MENGE = 1;
     public static final int NAHRUNGSMITTEL_NAME = 3;
     NahrungsmittelVerwaltung nahrungsmittels = NahrungsmittelVerwaltung.getInstanz();
-/**
- * Diese Methode erstellt eine Zuzaz aus einer Zeile der rezepte-Datei.
- * @param rezeptZeile Eine Zeile der Rezepte-Datei.
- * @return Gibt die neu erstellte Zutat wieder.
- */
+    /**
+     * Diese Methode erstellt eine Zuzaz aus einer Zeile der rezepte-Datei.
+     * @param rezeptZeile Eine Zeile der Rezepte-Datei.
+     * @return Gibt die neu erstellte Zutat wieder.
+     */
     protected Zutat erstelle(String rezeptZeile){
         List<String> zellen = separiereRezeptZeile(rezeptZeile);
         Zutat zutat = erstelleZutat(zellen);
@@ -41,7 +41,12 @@ class ZutatErsteller {
         zutat.setNahrungsmittel(nahrungsmittel);
         return zutat;
     }
-
+    
+    /**
+     * Findet anahnd des Namen eines Nahrungsmittels das Nahrungsmittel in einem Rezept
+     * @param nahrungsmittelName Name des Nahrungsmittels
+     * @return das gefundene Nahrungsmittel
+     */
     protected Nahrungsmittel findeNahrungsmittelAusRezept(String nahrungsmittelName) {
         Nahrungsmittel nahrungsmittel = nahrungsmittels.findeDurchName(nahrungsmittelName);
         return nahrungsmittel;
