@@ -6,7 +6,7 @@ import de.vawi.kuechenchefApp.dateien.DateiSchreiber;
 import de.vawi.kuechenchefApp.speiseplan.Speiseplan;
 import java.util.*;
 /**
- * Diese Klasse ist für den Export der Speisepläne verantwortlich.
+ * Diese Klasse ist fuer den Export der Speisepläne verantwortlich.
  * 
  * @author Lepping 
  * @version 30.01.2013

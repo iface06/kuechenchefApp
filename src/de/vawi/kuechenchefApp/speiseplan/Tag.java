@@ -17,7 +17,7 @@ public class Tag{
     
     /**
      * Konstrutkor 
-     * @param nummer Die Tage innerhalb eines Plans werden druch nummeriert, diese Nummer wird dem Konstrukro mitgegeben.s 
+     * @param nummer Die Tage innerhalb eines Plans werden druch nummeriert, diese Nummer wird dem Konstrukor mitgegeben. 
      */
     public Tag(int nummer) {
         this.nummer = nummer;
