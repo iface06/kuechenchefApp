@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    //de.vawi.kuechenchefApp.speisen.SpeisenImportTest.class,
+    PlanungsPeriodeTest.class,
+    de.vawi.kuechenchefApp.speisen.SpeisenImportTest.class,
     de.vawi.kuechenchefApp.lieferanten.LieferantenVerwaltungTest.class,
     de.vawi.kuechenchefApp.dateien.VawiDateiManagerTest.class,
     de.vawi.kuechenchefApp.dateien.CsvZeileSeperatorTest.class, 
