@@ -14,7 +14,6 @@ import java.util.*;
  * @version (a version number or a date)
  */
 public class SpeiseplanErsteller {
-    // Ich benötige insgesamt 3 * 15 = 45 Gerichte also 
 
     private SpeisenVerwaltung speisen = SpeisenVerwaltung.getInstanz();
     private List<Speise> beliebtesteSpeisen;
@@ -122,7 +121,7 @@ public class SpeiseplanErsteller {
      * Prueft ob die beliebtesten Speisen schon genug Fleischgerichte
      * beinhaltet.
      *
-     * @return
+     * @return true falls genuegend Gerichte vorhanden sind, andernfalls false
      */
     private boolean beliebtesteSpeisenBeinhaltenGenugFleischgerichte() {
         int counter = 0;
