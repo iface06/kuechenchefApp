@@ -13,7 +13,7 @@ import java.util.*;
  *
  * 
  * 
- * @author Lepping
+ * @author Tatsch
  * @version 29.01.2013
  */
 public class ZutatenKalkulator {

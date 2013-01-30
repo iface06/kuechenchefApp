@@ -47,7 +47,7 @@ public class EinkaufslistenExport extends DateiExport<Einkaufsliste>
     /**
      *
      * @param lieferant (Lieferant)
-     * @return 
+     * @return schreiber
      */
     protected DateiSchreiber oeffneEinkaufslisteDatei(Lieferant lieferant) {
         DateiSchreiber schreiber = new DateiSchreiber(new EinkaufslistenDatei(lieferant.getName()));

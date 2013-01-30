@@ -21,6 +21,10 @@ public class EinkaufslistenPosition
     public EinkaufslistenPosition() {
     }
     
+    /**
+     *
+     * @param nahrungsmittel
+     */
     public EinkaufslistenPosition(Nahrungsmittel nahrungsmittel) {
         this.nahrungsmittel = nahrungsmittel;
     }

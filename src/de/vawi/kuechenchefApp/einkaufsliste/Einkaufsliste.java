@@ -5,7 +5,7 @@ import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import java.util.*;
 
 /**
- * Die Einkaufsliste für die Speisepläne der Planungsperiode
+ * Diese Klasse verwaltet die Einkaufsliste.
  *
  * @author Lepping
  * @version 29.01.2013
@@ -24,16 +24,21 @@ public class Einkaufsliste implements Iterable<EinkaufslistenPosition> {
     }
 
     /**
+     * 
+     * Gibt die positionen der Einkaufsliste zurück
+     * 
      * @return Positionen der Einkaufsliste
      */
     public List<EinkaufslistenPosition> getPositionen() {
         return positionen;
     }
 
+
     /**
      *
+     * Findet Position durch Nahrungsmittel
      * @param nahrungsmittel
-     * @return
+     * @return position
      */
     protected EinkaufslistenPosition findePositionDurchNahrungsmittel(Nahrungsmittel nahrungsmittel) {
         for (EinkaufslistenPosition position : positionen) {
@@ -60,6 +65,8 @@ public class Einkaufsliste implements Iterable<EinkaufslistenPosition> {
 
     /**
      *
+     * Liefert Liste an Lieferanten bei denen bestellt wird zurück
+     * 
      * @return Liste an Lieferanten (bei denen mindestens eine Zutat bestellt wird)
      */
     public Set<Lieferant> holeLieferanten() {
@@ -73,6 +80,8 @@ public class Einkaufsliste implements Iterable<EinkaufslistenPosition> {
 
     /**
      *
+     * Liefert Liste an Einkaufslistenpositionen für einen bestimmten Lieferanten zurück
+     * 
      * @param lieferant
      * @return Gibt die Liste an Einkaufslistenpositionen für einen bestimmten Lieferanten zurück
      */
