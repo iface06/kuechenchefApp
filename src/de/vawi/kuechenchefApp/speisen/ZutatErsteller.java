@@ -37,13 +37,13 @@ class ZutatErsteller {
     private Zutat erstelleZutat(List<String> zellen) throws NumberFormatException {
         Zutat zutat = new Zutat();
         zutat.setMenge(Parse.toDouble(zellen.get(MENGE)));
-        Nahrungsmittel nahrungsmittel = findeNahrungsmittelAusRezept(zellen);
+        Nahrungsmittel nahrungsmittel = findeNahrungsmittelAusRezept(zellen.get(NAHRUNGSMITTEL_NAME));
         zutat.setNahrungsmittel(nahrungsmittel);
         return zutat;
     }
 
-    private Nahrungsmittel findeNahrungsmittelAusRezept(List<String> cells) {
-        Nahrungsmittel nahrungsmittel = nahrungsmittels.findeDurchName(cells.get(NAHRUNGSMITTEL_NAME));
+    protected Nahrungsmittel findeNahrungsmittelAusRezept(String nahrungsmittelName) {
+        Nahrungsmittel nahrungsmittel = nahrungsmittels.findeDurchName(nahrungsmittelName);
         return nahrungsmittel;
     }
     

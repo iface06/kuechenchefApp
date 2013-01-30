@@ -4,8 +4,10 @@ package de.vawi.kuechenchefApp.lieferanten;
 
 import de.vawi.kuechenchefApp.nahrungsmittel.Einheit;
 import java.util.*;
+import org.junit.Ignore;
 
 
+@Ignore
 public class DummyLieferantenVerwaltungErsteller {
     
     private LieferantenVerwaltung verwaltung = LieferantenVerwaltung.getInstanz();

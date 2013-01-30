@@ -11,30 +11,35 @@ public class SpeisenImportTest {
 
     private SpeisenImport importer;
     private SpeisenVerwaltung speisen;
-    private List<String> hitlisteZeilen = new ArrayList<>();
-    private List<String> rezepteZeilen = new ArrayList<>();
+    private List<String> hitlisteZeilen;
+    private List<Nahrungsmittel> nahrungsmittel;
+    private List<String> rezepteZeilen;
+    
 
     /**
      * Speisen aus Hitliste importieren -> OK Zutaten aus Rezpete importieren ->
      * OK Zutaten zu Speisen zuordnen -> OK
      */
-    @Before
-    public void initRezepteZeilen() {
+    private void initRezepteZeilen() {
+        rezepteZeilen = new ArrayList<>();
         rezepteZeilen.add("\"Bohneneintopf Mexiko\",150,\"g\",\"Kartoffeln\"");
         rezepteZeilen.add("\"Bohneneintopf Mexiko\",10,\"g\",\"Chilipulver\"");
         rezepteZeilen.add("\"Falscher Hase\",10,\"g\",\"Hase\"");
         rezepteZeilen.add("\"Falscher Hase\",10,\"g\",\"Chilipulver\"");
     }
 
-    @Before
-    public void initHitlisteZeilen() {
+    private void initHitlisteZeilen() {
+        hitlisteZeilen = new ArrayList<>();
         hitlisteZeilen.add("1,\"Bohneneintopf Mexiko\"");
         hitlisteZeilen.add("2,\"Falscher Hase\"");
-        
+
     }
 
     @Before
     public void before() {
+        initRezepteZeilen();
+        initHitlisteZeilen();
+        initNahrungsmittel();
         fuegeKartoffelUndChilipulvernInNahrungsmittelVerwaltungEin();
         initializiereImporter();
         initizialisiereSpeisenVerwaltung();
@@ -75,29 +80,29 @@ public class SpeisenImportTest {
         assertEquals(SpeisenUndNahrungsmittelKategorie.FLEISCH, speise.getKategorie());
     }
 
-    @Test(expected=SpeisenImport.HitlisteDateiIstNichtValide.class)
+    @Test(expected = SpeisenImport.HitlisteDateiIstNichtValide.class)
     public void testFehlerhafteHitliste() {
-        hitlisteZeilen.add(",\"Falscher Hase\"");        
+        hitlisteZeilen.add(",\"Falscher Hase\"");
         importer.importFiles();
         fail();
     }
-    
-    @Test(expected=SpeisenImport.RezepteDateiIstNichtValide.class)
+
+    @Test(expected = SpeisenImport.RezepteDateiIstNichtValide.class)
     public void testFehlerhafteRezepteDatei() {
         rezepteZeilen.add("\"Falscher Hase\",,\"\",\"Eier\"");
         importer.importFiles();
         fail();
     }
-    
-    @Test(expected=SpeisenVerwaltung.SpeiseNichtGefunden.class)
+
+    @Test(expected = SpeisenVerwaltung.SpeiseNichtGefunden.class)
     public void testNahrungsmittelIstNichtVerfuegbar() {
         hitlisteZeilen.add("3,\"Walfischstreifen auf Salat\"");
         rezepteZeilen.add("\"Walfischstreifen auf Salat\",100,\"g\",\"Walfleisch\"");
         importer.importFiles();
+
         
-        assertEquals(2, speisen.size());
-        Speise walfisch = speisen.findeSpeise("Walfischstreifen auf Salat");
-        fail();
+        assertNull(speisen.findeSpeise("Walfischstreifen auf Salat"));
+        
     }
 
     private void fuegeKartoffelUndChilipulvernInNahrungsmittelVerwaltungEin() {
@@ -129,23 +134,39 @@ public class SpeisenImportTest {
         speisen = SpeisenVerwaltung.getInstanz();
     }
 
-    private class TestbarerImport extends SpeisenImport{
+    private void initNahrungsmittel() {
+        nahrungsmittel = new ArrayList<>();
+
+        nahrungsmittel.add(erstelleNahrungsmittel("Hase", SpeisenUndNahrungsmittelKategorie.FLEISCH));
+        nahrungsmittel.add(erstelleNahrungsmittel("Chilipulver", SpeisenUndNahrungsmittelKategorie.VEGETARISCH));
+        nahrungsmittel.add(erstelleNahrungsmittel("Kartoffeln", SpeisenUndNahrungsmittelKategorie.VEGETARISCH));
+        
+        nahrungsmittel.add(erstelleNahrungsmittel("Eier", SpeisenUndNahrungsmittelKategorie.VEGETARISCH));
+    }
+
+    private Nahrungsmittel erstelleNahrungsmittel(String name, SpeisenUndNahrungsmittelKategorie kategorie) {
+        Nahrungsmittel mittel = new Nahrungsmittel();
+        mittel.setName(name);
+        mittel.setKategorie(kategorie);
+        return mittel;
+    }
+
+    private class TestbarerImport extends SpeisenImport {
 
         public TestbarerImport(String dateiOrdner) {
             super(dateiOrdner);
         }
 
-        
         @Override
         protected Datei leseDatei(String dateiPfad) {
-            if(dateiPfad.endsWith("hitliste.csv"))
+            if (dateiPfad.endsWith("hitliste.csv")) {
                 return new TestbareHitlisteDatei();
-            else 
+            } else {
                 return new TestbareRezpeteDatei();
+            }
         }
-        
     }
-    
+
     private class TestbareHitlisteDatei implements Datei {
 
         @Override

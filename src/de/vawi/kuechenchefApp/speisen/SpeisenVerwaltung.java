@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class SpeisenVerwaltung implements Iterable<Speise> {
 
-    private static SpeisenVerwaltung INSTANZ;
+    static SpeisenVerwaltung INSTANZ;
     private Set<Speise> speisen = new HashSet<>();
     private PlanungsPeriode planungsperiode = new PlanungsPeriode();
 

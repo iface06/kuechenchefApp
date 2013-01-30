@@ -24,6 +24,7 @@ public class SpeiseplanDruckerTest {
         }
         
         Speiseplan plan = new Speiseplan(Kantine.ESSEN, tage);
+        
         String ausdruck = new SpeiseplanDrucker().drucke(plan);
         
         System.out.print(ausdruck);

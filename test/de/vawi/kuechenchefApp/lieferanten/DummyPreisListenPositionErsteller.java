@@ -3,8 +3,9 @@
 package de.vawi.kuechenchefApp.lieferanten;
 
 import de.vawi.kuechenchefApp.nahrungsmittel.*;
+import org.junit.Ignore;
 
-
+@Ignore
 public class DummyPreisListenPositionErsteller {
     
     public static final int GROSSHAENDLER = 1;

@@ -4,11 +4,13 @@ import de.vawi.kuechenchefApp.lieferanten.*;
 import de.vawi.kuechenchefApp.nahrungsmittel.Einheit;
 import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
+import org.junit.Ignore;
 
 /**
  *
  * @author Tatsch
  */
+@Ignore
 public class DummyEinkaufslistenPosition {
 
     EinkaufslistenPosition position = new EinkaufslistenPosition(new Nahrungsmittel());
