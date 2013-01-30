@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package de.vawi.kuechenchefApp.dateien;
 
 import java.io.IOException;
@@ -9,6 +6,7 @@ import java.io.IOException;
 /**
  *
  * @author Tatsch
+ * @version 30.01.2013
  */
 public interface DateiSchreiberManager {
 
