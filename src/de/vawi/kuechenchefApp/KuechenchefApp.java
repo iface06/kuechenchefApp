@@ -12,7 +12,7 @@ import de.vawi.kuechenchefApp.speiseplan.*;
  * Diese Klasse ist der Einstiegspunkt der Anwendung KüchenchefApp.
  * 
  * @author Tatsch 
- * @version Beta
+ * @version 30.01.2013
  * 
  * 
  */
@@ -20,7 +20,7 @@ public class KuechenchefApp {
     
     /**
      * Diese Methode ist der Einstiegspunkt der Anwendung KüchenchefApp. 
-     * 
+     *  
      * @param args Keine Argumente bislang notwendig!
      */
     public static void main(String[] args) throws Exception {

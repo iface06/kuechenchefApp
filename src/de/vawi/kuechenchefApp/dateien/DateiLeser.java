@@ -9,6 +9,7 @@ import java.util.logging.Logger;
  * Diese Klasse ist für das einlesen der Dateien zuständig.
  *
  * @author Tatsch
+ * @version 30.01.2013
  */
 public class DateiLeser {
 

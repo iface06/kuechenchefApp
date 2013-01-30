@@ -12,6 +12,7 @@ import java.util.List;
 /**
  *
  * @author Tatsch
+ * @version 30.01.2013
  */
 public class AsciiTable {
 

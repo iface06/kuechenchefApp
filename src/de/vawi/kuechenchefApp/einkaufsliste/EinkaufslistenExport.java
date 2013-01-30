@@ -45,7 +45,7 @@ public class EinkaufslistenExport extends DateiExport<Einkaufsliste>
     }
 
     /**
-     *
+     * Startet Dateischreiber
      * @param lieferant (Lieferant)
      * @return schreiber
      */

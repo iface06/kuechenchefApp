@@ -12,7 +12,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Max
+ * @author Beer
+ * @version 30.01.2013
  */
 public class DateiSchreiber {
     
@@ -22,6 +23,7 @@ public class DateiSchreiber {
 
     /**
      *
+     * Setzt Dateinamen
      * @param dateiName
      */
     public DateiSchreiber(Datei dateiName) {
@@ -29,6 +31,10 @@ public class DateiSchreiber {
         
     }
 
+    /**
+     * Schreibt String in Datei
+     * @param inhalt
+     */
     public void schreibe(String inhalt) {
         dateiManager = erzeugeDatei();
         oeffneDatei();
@@ -37,6 +43,10 @@ public class DateiSchreiber {
         
     }
     
+    /**
+     * Erzeugt neue Datei
+     * @return
+     */
     protected DateiSchreiberManager erzeugeDatei() {
         return new VawiDateiManager(dateiName.getDateiname());
     }

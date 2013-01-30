@@ -8,6 +8,7 @@ import java.util.*;
 /**
  * Diese Klasse steuert den Prozess für die Erstellung der Speisepläne, Einkaufsliste und Kostenaufstellung.
  * @author Beer 
+ * @version 30.01.2013
  */
 class ProzessSteuerung{
 
