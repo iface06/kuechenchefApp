@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package de.vawi.kuechenchefApp.speiseplan;
 
 import de.vawi.kuechenchefApp.PlanungsPeriode;
@@ -10,7 +7,7 @@ import de.vawi.kuechenchefApp.export.Row;
 import java.util.*;
 
 /**
- *
+ * Diese Klasse erstellt die String-Repraesentatin eines Speiseplans
  * @author Tatsch
  * @version 30.01.2013
  */

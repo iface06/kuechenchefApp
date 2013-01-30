@@ -30,7 +30,7 @@ public enum Kantine
 
     /**
      *
-     * Gibt Anzahl an Gerichten für beliebtestes Gericht zurück
+     * Gibt Anzahl an Gerichten für beliebtestes Gericht zurueck
      * 
      * @ return Anzahl für beliebtestes Gericht
      */
@@ -40,7 +40,7 @@ public enum Kantine
     }
     /**
      *
-     * Gibt Anzahl an Gerichten für zweitbeliebtestes Gericht zurück
+     * Gibt Anzahl an Gerichten für zweitbeliebtestes Gericht zurueck
      * 
      * @return Anzahl für zweitbeliebtestes Gericht
      * 
@@ -51,7 +51,7 @@ public enum Kantine
     }
     /**
      *
-     * Gibt Anzahl der Gerichte für drittbeliebtestes Gericht zurück
+     * Gibt Anzahl der Gerichte für drittbeliebtestes Gericht zurueck
      * 
      * @return Anzahö für drittbeliebtestes Gericht
      */
