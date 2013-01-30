@@ -53,7 +53,10 @@ public class NahrungsmittelVerwaltung {
         return INSTANZ;
 
     }
-
+    
+    /**
+     * Der Fehler der geworfen wird, wenn ein Nahrungsmittel nicht gefunden wird.
+     */
     public class NahrungsmittelNichtGefunden extends RuntimeException {
     }
 }
