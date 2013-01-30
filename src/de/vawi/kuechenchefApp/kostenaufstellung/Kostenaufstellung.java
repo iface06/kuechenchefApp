@@ -16,18 +16,36 @@ public class Kostenaufstellung {
     Lieferant lieferant;
     List<EinkaufslistenPosition> einkaufslistenPositionen;
 
+    /**
+     * Gibt Lieferant zurück
+     * @return lieferant
+     */
     public Lieferant getLieferant() {
         return this.lieferant;
     }
 
+    /**
+     *
+     * @param lieferant
+     */
     public void setLieferant(Lieferant lieferant) {
         this.lieferant = lieferant;
     }
 
+    /**
+     *
+     * Gibt Einkaufslistenpositionen zurück
+     * 
+     * @return einkaufslistePositionen
+     */
     public List<EinkaufslistenPosition> getEinkaufslistenPositionsListe() {
         return this.einkaufslistenPositionen;
     }
 
+    /**
+     *
+     * @param einkaufslistenPositionen
+     */
     public void setEinkaufslistenPositionsListe(List<EinkaufslistenPosition> einkaufslistenPositionen) {
         this.einkaufslistenPositionen = einkaufslistenPositionen;
     }

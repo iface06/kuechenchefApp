@@ -64,6 +64,10 @@ public class KuechenchefApp {
         new KostenaufstellungExport().export(steuerung.getKostenUbersicht());
     }
 
+    /**
+     * Startet den Import und startet die Prozesssteuerung
+     * @param dateiOrdner
+     */
     protected static void starteProgramm(String dateiOrdner) {
         importiereDateien(dateiOrdner);
 
