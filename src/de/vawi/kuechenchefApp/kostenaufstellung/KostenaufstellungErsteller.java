@@ -25,6 +25,12 @@ public class KostenaufstellungErsteller {
         this.liste = liste;
     }
 
+    /**
+     *
+     * Gibt Kostenuebersicht zurück
+     * 
+     * @return uebersicht
+     */
     public KostenUebersicht erstelle(){
         uebersicht = new KostenUebersicht();
         kostenaufstellungNachLieferant();

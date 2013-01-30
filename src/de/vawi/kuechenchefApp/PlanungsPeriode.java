@@ -75,14 +75,32 @@ public class PlanungsPeriode {
 
     
     
+    /**
+     *
+     * Gibt Anzahl von benötigten Fischspeisen zurück
+     * 
+     * @return Anzahl an benötigten Fischpeisen
+     */
     public int berechneAnzahlBenoetigterFischSpeisen() {
         return anzahlWochen;
     }
     
+    /**
+     *
+     * Gibt Anzahl an benötigten vegetarischen Speisen zurück
+     * 
+     * @return Anzahl an benötigten vegetarischen Speisen
+     */
     public int berechneAnzahlBenoetigteVegetarischeSpeisen() {
         return anzahlWochen * anzahlTageProWoche;
     }
     
+    /**
+     *
+     * Gibt Anzahl an benötigten Fleischspeisen zurück
+     * 
+     * @return Anzahl an benötigten Fleischspeisen
+     */
     public int berechneAnzahlBenoetigteFleischSpeisen() {
         return anzahlWochen * anzahlTageProWoche;
     }
