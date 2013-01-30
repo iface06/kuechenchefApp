@@ -7,7 +7,8 @@ import java.util.List;
  * Diese Klasse bestimmt anhand der Preislisten-Datei den Namen und Typ des
  * Lieferanten.
  *
- * @author Struebe (25.01.2013)
+ * @author Struebe
+ * @version 25.01.2013
  */
 class LieferantenErsteller {
 

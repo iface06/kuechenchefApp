@@ -8,7 +8,8 @@ import java.util.List;
 /**
  * Diese Klasse erstellt ein Nahrungsmittel durch
  *
- * @author Struebe (25.01.2013)
+ * @author Struebe
+ * @version 25.01.2013
  */
 class NahrungsmittelErsteller {
 

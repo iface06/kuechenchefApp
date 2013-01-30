@@ -6,7 +6,7 @@ import java.util.*;
  * Ein Speiseplan für eine Planungsperiode.
  * 
  * @author Beer 
- * @version (a version number or a date)
+ * @version 30.01.2013
  */
 public class Speiseplan implements Iterable<Tag>
 {

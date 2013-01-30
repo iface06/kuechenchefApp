@@ -7,7 +7,8 @@ import java.util.List;
 
 /**
  * Erstellt den Ausdruck für die Kostenübersicht.
- * @author tatsch
+ * @author Tatsch
+ * @version 30.01.2013
  */
 class KostenUebersichtDrucker {
     private String ausdruck = new String();
