@@ -27,7 +27,7 @@ public class KuechenchefApp {
      */
     public static void main(String[] args) throws Exception {
 //        String dateiOrdner = importDateienOrdnerAbfragen();
-        importiereDateien("C:\\projects\\kuechenchefApp\\importDatein");
+        importiereDateien("C:\\Users\\Max\\Dropbox\\WS-12-Java-Gruppe\\TL2\\Beispiel Eingabedateien");
 
         ProzessSteuerung steuerung = erstelleProzessSteuerung();
         steuerung.start();

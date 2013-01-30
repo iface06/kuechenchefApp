@@ -36,14 +36,13 @@ public class SpeiseplanErsteller {
     }
 
     /**
-     * Erstellt auf Basis der Rezpete einen Speiseplan für eine der Kantinen, nach den Regeln:
+     * Erstellt auf Basis der Rezpete einen Speiseplan für eine der Kantinen,
+     * nach den Regeln:
      *
-     * 1. 3 Gerichte pro Tag
-     * 2. Mindestens 1 Gericht davon vegetarisch
-     * 3. Mindestens 1 Gericht davon mit Fleisch
-     * 4. Einmal pro Woche ein Gericht mit Fisch
-     * 5. Für einen Zeitraum von 3 Wochen
-     * 6. Jedes Gericht maximal einmal pro 3 Wochen
+     * 1. 3 Gerichte pro Tag 2. Mindestens 1 Gericht davon vegetarisch 3.
+     * Mindestens 1 Gericht davon mit Fleisch 4. Einmal pro Woche ein Gericht
+     * mit Fisch 5. Für einen Zeitraum von 3 Wochen 6. Jedes Gericht maximal
+     * einmal pro 3 Wochen
      *
      * @params kantine Kantine des Unternehmens
      * @return Speiseplan
@@ -115,7 +114,8 @@ public class SpeiseplanErsteller {
     }
 
     /**
-     * Prueft ob die beliebtesten Speisen schon genug Fleischgerichte beinhaltet.
+     * Prueft ob die beliebtesten Speisen schon genug Fleischgerichte
+     * beinhaltet.
      *
      * @return
      */
@@ -153,7 +153,8 @@ public class SpeiseplanErsteller {
     }
 
     /**
-     * Prueft ob die beliebtesten Speisen schon genug Vegetarischen Gerichte beinhaltet.
+     * Prueft ob die beliebtesten Speisen schon genug Vegetarischen Gerichte
+     * beinhaltet.
      *
      * @return
      */
@@ -187,7 +188,6 @@ public class SpeiseplanErsteller {
         return nachKategorie.get(nachKategorie.size() - 1);
     }
 
-
     private Speise ermittlebeliebtestesGericht(SpeisenUndNahrungsmittelKategorie speiseKategorie) {
         List<Speise> nachKategorie = extrahiereSpeisenNachKategorie(uebrigenSpeisen, speiseKategorie);
         sortiereSpeisen(nachKategorie);
@@ -216,20 +216,99 @@ public class SpeiseplanErsteller {
         }
 
         if (problematischeNahrungsmittelEssen.size() != 0 || problematischeNahrungsmittelMuehl.size() != 0) {
-//das nächste beliebteste der gleichen kategorie aus übrige Speisen holen
-//neustart der Validierung
             System.out.println("Verfügbarkeit reicht nicht aus!");
-//            passeSpeisenDerVerfügbarkeitAn();            
+            passeSpeisenDerVerfügbarkeitAn(problematischeNahrungsmittelEssen, problematischeNahrungsmittelMuehl);
+        } else {
+            System.out.println("Verfügbarkeit reicht aus!!!!");
         }
 
     }
 
-    private void erstelleSpeiseplaene() {
-        speisenFuerEssen = new ArrayList<>(beliebtesteSpeisen);
-        uebrigeSpeiesenEssen = new ArrayList<>(uebrigenSpeisen);
+    private void passeSpeisenDerVerfügbarkeitAn(List<Nahrungsmittel> problematischeNahrungsmittelEssen, List<Nahrungsmittel> problematischeNahrungsmittelMuehl) {
+        if (!problematischeNahrungsmittelEssen.isEmpty()) {
+            passeSpeisenFuerEssenAn(problematischeNahrungsmittelEssen);
+        }
+        if (!problematischeNahrungsmittelMuehl.isEmpty()) {
+            passeSpeisenFuerMuehlaheimAn(problematischeNahrungsmittelMuehl);
+        }
 
-        speisenFuerMuehlheim = new ArrayList<>(beliebtesteSpeisen);
-        uebrigeSpeisenMuehlheim = new ArrayList<>(uebrigenSpeisen);
+        erstelleSpeiseplaene();
+        pruefeVerfuegbarkeit();
+
+    }
+
+    private void passeSpeisenFuerEssenAn(List<Nahrungsmittel> problematischeNahrungsmittelEssen) {
+        List<Speise> problematischeSpeisen = findeSpeisenMitNahrungsmittel(problematischeNahrungsmittelEssen, speisenFuerEssen);
+        List<Speise> moeglicheErsatzSpeisen = findeSpeisenOhneNahrungsmittel(problematischeNahrungsmittelEssen, uebrigeSpeiesenEssen);
+        
+        ersetzeSpeisen(problematischeSpeisen, moeglicheErsatzSpeisen, speisenFuerEssen, uebrigeSpeiesenEssen);
+
+    }
+
+    private void passeSpeisenFuerMuehlaheimAn(List<Nahrungsmittel> problematischeNahrungsmittelMuehl) {
+        List<Speise> problematischeSpeisen = findeSpeisenMitNahrungsmittel(problematischeNahrungsmittelMuehl, speisenFuerMuehlheim);
+        List<Speise> moeglicheErsatzSpeisen = findeSpeisenOhneNahrungsmittel(problematischeNahrungsmittelMuehl, uebrigeSpeisenMuehlheim);
+
+        ersetzeSpeisen(problematischeSpeisen, moeglicheErsatzSpeisen, speisenFuerMuehlheim, uebrigeSpeisenMuehlheim);
+    }
+
+    private List<Speise> findeSpeisenMitNahrungsmittel(List<Nahrungsmittel> problematischeNahrungsmittelEssen, List<Speise> speisenFuerEssen) {
+        List<Speise> gefundeneSpeisen = new ArrayList<Speise>();
+
+        for (Nahrungsmittel nahrungsmittel : problematischeNahrungsmittelEssen) {
+            List<Speise> potentielleSpeisen = new ArrayList<Speise>();
+            for (Speise speise : speisenFuerEssen) {
+                for (Zutat zutat : speise.getZutaten()) {
+                    if (zutat.getNahrungsmittel().equals(nahrungsmittel)) {
+                        potentielleSpeisen.add(speise);
+                    }
+                }
+            }
+            if (!potentielleSpeisen.isEmpty()) {
+                gefundeneSpeisen.add(findeUnbeliebtesteSpeise(potentielleSpeisen));
+            }
+        }
+        return gefundeneSpeisen;
+    }
+
+    private List<Speise> findeSpeisenOhneNahrungsmittel(List<Nahrungsmittel> problematischeNahrungsmittelEssen, List<Speise> uebrigeSpeiesenEssen) {
+        List<Speise> gefundeneSpeisen = new ArrayList<Speise>(uebrigeSpeiesenEssen);
+
+        for (Nahrungsmittel nahrungsmittel : problematischeNahrungsmittelEssen) {
+            List<Speise> potentielleSpeisen = new ArrayList<Speise>();
+            for (Speise speise : uebrigeSpeiesenEssen) {
+                for (Zutat zutat : speise.getZutaten()) {
+                    if (zutat.getNahrungsmittel().equals(nahrungsmittel)) {
+                        potentielleSpeisen.add(speise);
+                    }
+                }
+            }
+            gefundeneSpeisen.removeAll(potentielleSpeisen);
+        }
+        return gefundeneSpeisen;
+    }
+
+    private void ersetzeSpeisen(List<Speise> problematischeSpeisen, List<Speise> moeglicheErsatzSpeisen, List<Speise> speisenFuerEssen, List<Speise> uebrigeSpeiesenEssen) {
+        int i = 0;
+        sortiereSpeisen(moeglicheErsatzSpeisen);
+        for (Speise probSpeise : problematischeSpeisen) {
+            speisenFuerEssen.remove(probSpeise);
+            uebrigeSpeiesenEssen.add(probSpeise);
+            speisenFuerEssen.add(moeglicheErsatzSpeisen.get(i));
+            i++;
+        }
+    }
+
+    private void erstelleSpeiseplaene() {
+        if (speisenFuerEssen == null || speisenFuerEssen.isEmpty()) {
+            speisenFuerEssen = new ArrayList<>(beliebtesteSpeisen);
+            uebrigeSpeiesenEssen = new ArrayList<>(uebrigenSpeisen);
+        }
+
+        if (speisenFuerMuehlheim == null || speisenFuerMuehlheim.isEmpty()) {
+            speisenFuerMuehlheim = new ArrayList<>(beliebtesteSpeisen);
+            uebrigeSpeisenMuehlheim = new ArrayList<>(uebrigenSpeisen);
+        }
 
         speiseplanEssen = erstelleSpeiseplan(Kantine.ESSEN);
         speiseplanMuehlheim = erstelleSpeiseplan(Kantine.MUELHEIM_AN_DER_RUHR);
@@ -238,9 +317,9 @@ public class SpeiseplanErsteller {
     private Speiseplan erstelleSpeiseplan(Kantine kantine) {
         List<Speise> speisenFuerPlan;
         if (kantine.equals(Kantine.ESSEN)) {
-            speisenFuerPlan = speisenFuerEssen;
+            speisenFuerPlan = new ArrayList<Speise>(speisenFuerEssen);
         } else {
-            speisenFuerPlan = speisenFuerMuehlheim;
+            speisenFuerPlan = new ArrayList<Speise>(speisenFuerMuehlheim);
         }
         List<Tag> tage = new ArrayList<Tag>();
         PlanungsPeriode periode = new PlanungsPeriode();
@@ -280,8 +359,8 @@ public class SpeiseplanErsteller {
 
     private Tag verteileSpeisenAufTag(Tag tag, List<Speise> tagesSpeisen) {
         Speise speise1 = findeBeliebtesteSpeise(tagesSpeisen);
-        if(speise1.getName() == null){
-            int test  = 1;
+        if (speise1.getName() == null) {
+            int test = 1;
         }
         tag.setBeliebtesteSpeise(speise1);
         tagesSpeisen.remove(speise1);
@@ -297,19 +376,24 @@ public class SpeiseplanErsteller {
         return speisen.get(0);
     }
 
+    private Speise findeUnbeliebtesteSpeise(List<Speise> speisen) {
+        sortiereSpeisen(speisen);
+        return speisen.get(speisen.size() - 1);
+    }
+
     private Speise nimmEinGerichtAusListe(List<Speise> speisen, SpeisenUndNahrungsmittelKategorie kategorie) {
         List<Speise> gefundenesGericht = extrahiereSpeisenNachKategorie(speisen, kategorie);
         if (!gefundenesGericht.isEmpty()) {
             speisen.remove(gefundenesGericht.get(0));
             return gefundenesGericht.get(0);
         } else {
-            
+
             SpeisenUndNahrungsmittelKategorie gemerkteKategorie;
             List<Speise> listeMitMehrSpeisen = new ArrayList<>();
             List<SpeisenUndNahrungsmittelKategorie> andereKategorien = SpeisenUndNahrungsmittelKategorie.holeAndereKategorien(kategorie);
             for (SpeisenUndNahrungsmittelKategorie andereKategorie : andereKategorien) {
                 List<Speise> andereSpeisen = extrahiereSpeisenNachKategorie(speisen, andereKategorie);
-                if(listeMitMehrSpeisen.size() <= andereSpeisen.size()){
+                if (listeMitMehrSpeisen.size() <= andereSpeisen.size()) {
                     listeMitMehrSpeisen = andereSpeisen;
                 }
             }
@@ -320,12 +404,11 @@ public class SpeiseplanErsteller {
 
     private void sortiereSpeisen(List<Speise> speisen) {
         Collections.sort(speisen, new Comparator<Speise>() {
-
-             @Override
-             public int compare(Speise o1, Speise o2) {
-                 return Integer.valueOf(o1.getBeliebtheit()).compareTo(Integer.valueOf(o2.getBeliebtheit()));
-             }
-         });
+            @Override
+            public int compare(Speise o1, Speise o2) {
+                return Integer.valueOf(o1.getBeliebtheit()).compareTo(Integer.valueOf(o2.getBeliebtheit()));
+            }
+        });
     }
 
     private List<Speise> extrahiereSpeisenNachKategorie(List<Speise> speisen, SpeisenUndNahrungsmittelKategorie kategorie) {
