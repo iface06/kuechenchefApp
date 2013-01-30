@@ -47,19 +47,18 @@ public class SpeiseplanErsteller {
         beliebtesteSpeisenPruefenUndAnpassen();
         erstelleSpeiseplaene();
         pruefeVerfuegbarkeit();
+        sortiereTageSpeisseplaene();
         return Arrays.asList(speiseplanEssen, speiseplanMuehlheim);
     }
-    
+
     private void validiereSpeisenAnzahl() {
-        if(!sindAusreichendSpeisenInSpeisenVerwaltungVorhanden()){
+        if (!sindAusreichendSpeisenInSpeisenVerwaltungVorhanden()) {
             throw new KeineAusreichendeAnzahlAnSpeisen();
         }
     }
 
     private void ladeBeliebtesteSpeisen() {
         beliebtesteSpeisen = findeBeliebtesteSpeisenFuerPlanungsperiode();
-        System.out.println(speisen.size());
-        System.out.println(beliebtesteSpeisen.size());
     }
 
     protected List<Speise> findeBeliebtesteSpeisenFuerPlanungsperiode() {
@@ -68,7 +67,6 @@ public class SpeiseplanErsteller {
 
     private void ladeUnbeliebtesteSpeisen() {
         uebrigenSpeisen = findeUnbeliebtesteSpeisen();
-        System.out.println(uebrigenSpeisen.size());
     }
 
     protected List<Speise> findeUnbeliebtesteSpeisen() {
@@ -79,22 +77,18 @@ public class SpeiseplanErsteller {
         if (beliebtesteSpeisenBeinhaltenGenugFischgerichte()) {
             if (beliebtesteSpeisenBeinhaltenGenugVegGerichte()) {
                 if (beliebtesteSpeisenBeinhaltenGenugFleischgerichte()) {
-                    System.out.println("Ausgewählte Speisen erfüllen harte Kriterien!");
                 } else {
-                    System.out.println("Zu wenig Fleisch Gerichte an Bord!");
                     fuegeNeuesGerichtHinzu(SpeisenUndNahrungsmittelKategorie.FLEISCH);
                     beliebtesteSpeisenPruefenUndAnpassen();
                 }
 
                 //else Zweig für "zu wenig Vegetarische Gerichte in den beliebtesten Speisen"
             } else {
-                System.out.println("Zu wenig Vegetarische Gerichte an Bord!");
                 fuegeNeuesGerichtHinzu(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
                 beliebtesteSpeisenPruefenUndAnpassen();
             }
             //else Zweig für "zu wenig Fischgerichte in den beliebtesten Speisen"
         } else {
-            System.out.println("Zu wenig Fischgerichte Gerichte an Bord!");
             fuegeNeuesGerichtHinzu(SpeisenUndNahrungsmittelKategorie.FISCH);
             beliebtesteSpeisenPruefenUndAnpassen();
         }
@@ -103,9 +97,7 @@ public class SpeiseplanErsteller {
     private void fuegeNeuesGerichtHinzu(SpeisenUndNahrungsmittelKategorie speiseKategorie) {
         if (speiseKategorie.equals(SpeisenUndNahrungsmittelKategorie.FLEISCH)) {
             Speise unbeliebtestesVegGericht = ermittleUnbeliebtestesGericht(SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
-            System.out.println("Unbeliebtestes Veggericht: " + unbeliebtestesVegGericht.getName());
             Speise neuesFleischGericht = ermittlebeliebtestesGericht(speiseKategorie);
-            System.out.println("Neues Gericht: " + neuesFleischGericht.getName());
             beliebtesteSpeisen.add(neuesFleischGericht);
             uebrigenSpeisen.add(unbeliebtestesVegGericht);
             beliebtesteSpeisen.remove(unbeliebtestesVegGericht);
@@ -113,9 +105,7 @@ public class SpeiseplanErsteller {
 
         } else {
             Speise unbeliebtestesFleischGericht = ermittleUnbeliebtestesGericht(SpeisenUndNahrungsmittelKategorie.FLEISCH);
-            System.out.println("Unbeliebtestes Fleischgericht: " + unbeliebtestesFleischGericht.getName());
             Speise neuesGericht = ermittlebeliebtestesGericht(speiseKategorie);
-            System.out.println("Neues Gericht: " + neuesGericht.getName());
             beliebtesteSpeisen.add(neuesGericht);
             beliebtesteSpeisen.remove(unbeliebtestesFleischGericht);
             uebrigenSpeisen.add(unbeliebtestesFleischGericht);
@@ -141,7 +131,6 @@ public class SpeiseplanErsteller {
                 counter++;
             }
         }
-        System.out.println("Anzahl von Fleischgerichten: " + counter);
         if (counter >= mindestAnzahlBenoetigterFleischgerichte()) {
             return true;
         }
@@ -160,7 +149,6 @@ public class SpeiseplanErsteller {
                 gezaehlteSpeisen++;
             }
         }
-        System.out.println("Anzahl von Fischgerichten: " + gezaehlteSpeisen);
         if (gezaehlteSpeisen >= mindestAnzahlBenoetigterFischgerichte()) {
             return true;
         }
@@ -180,7 +168,6 @@ public class SpeiseplanErsteller {
                 counter++;
             }
         }
-        System.out.println("Anzahl von Veggerichten: " + counter);
         if (counter >= mindestAnzahlBenoetigterVegGerichte()) {
             return true;
         }
@@ -229,10 +216,7 @@ public class SpeiseplanErsteller {
         }
 
         if (problematischeNahrungsmittelEssen.size() != 0 || problematischeNahrungsmittelMuehl.size() != 0) {
-            System.out.println("Verfügbarkeit reicht nicht aus!");
             passeSpeisenDerVerfügbarkeitAn(problematischeNahrungsmittelEssen, problematischeNahrungsmittelMuehl);
-        } else {
-            System.out.println("Verfügbarkeit reicht aus!!!!");
         }
 
     }
@@ -335,7 +319,7 @@ public class SpeiseplanErsteller {
             speisenFuerPlan = new ArrayList<Speise>(speisenFuerMuehlheim);
         }
         List<Tag> tage = new ArrayList<Tag>();
-        
+
         //zuerst müssen die Fischtage erstellt werden!!
         for (int i = 1; i <= planungsperiode.getAnzahlWochen(); i++) {
             tage.add(erstelleFischTag(speisenFuerPlan, i * 5));
@@ -439,6 +423,17 @@ public class SpeiseplanErsteller {
 
     protected boolean sindAusreichendSpeisenInSpeisenVerwaltungVorhanden() {
         return speisen.sindAusreichendSpeisenFuerSpeiseplanErstellungVorhanden();
+    }
+
+    private void sortiereTageSpeisseplaene() {
+        Comparator<Tag> c = new Comparator<Tag>() {
+            @Override
+            public int compare(Tag o1, Tag o2) {
+                return Integer.valueOf(o1.getNummer()).compareTo(Integer.valueOf(o2.getNummer()));
+            }
+        };
+        Collections.sort(speiseplanEssen.getTageMitGerichten(), c);
+        Collections.sort(speiseplanMuehlheim.getTageMitGerichten(), c);
     }
 
     public static class KeineAusreichendeAnzahlAnSpeisen extends RuntimeException {

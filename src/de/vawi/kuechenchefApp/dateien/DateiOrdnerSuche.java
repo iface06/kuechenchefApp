@@ -31,8 +31,6 @@ public class DateiOrdnerSuche {
         File ordner;
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             ordner = fc.getSelectedFile();
-            System.out.println(ordner.getAbsolutePath());
-
             return ordner.getAbsolutePath().toString();
         } else {
             return null;

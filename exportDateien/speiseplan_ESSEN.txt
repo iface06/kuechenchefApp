@@ -2,37 +2,37 @@ Speiseplan
 
 Woche 1
 
-+------------------------------------+--------------------------------+------------------------------------------+-------------------------------------+------------------------------------+
-|                Tag 1               |              Tag 2             |                   Tag 3                  |                Tag 4                |                Tag 5               |
-+------------------------------------+--------------------------------+------------------------------------------+-------------------------------------+------------------------------------+
-| Forelle Muellerin Art              | Bohneneintopf Mexiko           | Seelachs mit Kartoffel-Knusperkruste     | Rouladen mit Rotkohl und Kartoffeln | Pfannkuchen mit Kirschen           |
-| Penne mit Spinatsauce              | Safransuppe mit Straussenfilet | Italienische Gemuesepfanne mit Haehnchen | Bunte Gemuesepfanne                 | Cordon Bleu mit Kartoffeln         |
-| Asiatisches Schweinegeschnetzeltes | Lachs Suess-Sauer              | Birnenmilchreis                          | Spaghetti Bolognese                 | Truthahn in Estragonsauce mit Reis |
-+------------------------------------+--------------------------------+------------------------------------------+-------------------------------------+------------------------------------+
++-------------------------------------+------------------------------------+--------------------------------------------+-------------------------------+------------------------------------+
+|                Tag 1                |                Tag 2               |                    Tag 3                   |             Tag 4             |                Tag 5               |
++-------------------------------------+------------------------------------+--------------------------------------------+-------------------------------+------------------------------------+
+| Rouladen mit Rotkohl und Kartoffeln | Pfannkuchen mit Kirschen           | Omelette mit Kartoffeln                    | Toast Hawaii                  | Forelle Muellerin Art              |
+| Bunte Gemuesepfanne                 | Cordon Bleu mit Kartoffeln         | Huehner-Nudel-Auflauf                      | Rindergeschnetzeltes mit Reis | Penne mit Spinatsauce              |
+| Spaghetti Bolognese                 | Truthahn in Estragonsauce mit Reis | Schweinefilet mit gruenem Pfeffer und Reis | Gnocchipfanne                 | Asiatisches Schweinegeschnetzeltes |
++-------------------------------------+------------------------------------+--------------------------------------------+-------------------------------+------------------------------------+
 
 
 
 Woche 2
 
-+--------------------------------------------+-------------------------------+---------------------------------------+---------------------------+-----------------------------------+
-|                    Tag 1                   |             Tag 2             |                 Tag 3                 |           Tag 4           |               Tag 5               |
-+--------------------------------------------+-------------------------------+---------------------------------------+---------------------------+-----------------------------------+
-| Omelette mit Kartoffeln                    | Toast Hawaii                  | Tofu-Reispfanne                       | Raclette                  | Pilzravioli mit Sauce Hollandaise |
-| Huehner-Nudel-Auflauf                      | Rindergeschnetzeltes mit Reis | Haehnchenbrust in Salbeisauce m. Reis | Gyros mit Pommes          | Pizza Hawaii                      |
-| Schweinefilet mit gruenem Pfeffer und Reis | Gnocchipfanne                 | Schokoladenfondue                     | Penne Arrabiata mit Speck | Chili con carne                   |
-+--------------------------------------------+-------------------------------+---------------------------------------+---------------------------+-----------------------------------+
++---------------------------------------+---------------------------+-----------------------------------+-----------------------+--------------------------------+
+|                 Tag 1                 |           Tag 2           |               Tag 3               |         Tag 4         |              Tag 5             |
++---------------------------------------+---------------------------+-----------------------------------+-----------------------+--------------------------------+
+| Tofu-Reispfanne                       | Raclette                  | Pilzravioli mit Sauce Hollandaise | Moussaka              | Bohneneintopf Mexiko           |
+| Haehnchenbrust in Salbeisauce m. Reis | Gyros mit Pommes          | Pizza Hawaii                      | Penne mit Pesto Rosso | Safransuppe mit Straussenfilet |
+| Schokoladenfondue                     | Penne Arrabiata mit Speck | Chili con carne                   | Elcheintopf           | Lachs Suess-Sauer              |
++---------------------------------------+---------------------------+-----------------------------------+-----------------------+--------------------------------+
 
 
 
 Woche 3
 
-+-----------------------+-----------------------+------------------------------------------------+-------------------------------+------------------------------------+
-|         Tag 1         |         Tag 2         |                      Tag 3                     |             Tag 4             |                Tag 5               |
-+-----------------------+-----------------------+------------------------------------------------+-------------------------------+------------------------------------+
-| Moussaka              | Nudelsuppe            | Penne Arrabiata Vegetarisch                    | Spinat mit Kartoffeln und Ei  | Pangasiusfilet mit Kartoffelstampf |
-| Penne mit Pesto Rosso | Kuerbissuppe mit Feta | Tofugeschnetzeltes Asiatisch                   | Frischer Garnelensalat        | Kugelfisch-Pfanne                  |
-| Elcheintopf           | Chickenburger         | Frittierte Mozzarellakugeln in Gorgonzolasauce | Gemuesebratling mit Curryreis | Penne mit Pesto Verde              |
-+-----------------------+-----------------------+------------------------------------------------+-------------------------------+------------------------------------+
++-----------------------+------------------------------------------------+-------------------------------+------------------------------------+------------------------------------------+
+|         Tag 1         |                      Tag 2                     |             Tag 3             |                Tag 4               |                   Tag 5                  |
++-----------------------+------------------------------------------------+-------------------------------+------------------------------------+------------------------------------------+
+| Nudelsuppe            | Penne Arrabiata Vegetarisch                    | Spinat mit Kartoffeln und Ei  | Pangasiusfilet mit Kartoffelstampf | Seelachs mit Kartoffel-Knusperkruste     |
+| Kuerbissuppe mit Feta | Tofugeschnetzeltes Asiatisch                   | Frischer Garnelensalat        | Kugelfisch-Pfanne                  | Italienische Gemuesepfanne mit Haehnchen |
+| Chickenburger         | Frittierte Mozzarellakugeln in Gorgonzolasauce | Gemuesebratling mit Curryreis | Penne mit Pesto Verde              | Birnenmilchreis                          |
++-----------------------+------------------------------------------------+-------------------------------+------------------------------------+------------------------------------------+
 
 
 

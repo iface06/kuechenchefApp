@@ -101,7 +101,9 @@ public class SpeisenImportTest {
         importer.importFiles();
 
         
-        assertNull(speisen.findeSpeise("Walfischstreifen auf Salat"));
+        assertEquals(2, speisen.size());
+        Speise walfisch = speisen.findeSpeise("Walfischstreifen auf Salat");
+        fail();
         
     }
 

@@ -7,32 +7,31 @@ import de.vawi.kuechenchefApp.lieferanten.PreisListenImport;
 import de.vawi.kuechenchefApp.speisen.SpeisenImport;
 import de.vawi.kuechenchefApp.speiseplan.*;
 
-
 /**
  * Diese Klasse ist der Einstiegspunkt der Anwendung KüchenchefApp.
- * 
- * @author Tatsch 
+ *
+ * @author Tatsch
  * @version 30.01.2013
- * 
- * 
+ *
+ *
  */
 public class KuechenchefApp {
-    
+
     /**
-     * Diese Methode ist der Einstiegspunkt der Anwendung KüchenchefApp. 
-     *  
+     * Diese Methode ist der Einstiegspunkt der Anwendung KüchenchefApp.
+     *
      * @param args Keine Argumente bislang notwendig!
      */
     public static void main(String[] args) throws Exception {
         String dateiOrdner = importDateienOrdnerAbfragen();
-        importiereDateien(dateiOrdner);
-
-        ProzessSteuerung steuerung = erstelleProzessSteuerung();
-        steuerung.start();
-        
-        exportiereErgebnisse(steuerung);
+        if (dateiOrdner != null && !dateiOrdner.isEmpty()) {
+            starteProgramm(dateiOrdner);
+        } else {
+            System.out.println("Kein Ordner für Importdateien ausgewählt! -> Programm beendet");
+        }
+        System.out.println("Die Speisepläne, Einkaufslisten und Kostenaufstellung befinden sich im Ordner \"exportDateien\"");
     }
-    
+
     private static String importDateienOrdnerAbfragen() {
         String dateiOrdner = new DateiOrdnerSuche().dateiOrdnerSuche();
         return dateiOrdner;
@@ -42,7 +41,7 @@ public class KuechenchefApp {
         importierePreisListen(dateiOrdner);
         importiereSpeisen(dateiOrdner);
     }
-    
+
     private static void importiereSpeisen(String dateiOrdner) {
         new SpeisenImport(dateiOrdner).importFiles();
     }
@@ -63,5 +62,14 @@ public class KuechenchefApp {
         new SpeiseplanExport().export(steuerung.getSpeiseplaene());
         new EinkaufslistenExport().export(steuerung.getEinkaufsliste());
         new KostenaufstellungExport().export(steuerung.getKostenUbersicht());
+    }
+
+    protected static void starteProgramm(String dateiOrdner) {
+        importiereDateien(dateiOrdner);
+
+        ProzessSteuerung steuerung = erstelleProzessSteuerung();
+        steuerung.start();
+
+        exportiereErgebnisse(steuerung);
     }
 }

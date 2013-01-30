@@ -125,8 +125,8 @@ Kosten zur Bestellung bei Lieferant: Metri AG
 | Kokosmilch                   | 184.0           | 636.64             |
 | Pesto Verde                  | 16000.0         | 385.28             |
 | Cocktailsauce                | 31.0            | 142.6              |
-| Penne                        | 226000.0        | 397.76             |
 | Schweinefilet                | 106000.0        | 1460.6799999999998 |
+| Penne                        | 226000.0        | 397.76             |
 | Ei                           | 4810.0          | 466.57             |
 | Ringli                       | 83000.0         | 165.17             |
 | Pesto Rosso                  | 16000.0         | 282.4              |
@@ -137,10 +137,10 @@ Kosten zur Bestellung bei Lieferant: Metri AG
 | Olivenoel                    | 14000.0         | 14.14              |
 | Grundsauce Dunkel            | 9000.0          | 98.55              |
 | Rotwein                      | 31.0            | 34.720000000000006 |
-| Pizzateig vorgebacken        | 310.0           | 269.08             |
-| Muskat                       | 13000.0         | 85.41              |
 | Toastbrot                    | 151000.0        | 357.87             |
 | Scheiblettenkaese            | 60000.0         | 225.6              |
+| Muskat                       | 13000.0         | 85.41              |
+| Pizzateig vorgebacken        | 310.0           | 269.08             |
 | Lebensmittelfarbe rot        | 31.0            | 54.25              |
 | Feta                         | 79000.0         | 420.28000000000003 |
 | Oregano                      | 13000.0         | 108.03             |
@@ -237,4 +237,4 @@ Kosten zur Bestellung bei Lieferant: Naturschlachterei Hackebeil
 
 
 Gesamtkosten: 263452.47200000007
-Lieferkosten: 263452.47200000007
+Lieferkosten: 5322.922000000001
