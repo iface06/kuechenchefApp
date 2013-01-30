@@ -9,7 +9,7 @@ import java.util.*;
  * Diese Klasse ist für den Export der Speisepläne verantwortlich.
  * 
  * @author Lepping 
- * @version (a version number or a date)
+ * @version 30.01.2013
  */
 public class SpeiseplanExport extends DateiExport<List<Speiseplan>>
 {
@@ -30,6 +30,11 @@ public class SpeiseplanExport extends DateiExport<List<Speiseplan>>
        }
    }
 
+    /**
+     * Erstellt DateiSchreiber für Speiseplan
+     * @param speiseplan
+     * @return Dateischreiber
+     */
     protected DateiSchreiber erstelleSchreiberFuer(Speiseplan speiseplan) {
         return new DateiSchreiber(new SpeiseplanDatei(speiseplan.getKantine()));
     }
