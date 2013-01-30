@@ -27,8 +27,8 @@ class PreisListe implements Datei {
     }
 
     /**
-     *
-     * @return
+     * 
+     * @return erste Zeile einer Preisliste
      */
     public String getLieferantenZeile() {
         Iterator<String> iterator = iterator();
@@ -40,8 +40,8 @@ class PreisListe implements Datei {
     }
 
     /**
-     *
-     * @return
+     * 
+     * @return Iterator ab Zeilen zwei
      */
     public Iterator<String> preisListenPositionenIterator() {
         Iterator<String> iterator = iterator();

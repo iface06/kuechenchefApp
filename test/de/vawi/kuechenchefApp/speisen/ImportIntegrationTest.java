@@ -34,12 +34,12 @@ public class ImportIntegrationTest {
     }
 
     private void importierePreislisten() {
-        PreisListenImport importer = new PreisListenImport("importDatein");
+        PreisListenImport importer = new PreisListenImport("importDateien");
         importer.importFiles();
     }
 
     private void importiereSpeisen() {
-        SpeisenImport importer = new SpeisenImport("importDatein");
+        SpeisenImport importer = new SpeisenImport("importDateien");
         importer.importFiles();
     }
 

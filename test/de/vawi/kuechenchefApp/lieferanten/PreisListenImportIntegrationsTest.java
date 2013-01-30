@@ -16,7 +16,7 @@ public class PreisListenImportIntegrationsTest {
     
     @Test
     public void testLeseAlleDateienEin() {
-        PreisListenImport importer = new PreisListenImport("importDatein");
+        PreisListenImport importer = new PreisListenImport("importDateien");
         importer.importFiles();
         assertEquals(467, LieferantenVerwaltung.getInstanz().anzahlPreisListenPositionen());
     }
