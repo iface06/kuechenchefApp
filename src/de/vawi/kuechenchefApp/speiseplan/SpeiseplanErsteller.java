@@ -9,6 +9,9 @@ import java.util.*;
 
 /**
  * Diese Klasse ist für das Erstellen eines Speiseplans verantwortlich.
+ * Hier werden die beliebtesten Speisen auf die Harten Kriterien geprueft und ggf. angepasst.
+ * Im Anschluss daran werden diese auf die auf dem Markt vorhandene Verfuegbarkeit geprueft und ggf angepasst.
+ * Sollten diese Schritte erfolgreich sein, werden die finalen Plaene erzeugt.
  *
  * @author Beer
  * @version (a version number or a date)
@@ -17,7 +20,6 @@ public class SpeiseplanErsteller {
 
     private SpeisenVerwaltung speisen = SpeisenVerwaltung.getInstanz();
     private List<Speise> beliebtesteSpeisen;
-    //TODO uebrige Speisen muessen ermittelt werden evtl in der SpeisenVerwaltung
     private List<Speise> uebrigenSpeisen;
     private List<Speise> speisenFuerEssen;
     private List<Speise> uebrigeSpeiesenEssen;
@@ -28,16 +30,8 @@ public class SpeiseplanErsteller {
     private PlanungsPeriode planungsperiode = new PlanungsPeriode();
 
     /**
-     * Erstellt auf Basis der Rezpete einen Speiseplan für eine der Kantinen,
-     * nach den Regeln:
-     *
-     * 1. 3 Gerichte pro Tag 2. Mindestens 1 Gericht davon vegetarisch 3.
-     * Mindestens 1 Gericht davon mit Fleisch 4. Einmal pro Woche ein Gericht
-     * mit Fisch 5. Für einen Zeitraum von 3 Wochen 6. Jedes Gericht maximal
-     * einmal pro 3 Wochen
-     *
-     * @params kantine Kantine des Unternehmens
-     * @return Speiseplan
+     * Stoesst den Pruefungs und Anpassungsprozess an.
+     * @return liefert eine Liste mit den erzeugten Plaene 
      */
     public List<Speiseplan> erzeuge() {
         validiereSpeisenAnzahl();
@@ -55,11 +49,15 @@ public class SpeiseplanErsteller {
             throw new KeineAusreichendeAnzahlAnSpeisen();
         }
     }
-
+    
     private void ladeBeliebtesteSpeisen() {
         beliebtesteSpeisen = findeBeliebtesteSpeisenFuerPlanungsperiode();
     }
-
+    
+    /**
+     * Findet die beliebtesten Speisen fuer die Planungsperiode
+     * @return liefert eine Liste mit den gefundenen Speisen
+     */
     protected List<Speise> findeBeliebtesteSpeisenFuerPlanungsperiode() {
         return speisen.findeBeliebtesteSpeisenFuerPlanungsPeriode(planungsperiode);
     }
@@ -67,11 +65,20 @@ public class SpeiseplanErsteller {
     private void ladeUnbeliebtesteSpeisen() {
         uebrigenSpeisen = findeUnbeliebtesteSpeisen();
     }
-
+    
+    /**
+     * Findet die ubeliebtesten Speisen fuer die Planungsperiode
+     * @return liefert eine Liste mit den gefundenen Speisen
+     */
     protected List<Speise> findeUnbeliebtesteSpeisen() {
         return speisen.findeUnbeliebtesteSpeisen(this.planungsperiode);
     }
-
+    
+    /**
+     * Diese Methode prueft auf die Kriterien wie viele Fleisch-, Fisch- und vegetarischen Gerichte
+     * midestens in einem Plan vorkommen muessen. Sollten diese Kriterien nicht eingehalten sein leitet diese 
+     * Methode noetige Anpassungen ein.
+     */
     protected void beliebtesteSpeisenPruefenUndAnpassen() {
         if (beliebtesteSpeisenBeinhaltenGenugFischgerichte()) {
             if (beliebtesteSpeisenBeinhaltenGenugVegGerichte()) {
@@ -139,7 +146,7 @@ public class SpeiseplanErsteller {
     /**
      * Prueft ob die beliebtesten Speisen schon genug Fischgerichte beinhaltet.
      *
-     * @return
+     * @return true falls genug vorhanden sind, sonst false
      */
     private boolean beliebtesteSpeisenBeinhaltenGenugFischgerichte() {
         int gezaehlteSpeisen = 0;
@@ -158,7 +165,7 @@ public class SpeiseplanErsteller {
      * Prueft ob die beliebtesten Speisen schon genug Vegetarischen Gerichte
      * beinhaltet.
      *
-     * @return
+     * @return true falls genug vorhanden sind, sonst false
      */
     private boolean beliebtesteSpeisenBeinhaltenGenugVegGerichte() {
         int counter = 0;
@@ -415,11 +422,19 @@ public class SpeiseplanErsteller {
         }
         return nachKategorie;
     }
-
+    
+    /**
+     * Setzt die PlaungsPeriode
+     * @param planungsperiode die entsprechende PlanungsPeriode, die gesetzt werden soll
+     */
     protected void setPlanungsperiode(PlanungsPeriode planungsperiode) {
         this.planungsperiode = planungsperiode;
     }
-
+    
+    /**
+     * Prueft ob grundsaetzlich genug Speisen vorhanden sind um einen Plan zu erstellen
+     * @return liefert true wenn genug Speisen vorhanden sind, andernfalls false
+     */
     protected boolean sindAusreichendSpeisenInSpeisenVerwaltungVorhanden() {
         return speisen.sindAusreichendSpeisenFuerSpeiseplanErstellungVorhanden();
     }
@@ -434,7 +449,10 @@ public class SpeiseplanErsteller {
         Collections.sort(speiseplanEssen.getTageMitGerichten(), c);
         Collections.sort(speiseplanMuehlheim.getTageMitGerichten(), c);
     }
-
+    
+    /**
+     * Die Exception die geworfen wird, sollten zu wenig Speisen zum Erstellen eines Planes vorhanden sind.s
+     */
     public static class KeineAusreichendeAnzahlAnSpeisen extends RuntimeException {
     }
 }
