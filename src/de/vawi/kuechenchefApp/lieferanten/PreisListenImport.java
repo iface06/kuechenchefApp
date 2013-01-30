@@ -60,15 +60,7 @@ public class PreisListenImport {
     }
     private CsvZeileSeparator csvSepp = new CsvZeileSeparator();
 
-    /**
-     * Diese Methode liest die Preislisten-Dateien aus.
-     *
-     *
-     * @param preisListenDateiName Name der Datei, die hier ausgelesen werden
-     * soll.
-     * @return Gbit ein Objekt der Klasse Lieferant, unterteilt in Großhändler
-     * oder Bauer aus.
-     */
+
     /**
      * Diese Methode erstellt einer Liste an Preislistenpositionen pro
      * Lieferant.

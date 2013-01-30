@@ -12,6 +12,13 @@ package de.vawi.kuechenchefApp.lieferanten;
  */
 public class Grosshaendler extends Lieferant {
 
+    /**
+     * Diese Methode berechnet die Lieferkosten eines Großhändlers.
+     *
+     * @param einkaufsWert Der Einkaufswert, der insgesamt beim Großhändler
+     * bestellt wird.
+     * @return Gibt die Lieferkosten eines Großhändlers wieder.
+     */
     @Override
     public double berechneLieferkosten(double einkaufsWert) {
         return (einkaufsWert * (getLieferKostenFaktor() - 1.0));

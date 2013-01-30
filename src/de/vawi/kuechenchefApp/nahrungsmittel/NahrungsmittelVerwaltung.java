@@ -40,6 +40,12 @@ public class NahrungsmittelVerwaltung {
         nahrungsmittels.add(nahrungsmittel);
     }
 
+    /**
+     * Diese Methode stellt sicher, dass genau eine Instanz der
+     * NahrungsmittelVerwaltung existiert.
+     *
+     * @return Gibt die Insatanz der NahrungsmittelVerwaltung wieder.
+     */
     public static NahrungsmittelVerwaltung getInstanz() {
         if (INSTANZ == null) {
             INSTANZ = new NahrungsmittelVerwaltung();
@@ -47,8 +53,7 @@ public class NahrungsmittelVerwaltung {
         return INSTANZ;
 
     }
-    
-    public class NahrungsmittelNichtGefunden extends RuntimeException{
-        
+
+    public class NahrungsmittelNichtGefunden extends RuntimeException {
     }
 }
