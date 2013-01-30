@@ -4,6 +4,7 @@ package de.vawi.kuechenchefApp.speisen;
 
 import de.vawi.kuechenchefApp.speisen.Speise;
 import de.vawi.kuechenchefApp.PlanungsPeriode;
+import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
 import de.vawi.kuechenchefApp.speisen.SpeisenVerwaltung.SpeiseNichtGefunden;
 import java.util.List;
 import org.junit.*;
@@ -16,12 +17,13 @@ public class SpeisenVerwaltungTest {
     @Before
     public void before() {
         verwaltung = new SpeisenVerwaltung();
-        Speise speise = erstelleSpeise("Steaks");
-        verwaltung.addSpeise(speise);
+        
     }
 
     @Test
     public void testHinzufuegenEinerSpeise() {
+        Speise speise = erstelleSpeise("Steaks");
+        verwaltung.addSpeise(speise);
         assertEquals(1, verwaltung.size());
     }
     
@@ -35,6 +37,8 @@ public class SpeisenVerwaltungTest {
     
     @Test
     public void testFindeSpeiseMitNamen(){
+        Speise speise = erstelleSpeise("Steaks");
+        verwaltung.addSpeise(speise);
         Speise steaks = verwaltung.findeSpeise("Steaks");
         
         assertEquals("Steaks", steaks.getName());
@@ -46,11 +50,56 @@ public class SpeisenVerwaltungTest {
         fail();
     }
     
+    @Test
+    public void testAusreichendSpeisenVorhandenFuerSpeiseplanErstellung(){
+        fuegeSpeisenNachKategorieInVerwaltungEin(SpeisenUndNahrungsmittelKategorie.FISCH, 15);
+        fuegeSpeisenNachKategorieInVerwaltungEin(SpeisenUndNahrungsmittelKategorie.FLEISCH, 15);
+        fuegeSpeisenNachKategorieInVerwaltungEin(SpeisenUndNahrungsmittelKategorie.VEGETARISCH, 15);
+        boolean result = verwaltung.sindAusreichendSpeisenFuerSpeiseplanErstellungVorhanden();
+        assertTrue(result);
+    }
+    
+    @Test
+    public void testNichtAusreichendFischSpeisenVorhandenFuerSpeiseplanErstellung(){
+        fuegeSpeisenNachKategorieInVerwaltungEin(SpeisenUndNahrungsmittelKategorie.FISCH, 2);
+        fuegeSpeisenNachKategorieInVerwaltungEin(SpeisenUndNahrungsmittelKategorie.FLEISCH, 28);
+        fuegeSpeisenNachKategorieInVerwaltungEin(SpeisenUndNahrungsmittelKategorie.VEGETARISCH, 15);
+        boolean result = verwaltung.sindAusreichendSpeisenFuerSpeiseplanErstellungVorhanden();
+        assertFalse(result);
+    }
+    
+    @Test
+    public void testNichtAusreichendFleischSpeisenVorhandenFuerSpeiseplanErstellung(){
+        fuegeSpeisenNachKategorieInVerwaltungEin(SpeisenUndNahrungsmittelKategorie.FLEISCH, 14);
+        fuegeSpeisenNachKategorieInVerwaltungEin(SpeisenUndNahrungsmittelKategorie.FISCH, 16);
+        fuegeSpeisenNachKategorieInVerwaltungEin(SpeisenUndNahrungsmittelKategorie.VEGETARISCH, 15);
+        boolean result = verwaltung.sindAusreichendSpeisenFuerSpeiseplanErstellungVorhanden();
+        assertFalse(result);
+    }
+    
+    @Test
+    public void testNichtAusreichendVegetarischeSpeisenVorhandenFuerSpeiseplanErstellung(){
+        fuegeSpeisenNachKategorieInVerwaltungEin(SpeisenUndNahrungsmittelKategorie.VEGETARISCH, 14);
+        fuegeSpeisenNachKategorieInVerwaltungEin(SpeisenUndNahrungsmittelKategorie.FLEISCH, 15);
+        fuegeSpeisenNachKategorieInVerwaltungEin(SpeisenUndNahrungsmittelKategorie.FISCH, 16);
+        boolean result = verwaltung.sindAusreichendSpeisenFuerSpeiseplanErstellungVorhanden();
+        assertFalse(result);
+    }
+    
 
     private Speise erstelleSpeise(String name) {
         Speise speise = new Speise();
         speise.setName(name);
         return speise;
+    }
+
+    private void fuegeSpeisenNachKategorieInVerwaltungEin(SpeisenUndNahrungsmittelKategorie kategorie, int anzahl) {
+        Zutat salz = new DummyZutat().name("Salz").erstelle();
+        for (int anzahlSpeisen = 0; anzahlSpeisen < anzahl; anzahlSpeisen++) {
+            Zutat nachKategorie = new DummyZutat().name("Zutat-" + kategorie.getAbkuerzung()).kategorie(kategorie).erstelle();
+            Speise speise = new DummySpeise().name("Speise-"+ kategorie.getAbkuerzung() + "-" + anzahlSpeisen).mitZutat(nachKategorie).mitZutat(salz).erstelle();
+            verwaltung.addSpeise(speise);
+        }
     }
 
     

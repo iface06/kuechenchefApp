@@ -42,10 +42,11 @@ public class PlanungsPeriode {
      *
      * @return Gibt die Anzahl an benötigter Speisen für Planungsperiode zurück
      */
-    public int berechneAnzahlBenötigterSpeisen() {
+    public int berechneAnzahlBenoetigterSpeisen() {
        return anzahlGerichteProTag * anzahlTageProWoche * anzahlWochen;
     }
 
+    
     
     /**
      * Setzt Anzahl der Wochen für eine Planungsperiode (Standart 3)
@@ -70,6 +71,20 @@ public class PlanungsPeriode {
      */
     public void setAnzahlGerichteProTag(int anzahlGerichteProTag) {
         this.anzahlGerichteProTag = anzahlGerichteProTag;
+    }
+
+    
+    
+    public int berechneAnzahlBenoetigterFischSpeisen() {
+        return anzahlWochen;
+    }
+    
+    public int berechneAnzahlBenoetigteVegetarischeSpeisen() {
+        return anzahlWochen * anzahlTageProWoche;
+    }
+    
+    public int berechneAnzahlBenoetigteFleischSpeisen() {
+        return anzahlWochen * anzahlTageProWoche;
     }
     
 }

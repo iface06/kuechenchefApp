@@ -149,14 +149,14 @@ public class SpeiseplanErsteller {
      * @return
      */
     private boolean beliebtesteSpeisenBeinhaltenGenugFischgerichte() {
-        int counter = 0;
+        int gezaehlteSpeisen = 0;
         for (Speise speise : beliebtesteSpeisen) {
             if (speise.getKategorie().equals(SpeisenUndNahrungsmittelKategorie.FISCH)) {
-                counter++;
+                gezaehlteSpeisen++;
             }
         }
-        System.out.println("Anzahl von Fischgerichten: " + counter);
-        if (counter >= mindestAnzahlBenoetigterFischgerichte()) {
+        System.out.println("Anzahl von Fischgerichten: " + gezaehlteSpeisen);
+        if (gezaehlteSpeisen >= mindestAnzahlBenoetigterFischgerichte()) {
             return true;
         }
         return false;
@@ -183,11 +183,11 @@ public class SpeiseplanErsteller {
     }
 
     private int mindestAnzahlBenoetigterFischgerichte() {
-        return planungsperiode.getAnzahlWochen();
+        return planungsperiode.berechneAnzahlBenoetigterFischSpeisen();
     }
 
     private int mindestAnzahlBenoetigterVegGerichte() {
-        return planungsperiode.getAnzahlWochen() * planungsperiode.getAnzahlTageProWoche();
+        return planungsperiode.berechneAnzahlBenoetigteVegetarischeSpeisen();
     }
 
     private Speise ermittleUnbeliebtestesGericht(SpeisenUndNahrungsmittelKategorie kategorie) {
