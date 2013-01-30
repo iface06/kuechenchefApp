@@ -10,6 +10,7 @@ import java.util.Iterator;
 /**
  *
  * @author Tatsch
+ * @version 30.01.2013
  */
 class SpeiseplanDatei implements Datei{
 
