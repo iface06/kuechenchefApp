@@ -20,7 +20,7 @@ public class SpeisenImport {
     private CsvZeileSeparator separator = new CsvZeileSeparator();
     private SpeisenVerwaltung speisen = SpeisenVerwaltung.getInstanz();
     private List<Speise> unvollstaendigeSpeisen = new ArrayList<>();
-    String dateiOrdner;
+    private String dateiOrdner;
 
     public SpeisenImport(String dateiOrdner) {
         this.dateiOrdner = dateiOrdner;
@@ -45,6 +45,7 @@ public class SpeisenImport {
         fuegeSpeisenVonHitlisteInSpeisenverwaltungEin();
         fuegeZutatenZuSpeisenAusRezepteDateiHinzu();
         loescheUnvollstaendigeSpeisen();
+        loescheGerichteDieAufSchwarzerListeStehen();
         sortiereZutatenNachKategorie();
     }
 
@@ -219,6 +220,10 @@ public class SpeisenImport {
      */
     protected void handhabeRezepteDateiIstNichtValide(Exception ex, String zeile) throws RezepteDateiIstNichtValide {
         throw new RezepteDateiIstNichtValide(zeile);
+    }
+
+    protected void loescheGerichteDieAufSchwarzerListeStehen() {
+        
     }
 
     /**

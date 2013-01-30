@@ -54,17 +54,6 @@ public class SpeisenImportTest {
     }
 
     @Test
-    public void testZutatenAusRezepteZuSpeisenImportieren() {
-        importer.importFiles();
-
-        Speise speise = speisen.findeSpeise("Bohneneintopf Mexiko");
-        List<Zutat> zutatenZuSpeise = speise.getZutaten();
-        assertEquals(2, zutatenZuSpeise.size());
-        assertEquals("Kartoffeln", zutatenZuSpeise.get(0).getNahrungsmittel().getName());
-        assertEquals("Chilipulver", zutatenZuSpeise.get(1).getNahrungsmittel().getName());
-    }
-
-    @Test
     public void testKategorisierungDerVegetarischenSpeisen() {
         importer.importFiles();
 
@@ -93,19 +82,8 @@ public class SpeisenImportTest {
         importer.importFiles();
         fail();
     }
-
-    @Test(expected = SpeisenVerwaltung.SpeiseNichtGefunden.class)
-    public void testNahrungsmittelIstNichtVerfuegbar() {
-        hitlisteZeilen.add("3,\"Walfischstreifen auf Salat\"");
-        rezepteZeilen.add("\"Walfischstreifen auf Salat\",100,\"g\",\"Walfleisch\"");
-        importer.importFiles();
-
-        
-        assertEquals(2, speisen.size());
-        Speise walfisch = speisen.findeSpeise("Walfischstreifen auf Salat");
-        fail();
-        
-    }
+    
+    
 
     private void fuegeKartoffelUndChilipulvernInNahrungsmittelVerwaltungEin() {
         Nahrungsmittel kartoffeln = new Nahrungsmittel();
