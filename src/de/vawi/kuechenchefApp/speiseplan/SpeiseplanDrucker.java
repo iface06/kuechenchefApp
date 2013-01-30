@@ -7,7 +7,7 @@ package de.vawi.kuechenchefApp.speiseplan;
 import de.vawi.kuechenchefApp.PlanungsPeriode;
 import de.vawi.kuechenchefApp.export.AsciiTable;
 import de.vawi.kuechenchefApp.export.Row;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  *
@@ -27,11 +27,11 @@ class SpeiseplanDrucker {
     }
     
     private String speiseplanTabellen(Speiseplan plan){
-        int woche = 1;
+        int woche = 0;
         String tabellen = new String();
-        while(woche <= periode.getAnzahlWochen()){
+        while(woche < periode.getAnzahlWochen()){
             tabellen += ueberschriftWoche(woche);
-            tabellen += speiseplanFuerEineWoche(plan);
+            tabellen += speiseplanFuerEineWoche(plan, woche);
             tabellen += "\n\n\n";
             woche++;
         }
@@ -39,26 +39,31 @@ class SpeiseplanDrucker {
     }
     
     private String ueberschriftWoche(int woche) {
-        String ueberschrift = "Woche " + woche;
+        String ueberschrift = "Woche " + (woche + 1);
         ueberschrift += "\n\n";
         return ueberschrift;
     }
 
-    private String speiseplanFuerEineWoche(Speiseplan plan) {
+    private String speiseplanFuerEineWoche(Speiseplan plan, int woche) {
         AsciiTable tabelle = new AsciiTable();
         Row headRow = tabelle.row();
         Row variante1 = tabelle.row();
         Row variante2 = tabelle.row();
         Row variante3 = tabelle.row();
-        Iterator<Tag> tage = plan.iterator();
+        
+        
         int anzahlTage = 1;
-        while(tage.hasNext() && anzahlTage <= periode.getAnzahlTageProWoche()){
-            Tag tag = tage.next();
+        List<Tag> tage = plan.getTageMitGerichten();
+        int ersterTag = woche * periode.getAnzahlTageProWoche();
+        int letzterTag = ersterTag + periode.getAnzahlTageProWoche();
+        for (int aktuellerTag = ersterTag; aktuellerTag < letzterTag; aktuellerTag++) {
+            Tag tag = tage.get(aktuellerTag);
             headRow.cell("Tag " + anzahlTage);
             variante1.cell(tag.getBeliebtesteSpeise().getName());
             variante2.cell(tag.getZweitbeliebtesteSpeise().getName());
             variante3.cell(tag.getDrittbeliebtesteSpeise().getName());
             anzahlTage++;
+        
         }
         return tabelle.writeTable();
     }

@@ -41,14 +41,19 @@ public class SpeiseplanErsteller {
      * @return Speiseplan
      */
     public List<Speiseplan> erzeuge() {
+        validiereSpeisenAnzahl();
         ladeBeliebtesteSpeisen();
         ladeUnbeliebtesteSpeisen();
         beliebtesteSpeisenPruefenUndAnpassen();
         erstelleSpeiseplaene();
         pruefeVerfuegbarkeit();
         return Arrays.asList(speiseplanEssen, speiseplanMuehlheim);
-        
-//        return new Speiseplan(kantine, new ArrayList<Tag>());
+    }
+    
+    private void validiereSpeisenAnzahl() {
+        if(!sindAusreichendSpeisenInSpeisenVerwaltungVorhanden()){
+            throw new KeineAusreichendeAnzahlAnSpeisen();
+        }
     }
 
     private void ladeBeliebtesteSpeisen() {
@@ -280,10 +285,10 @@ public class SpeiseplanErsteller {
     }
 
     private List<Speise> findeSpeisenOhneNahrungsmittel(List<Nahrungsmittel> problematischeNahrungsmittelEssen, List<Speise> uebrigeSpeiesenEssen) {
-        List<Speise> gefundeneSpeisen = new ArrayList<Speise>(uebrigeSpeiesenEssen);
+        List<Speise> gefundeneSpeisen = new ArrayList<>(uebrigeSpeiesenEssen);
 
         for (Nahrungsmittel nahrungsmittel : problematischeNahrungsmittelEssen) {
-            List<Speise> potentielleSpeisen = new ArrayList<Speise>();
+            List<Speise> potentielleSpeisen = new ArrayList<>();
             for (Speise speise : uebrigeSpeiesenEssen) {
                 for (Zutat zutat : speise.getZutaten()) {
                     if (zutat.getNahrungsmittel().equals(nahrungsmittel)) {
@@ -431,5 +436,12 @@ public class SpeiseplanErsteller {
 
     protected void setPlanungsperiode(PlanungsPeriode planungsperiode) {
         this.planungsperiode = planungsperiode;
+    }
+
+    protected boolean sindAusreichendSpeisenInSpeisenVerwaltungVorhanden() {
+        return speisen.sindAusreichendSpeisenFuerSpeiseplanErstellungVorhanden();
+    }
+
+    public static class KeineAusreichendeAnzahlAnSpeisen extends RuntimeException {
     }
 }

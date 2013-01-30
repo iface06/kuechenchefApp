@@ -3,6 +3,7 @@ package de.vawi.kuechenchefApp.speiseplan;
 import de.vawi.kuechenchefApp.PlanungsPeriode;
 import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
 import de.vawi.kuechenchefApp.speisen.*;
+import de.vawi.kuechenchefApp.speiseplan.SpeiseplanErsteller.KeineAusreichendeAnzahlAnSpeisen;
 import java.util.*;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -16,9 +17,11 @@ public class SpeiseplanErstellerTest {
     private PlanungsPeriode planungsperiode;
     private List<Speise> beliebtestSpeisen;
     private List<Speise> unbeliebtesteSpeisen;
+    private boolean ausreichendSpeisenVorhanden;
 
     @Before
     public void before() {
+        ausreichendSpeisenVorhanden = true;
         initialisierePlanunsperiode();
         initialisiereBeliebtesteSpeisen();
         initialisiereUnbeliebtesteSpeisen();
@@ -47,21 +50,13 @@ public class SpeiseplanErstellerTest {
         }
     }
     
-    @Test
+    @Test(expected=KeineAusreichendeAnzahlAnSpeisen.class)
     public void testSpeiseplanErstellungZuWenigVegetarischSpeisen() {
-        beliebtestSpeisen = loescheSpeisenMitKategorie(beliebtestSpeisen, SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
-        //loescheSpeisenMitKategorie(unbeliebtesteSpeisen, SpeisenUndNahrungsmittelKategorie.VEGETARISCH);
+        ausreichendSpeisenVorhanden = false;
         SpeiseplanErsteller ersteller = new TestbarerSpeiseplanErsteller();
         ersteller.setPlanungsperiode(planungsperiode);
         List<Speiseplan> plaene = ersteller.erzeuge();
-
-
-        assertEquals(2, plaene.size());
-        assertEquals(Kantine.ESSEN, plaene.get(0).getKantine());
-        assertEquals(Kantine.MUELHEIM_AN_DER_RUHR, plaene.get(1).getKantine());
-        for (Speiseplan plan : plaene) {
-            assertEquals(5, plan.getTageMitGerichten().size());
-        }
+        fail();
     }
 
     private void initialisierePlanunsperiode() {
@@ -138,6 +133,7 @@ public class SpeiseplanErstellerTest {
     
 
     class TestbarerSpeiseplanErsteller extends SpeiseplanErsteller {
+        
 
         @Override
         protected List<Speise> findeBeliebtesteSpeisenFuerPlanungsperiode() {
@@ -148,5 +144,12 @@ public class SpeiseplanErstellerTest {
         protected List<Speise> findeUnbeliebtesteSpeisen() {
             return unbeliebtesteSpeisen;
         }
+
+        @Override
+        protected boolean sindAusreichendSpeisenInSpeisenVerwaltungVorhanden() {
+            return ausreichendSpeisenVorhanden;
+        }
+        
+        
     }
 }
