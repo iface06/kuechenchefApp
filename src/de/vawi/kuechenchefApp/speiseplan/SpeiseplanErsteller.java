@@ -41,14 +41,19 @@ public class SpeiseplanErsteller {
      * @return Speiseplan
      */
     public List<Speiseplan> erzeuge() {
+        validiereSpeisenAnzahl();
         ladeBeliebtesteSpeisen();
         ladeUnbeliebtesteSpeisen();
         beliebtesteSpeisenPruefenUndAnpassen();
         erstelleSpeiseplaene();
         pruefeVerfuegbarkeit();
         return Arrays.asList(speiseplanEssen, speiseplanMuehlheim);
-        
-//        return new Speiseplan(kantine, new ArrayList<Tag>());
+    }
+    
+    private void validiereSpeisenAnzahl() {
+        if(!sindAusreichendSpeisenInSpeisenVerwaltungVorhanden()){
+            throw new KeineAusreichendeAnzahlAnSpeisen();
+        }
     }
 
     private void ladeBeliebtesteSpeisen() {
@@ -149,14 +154,14 @@ public class SpeiseplanErsteller {
      * @return
      */
     private boolean beliebtesteSpeisenBeinhaltenGenugFischgerichte() {
-        int counter = 0;
+        int gezaehlteSpeisen = 0;
         for (Speise speise : beliebtesteSpeisen) {
             if (speise.getKategorie().equals(SpeisenUndNahrungsmittelKategorie.FISCH)) {
-                counter++;
+                gezaehlteSpeisen++;
             }
         }
-        System.out.println("Anzahl von Fischgerichten: " + counter);
-        if (counter >= mindestAnzahlBenoetigterFischgerichte()) {
+        System.out.println("Anzahl von Fischgerichten: " + gezaehlteSpeisen);
+        if (gezaehlteSpeisen >= mindestAnzahlBenoetigterFischgerichte()) {
             return true;
         }
         return false;
@@ -183,11 +188,11 @@ public class SpeiseplanErsteller {
     }
 
     private int mindestAnzahlBenoetigterFischgerichte() {
-        return planungsperiode.getAnzahlWochen();
+        return planungsperiode.berechneAnzahlBenoetigterFischSpeisen();
     }
 
     private int mindestAnzahlBenoetigterVegGerichte() {
-        return planungsperiode.getAnzahlWochen() * planungsperiode.getAnzahlTageProWoche();
+        return planungsperiode.berechneAnzahlBenoetigteVegetarischeSpeisen();
     }
 
     private Speise ermittleUnbeliebtestesGericht(SpeisenUndNahrungsmittelKategorie kategorie) {
@@ -280,10 +285,10 @@ public class SpeiseplanErsteller {
     }
 
     private List<Speise> findeSpeisenOhneNahrungsmittel(List<Nahrungsmittel> problematischeNahrungsmittelEssen, List<Speise> uebrigeSpeiesenEssen) {
-        List<Speise> gefundeneSpeisen = new ArrayList<Speise>(uebrigeSpeiesenEssen);
+        List<Speise> gefundeneSpeisen = new ArrayList<>(uebrigeSpeiesenEssen);
 
         for (Nahrungsmittel nahrungsmittel : problematischeNahrungsmittelEssen) {
-            List<Speise> potentielleSpeisen = new ArrayList<Speise>();
+            List<Speise> potentielleSpeisen = new ArrayList<>();
             for (Speise speise : uebrigeSpeiesenEssen) {
                 for (Zutat zutat : speise.getZutaten()) {
                     if (zutat.getNahrungsmittel().equals(nahrungsmittel)) {
@@ -395,8 +400,6 @@ public class SpeiseplanErsteller {
             speisen.remove(gefundenesGericht.get(0));
             return gefundenesGericht.get(0);
         } else {
-
-            SpeisenUndNahrungsmittelKategorie gemerkteKategorie;
             List<Speise> listeMitMehrSpeisen = new ArrayList<>();
             List<SpeisenUndNahrungsmittelKategorie> andereKategorien = SpeisenUndNahrungsmittelKategorie.holeAndereKategorien(kategorie);
             for (SpeisenUndNahrungsmittelKategorie andereKategorie : andereKategorien) {
@@ -405,6 +408,7 @@ public class SpeiseplanErsteller {
                     listeMitMehrSpeisen = andereSpeisen;
                 }
             }
+            speisen.remove(listeMitMehrSpeisen.get(0));
             return listeMitMehrSpeisen.get(0);
         }
 
@@ -431,5 +435,12 @@ public class SpeiseplanErsteller {
 
     protected void setPlanungsperiode(PlanungsPeriode planungsperiode) {
         this.planungsperiode = planungsperiode;
+    }
+
+    protected boolean sindAusreichendSpeisenInSpeisenVerwaltungVorhanden() {
+        return speisen.sindAusreichendSpeisenFuerSpeiseplanErstellungVorhanden();
+    }
+
+    public static class KeineAusreichendeAnzahlAnSpeisen extends RuntimeException {
     }
 }

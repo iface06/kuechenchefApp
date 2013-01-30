@@ -8,7 +8,7 @@ public class KostenUebersichtDatei implements Datei{
 
     @Override
     public String getDateiname() {
-        return "kostenUebersicht.txt";
+        return "exportDateien/kostenUebersicht.txt";
     }
 
     @Override
