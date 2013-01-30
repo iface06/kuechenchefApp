@@ -55,9 +55,6 @@ class ProzessSteuerung{
         erzeugeSpeiseplaene();
         erzeugeEinkaufsliste();
         erzeugeKostenUbersicht();
-        
-        
-        
     }
 
     
@@ -90,8 +87,7 @@ class ProzessSteuerung{
     }
 
     private void erzeugeSpeiseplaene() {
-        speiseplaene.add(speiseplanErsteller.erzeuge(Kantine.ESSEN));
-        speiseplaene.add(speiseplanErsteller.erzeuge(Kantine.MUELHEIM_AN_DER_RUHR));
+        speiseplaene.addAll(speiseplanErsteller.erzeuge());
     }
 
     private void erzeugeEinkaufsliste() {
