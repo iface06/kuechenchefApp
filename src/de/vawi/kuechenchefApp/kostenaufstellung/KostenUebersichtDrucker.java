@@ -5,12 +5,18 @@ import de.vawi.kuechenchefApp.export.AsciiTable;
 import java.util.List;
 
 
-public class KostenUebersichtDrucker {
-    
-    
+/**
+ * Erstellt den Ausdruck für die Kostenübersicht.
+ * @author tatsch
+ */
+class KostenUebersichtDrucker {
     private String ausdruck = new String();
-    private KostenUebersicht uebersicht;
     
+    /**
+     * Erstellt Kostenübersicht als String
+     * @param uebersicht - Kostenüberischt
+     * @return ausdruck - Kostenübersicht als String
+     */
     public String drucke(KostenUebersicht uebersicht){
         
         ausdruck += "Kostenübersicht\n\n";
@@ -21,7 +27,7 @@ public class KostenUebersichtDrucker {
         
         ausdruck += "Gesamtkosten: " + uebersicht.getGesamtKosten();
         ausdruck += "\n";
-        ausdruck += "Lieferkosten: " + uebersicht.getGesamtKosten();
+        ausdruck += "Lieferkosten: " + uebersicht.getLieferKostenGesamt();
         
         
         return ausdruck;

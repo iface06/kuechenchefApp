@@ -400,8 +400,6 @@ public class SpeiseplanErsteller {
             speisen.remove(gefundenesGericht.get(0));
             return gefundenesGericht.get(0);
         } else {
-
-            SpeisenUndNahrungsmittelKategorie gemerkteKategorie;
             List<Speise> listeMitMehrSpeisen = new ArrayList<>();
             List<SpeisenUndNahrungsmittelKategorie> andereKategorien = SpeisenUndNahrungsmittelKategorie.holeAndereKategorien(kategorie);
             for (SpeisenUndNahrungsmittelKategorie andereKategorie : andereKategorien) {
@@ -410,6 +408,7 @@ public class SpeiseplanErsteller {
                     listeMitMehrSpeisen = andereSpeisen;
                 }
             }
+            speisen.remove(listeMitMehrSpeisen.get(0));
             return listeMitMehrSpeisen.get(0);
         }
 

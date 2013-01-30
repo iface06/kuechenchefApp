@@ -2,12 +2,10 @@ package de.vawi.kuechenchefApp;
 
 import de.vawi.kuechenchefApp.dateien.DateiOrdnerSuche;
 import de.vawi.kuechenchefApp.einkaufsliste.*;
-import de.vawi.kuechenchefApp.kostenaufstellung.KostenaufstellungErsteller;
-import de.vawi.kuechenchefApp.kostenaufstellung.KostenaufstellungExport;
+import de.vawi.kuechenchefApp.kostenaufstellung.*;
 import de.vawi.kuechenchefApp.lieferanten.PreisListenImport;
 import de.vawi.kuechenchefApp.speisen.SpeisenImport;
-import de.vawi.kuechenchefApp.speiseplan.SpeiseplanErsteller;
-import de.vawi.kuechenchefApp.speiseplan.SpeiseplanExport;
+import de.vawi.kuechenchefApp.speiseplan.*;
 
 
 /**
@@ -26,8 +24,8 @@ public class KuechenchefApp {
      * @param args Keine Argumente bislang notwendig!
      */
     public static void main(String[] args) throws Exception {
-//        String dateiOrdner = importDateienOrdnerAbfragen();
-        importiereDateien("C:\\Users\\Max\\Dropbox\\WS-12-Java-Gruppe\\TL2\\Beispiel Eingabedateien");
+        String dateiOrdner = importDateienOrdnerAbfragen();
+        importiereDateien(dateiOrdner);
 
         ProzessSteuerung steuerung = erstelleProzessSteuerung();
         steuerung.start();

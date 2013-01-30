@@ -21,7 +21,7 @@ class EinkaufslistenDatei implements Datei{
     
     @Override
     public String getDateiname() {
-        return "einkaufsliste_" + lieferant;
+        return "exportDateien/einkaufsliste_" + lieferant + ".txt";
     }
 
     @Override
