@@ -76,7 +76,13 @@ public class LieferantenVerwaltung {
     private void sortierePreisListenPositionenNachPreis(List<PreisListenPosition> positionen) {
         Collections.sort(positionen, new VergleichePreisListenPositionNachPreisProEinheit());
     }
-
+    
+    /**
+     * Diese Methode ermittelt zu einem Nahrungsmittel das entsprechende Angebot eine Lieferanten
+     * @param nahrungsmittel Das Nahrungsmittel zu dem eine Angebot gefunden werden soll.
+     * @param lieferant Der Lieferant bei welchem das Angebot ermittelt werden soll.
+     * @return liefert eine entsprechende Preislistenposition zurueck, falls kein Angebot gefunden wurde null
+     */
     public PreisListenPosition findeAngebotFuerNahrungsmittelVonLieferant(Nahrungsmittel nahrungsmittel, Lieferant lieferant) {
         for (PreisListenPosition position : preisListenPositionen) {
             if(position.getLieferant().equals(lieferant) && position.getNahrungsmittel().equals(nahrungsmittel)){

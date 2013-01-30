@@ -5,7 +5,7 @@ import de.vawi.kuechenchefApp.speisen.Speise;
 
 
 /**
- *
+ * Diese Klasse repraensntiert einen Tag innerhalb eines Speiseplans
  * @author Max
  */
 public class Tag{
@@ -14,7 +14,11 @@ public class Tag{
     private Speise beliebtesteSpeise;
     private Speise zweitbeliebtesteSpeise;
     private Speise drittbeliebtesteSpeise;
-
+    
+    /**
+     * Konstrutkor 
+     * @param nummer Die Tage innerhalb eines Plans werden druch nummeriert, diese Nummer wird dem Konstrukro mitgegeben.s 
+     */
     public Tag(int nummer) {
         this.nummer = nummer;
     }

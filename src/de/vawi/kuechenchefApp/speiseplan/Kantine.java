@@ -2,7 +2,7 @@ package de.vawi.kuechenchefApp.speiseplan;
 
 
 /**
- * Enumeration class Kantine - write a description of the enum class here
+ * Diese Klasse repraesentiert eine Kantine.
  * 
  * @author Beer
  * @version 30.01.2013
