@@ -93,27 +93,6 @@ public class EinkaufslistenErsteller {
         }
     }
 
-    private void findeLieferantenFuerDifferenz(double differenz, int positionsnummeralt, Nahrungsmittel nahrungsmittel, double vorhandeneMenge, double anzahlGebindeAlt, EinkaufslistenPosition position) {
-        List<PreisListenPosition> angebote = lieferanten.findeDurchNahrungsmittel(nahrungsmittel);
-        int positionsnummerneu = positionsnummeralt + 1;
-        double benoetigteMenge = angebote.get(positionsnummeralt).getGebindeGroesse() * differenz;
-        while (benoetigteMenge != 0) {
-            // Wenn die Gebindegroesse des neuen Lieferanten groesser oder gleich ist als die des alten kann er nicht preiswerter sein
-            if (angebote.get(positionsnummerneu).getGebindeGroesse() >= angebote.get(positionsnummeralt).getGebindeGroesse()) {
-                // wenn mit ignorieren des neuen Lieferanten die benötigte Menge nicht mehr erreicht werden kann, muss beim alten Lieferanten aufgerundet werden
-                if (benoetigteMenge > vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand())) {
-                    fuegeLieferantInEinkaufsliste(angebote.get(positionsnummeralt).getLieferant(), nahrungsmittel, Math.ceil(anzahlGebindeAlt), angebote.get(positionsnummeralt).getPreis() * Math.ceil(anzahlGebindeAlt), position);
-                    benoetigteMenge = 0;
-                } // wenn trotzdem noch genug vorhanden ist, dann wird der nächste Lieferant betrachtet
-                else {
-                    // vorhandene Menge wird reduziert um Vorratsmenge des neuen Lieferanten
-                    vorhandeneMenge = vorhandeneMenge - (angebote.get(positionsnummerneu).getGebindeGroesse() * angebote.get(positionsnummerneu).getVorratsBestand());
-                    positionsnummerneu = positionsnummerneu + 1;
-                }
-            }
-        }
-    }
-
     private void fuegeLieferantInEinkaufsliste(Lieferant lieferant, Nahrungsmittel nahrungsmittel, double anzahlGebinde, double preis, EinkaufslistenPosition position) {
 
         if (position.getLieferant() == null) {
