@@ -30,7 +30,10 @@ public class LieferantenVerwaltung {
         }
         return INSTANZ;
     }
-    
+    /**
+     * 
+     * @return Gibt die Anzahl der Preislistenpositionen wieder.
+     */
     public int anzahlPreisListenPositionen(){
         return preisListenPositionen.size();
     }

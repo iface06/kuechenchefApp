@@ -10,7 +10,8 @@ import java.util.*;
 
 
 /**
- *
+ * Diese Klasse ist eine Hilfsklasse, die anhand eines Speisplans berechnet, wie Nahrungsmittel insgesamt benoetigt werden
+ * unter Beruecksichtigung der zugehoerigen Kantine.
  * @author Tatsch
  * @version 29.01.2013
  */

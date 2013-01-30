@@ -22,7 +22,7 @@ public class Speiseplan implements Iterable<Tag>
     }
     
     /**
-     * Konstruktor der die nötigen Parameter für einen Speiseplan aufnimmt.
+     * Konstruktor der die noetigen Parameter für einen Speiseplan aufnimmt.
      * @param kantine gibt die Kantine an zu dem der Plan erzeugt werden.
      * @param tageMitGerichten eine Liste mit Tagen, entsprechend der Anzahl an Tagen, die der Plan beinhalten soll
      */
@@ -32,21 +32,21 @@ public class Speiseplan implements Iterable<Tag>
     }
 
     /**
-     * @return  Gibt die die Liste mit den Tagen der Planungsperiode zurück.
+     * @return  Gibt die die Liste mit den Tagen der Planungsperiode zurueck.
      */
     public List<Tag> getTageMitGerichten(){
         return this.tageMitGerichten;
     }  
     
     /**
-     * @return  Gibt die zugeordnete Kantine zurück
+     * @return  Gibt die zugeordnete Kantine zurueck
      */
     public Kantine getKantine(){
         return this.kantine;
     }
     
     /**
-     * Setzt die zugehörige Kantine
+     * Setzt die zugehoerige Kantine
      * @param kantine 
      */
     public void setKantine(Kantine kantine) {

@@ -15,6 +15,11 @@ public enum Einheit {
         this.abkuerzung = abkuerzung;
     }
 
+    /**
+     *
+     * @return Gibt die Abkürzung wieder, die aus der Datei für die Einheit
+     * eingelesen wird.
+     */
     public String getAbkuerzung() {
         return abkuerzung;
     }
