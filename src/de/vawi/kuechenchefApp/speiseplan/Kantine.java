@@ -5,7 +5,7 @@ package de.vawi.kuechenchefApp.speiseplan;
  * Enumeration class Kantine - write a description of the enum class here
  * 
  * @author Beer
- * @version (version number or date here)
+ * @version 30.01.2013
  */
 public enum Kantine
 {
@@ -28,14 +28,33 @@ public enum Kantine
         return this.mitarbeiterAnzahl;
     }
 
+    /**
+     *
+     * Gibt Anzahl an Gerichten für beliebtestes Gericht zurück
+     * 
+     * @ return Anzahl für beliebtestes Gericht
+     */
     public int berechneAnzahlFuerBeliebtestesGericht() {
         double anzahl = rundeAnzahlAufGanzeZahl(berechneSicherheitsbestand() * anteilBeliebtestesGericht);
         return parseAnzahlZuInteger(anzahl);
     }
+    /**
+     *
+     * Gibt Anzahl an Gerichten für zweitbeliebtestes Gericht zurück
+     * 
+     * @return Anzahl für zweitbeliebtestes Gericht
+     * 
+     */
     public int berechneAnzahlFuerZweitBeliebtestesGericht() {
         double anzahl = rundeAnzahlAufGanzeZahl(berechneSicherheitsbestand() * anteilZweitbeliebtestesGerichte);
         return parseAnzahlZuInteger(anzahl);
     }
+    /**
+     *
+     * Gibt Anzahl der Gerichte für drittbeliebtestes Gericht zurück
+     * 
+     * @return Anzahö für drittbeliebtestes Gericht
+     */
     public int berechneAnzahlFuerDrittBeliebtestesGericht() {
         double anzahl = rundeAnzahlAufGanzeZahl(berechneSicherheitsbestand() * anteilDrittbeliebtestesGerichte);
         return parseAnzahlZuInteger(anzahl);

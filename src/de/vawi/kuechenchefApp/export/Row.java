@@ -17,6 +17,11 @@ public class Row {
 
     List<Cell> cells = new ArrayList<Cell>();
     
+    /**
+     *
+     * @param value
+     * @return 
+     */
     public Row cell(String value) {
         Cell cell = new Cell(value);
         cells.add(cell);
