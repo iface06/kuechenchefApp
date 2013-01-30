@@ -417,10 +417,18 @@ public class SpeiseplanErsteller {
         return nachKategorie;
     }
 
+    /**
+     * Planungsperiode für die ein Speiseplan erstellt werden!
+     * @param planungsperiode 
+     */
     protected void setPlanungsperiode(PlanungsPeriode planungsperiode) {
         this.planungsperiode = planungsperiode;
     }
 
+    /**
+     * Prüft nach ob ausreichend Speisen vorhanden sind.
+     * @return 
+     */
     protected boolean sindAusreichendSpeisenInSpeisenVerwaltungVorhanden() {
         return speisen.sindAusreichendSpeisenFuerSpeiseplanErstellungVorhanden();
     }
