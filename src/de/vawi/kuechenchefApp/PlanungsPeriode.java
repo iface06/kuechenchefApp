@@ -45,5 +45,31 @@ public class PlanungsPeriode {
     public int berechneAnzahlBenötigterSpeisen() {
        return anzahlGerichteProTag * anzahlTageProWoche * anzahlWochen;
     }
+
+    
+    /**
+     * Setzt Anzahl der Wochen für eine Planungsperiode (Standart 3)
+     * @param anzahlWochen
+     */
+    public void setAnzahlWochen(int anzahlWochen) {
+        this.anzahlWochen = anzahlWochen;
+    }
+
+    
+    /**
+     * Setzt Anzahl der Tage die in eine Woche berücksichtigt werden sollen (Standart 5)
+     * @param anzahlTageProWoche
+     */
+    public void setAnzahlTageProWoche(int anzahlTageProWoche) {
+        this.anzahlTageProWoche = anzahlTageProWoche;
+    }
+
+    /**
+     * Setzt Anzahl der angeboteten Gerichte pro Tag (Standart 3)
+     * @param anzahlGerichteProTag
+     */
+    public void setAnzahlGerichteProTag(int anzahlGerichteProTag) {
+        this.anzahlGerichteProTag = anzahlGerichteProTag;
+    }
     
 }

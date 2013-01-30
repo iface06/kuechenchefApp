@@ -1,7 +1,7 @@
 package de.vawi.kuechenchefApp.speiseplan;
 
 import de.vawi.kuechenchefApp.PlanungsPeriode;
-import de.vawi.kuechenchefApp.ZutatenKalkulator;
+import de.vawi.kuechenchefApp.speisen.ZutatenKalkulator;
 import de.vawi.kuechenchefApp.nahrungsmittel.Nahrungsmittel;
 import de.vawi.kuechenchefApp.nahrungsmittel.SpeisenUndNahrungsmittelKategorie;
 import de.vawi.kuechenchefApp.speisen.*;
@@ -24,16 +24,9 @@ public class SpeiseplanErsteller {
     private List<Speise> uebrigeSpeiesenEssen;
     private List<Speise> speisenFuerMuehlheim;
     private List<Speise> uebrigeSpeisenMuehlheim;
-    Speiseplan speiseplanEssen;
-    Speiseplan speiseplanMuehlheim;
-
-    public SpeiseplanErsteller() {
-        beliebtesteSpeisen = speisen.findeBeliebtesteSpeisenFuerPlanungsPeriode(new PlanungsPeriode());
-        System.out.println(speisen.size());
-        System.out.println(beliebtesteSpeisen.size());
-        uebrigenSpeisen = speisen.findeUnbeliebtesteSpeisen(new PlanungsPeriode());
-        System.out.println(uebrigenSpeisen.size());
-    }
+    private Speiseplan speiseplanEssen;
+    private Speiseplan speiseplanMuehlheim;
+    private PlanungsPeriode planungsperiode = new PlanungsPeriode();
 
     /**
      * Erstellt auf Basis der Rezpete einen Speiseplan für eine der Kantinen,
@@ -47,16 +40,34 @@ public class SpeiseplanErsteller {
      * @params kantine Kantine des Unternehmens
      * @return Speiseplan
      */
-    public Speiseplan erzeuge(Kantine kantine) {
+    public List<Speiseplan> erzeuge() {
+        ladeBeliebtesteSpeisen();
+        ladeUnbeliebtesteSpeisen();
         beliebtesteSpeisenPruefenUndAnpassen();
         erstelleSpeiseplaene();
         pruefeVerfuegbarkeit();
-        if (kantine.equals(Kantine.ESSEN)) {
-            return speiseplanEssen;
-        } else {
-            return speiseplanMuehlheim;
-        }
+        return Arrays.asList(speiseplanEssen, speiseplanMuehlheim);
+        
 //        return new Speiseplan(kantine, new ArrayList<Tag>());
+    }
+
+    private void ladeBeliebtesteSpeisen() {
+        beliebtesteSpeisen = findeBeliebtesteSpeisenFuerPlanungsperiode();
+        System.out.println(speisen.size());
+        System.out.println(beliebtesteSpeisen.size());
+    }
+
+    protected List<Speise> findeBeliebtesteSpeisenFuerPlanungsperiode() {
+        return speisen.findeBeliebtesteSpeisenFuerPlanungsPeriode(planungsperiode);
+    }
+
+    private void ladeUnbeliebtesteSpeisen() {
+        uebrigenSpeisen = findeUnbeliebtesteSpeisen();
+        System.out.println(uebrigenSpeisen.size());
+    }
+
+    protected List<Speise> findeUnbeliebtesteSpeisen() {
+        return speisen.findeUnbeliebtesteSpeisen(this.planungsperiode);
     }
 
     protected void beliebtesteSpeisenPruefenUndAnpassen() {
@@ -109,8 +120,7 @@ public class SpeiseplanErsteller {
     }
 
     private int mindestAnzahlBenoetigterFleischgerichte() {
-        PlanungsPeriode periode = new PlanungsPeriode();
-        return periode.getAnzahlWochen() * 5;
+        return planungsperiode.getAnzahlWochen() * planungsperiode.getAnzahlTageProWoche();
     }
 
     /**
@@ -173,13 +183,11 @@ public class SpeiseplanErsteller {
     }
 
     private int mindestAnzahlBenoetigterFischgerichte() {
-        PlanungsPeriode periode = new PlanungsPeriode();
-        return periode.getAnzahlWochen();
+        return planungsperiode.getAnzahlWochen();
     }
 
     private int mindestAnzahlBenoetigterVegGerichte() {
-        PlanungsPeriode periode = new PlanungsPeriode();
-        return periode.getAnzahlWochen() * 5;
+        return planungsperiode.getAnzahlWochen() * planungsperiode.getAnzahlTageProWoche();
     }
 
     private Speise ermittleUnbeliebtestesGericht(SpeisenUndNahrungsmittelKategorie kategorie) {
@@ -240,7 +248,7 @@ public class SpeiseplanErsteller {
     private void passeSpeisenFuerEssenAn(List<Nahrungsmittel> problematischeNahrungsmittelEssen) {
         List<Speise> problematischeSpeisen = findeSpeisenMitNahrungsmittel(problematischeNahrungsmittelEssen, speisenFuerEssen);
         List<Speise> moeglicheErsatzSpeisen = findeSpeisenOhneNahrungsmittel(problematischeNahrungsmittelEssen, uebrigeSpeiesenEssen);
-        
+
         ersetzeSpeisen(problematischeSpeisen, moeglicheErsatzSpeisen, speisenFuerEssen, uebrigeSpeiesenEssen);
 
     }
@@ -322,14 +330,14 @@ public class SpeiseplanErsteller {
             speisenFuerPlan = new ArrayList<Speise>(speisenFuerMuehlheim);
         }
         List<Tag> tage = new ArrayList<Tag>();
-        PlanungsPeriode periode = new PlanungsPeriode();
+        
         //zuerst müssen die Fischtage erstellt werden!!
-        for (int i = 1; i <= periode.getAnzahlWochen(); i++) {
+        for (int i = 1; i <= planungsperiode.getAnzahlWochen(); i++) {
             tage.add(erstelleFischTag(speisenFuerPlan, i * 5));
         }
 
         //Dann die "normalen" Tage
-        for (int i = 1; i <= periode.getAnzahlWochen() * periode.getAnzahlTageProWoche(); i++) {
+        for (int i = 1; i <= planungsperiode.getAnzahlWochen() * planungsperiode.getAnzahlTageProWoche(); i++) {
             if ((i % 5) != 0) {
                 tage.add(erstelleNormalenTag(speisenFuerPlan, i));
             }
@@ -419,5 +427,9 @@ public class SpeiseplanErsteller {
             }
         }
         return nachKategorie;
+    }
+
+    protected void setPlanungsperiode(PlanungsPeriode planungsperiode) {
+        this.planungsperiode = planungsperiode;
     }
 }

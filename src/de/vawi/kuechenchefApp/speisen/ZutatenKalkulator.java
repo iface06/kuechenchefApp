@@ -1,4 +1,4 @@
-package de.vawi.kuechenchefApp;
+package de.vawi.kuechenchefApp.speisen;
 
 import de.vawi.kuechenchefApp.speisen.*;
 import de.vawi.kuechenchefApp.einkaufsliste.EinkaufslistenPosition;

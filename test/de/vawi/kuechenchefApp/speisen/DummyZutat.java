@@ -26,6 +26,11 @@ public class DummyZutat {
         return this;
     }
     
+    public DummyZutat verfuegbareMengeAmMarkt(int menge){
+        nahrungsmittel.setVerfuegbareGesamtMenge(menge);
+        return this;
+    }
+    
     public DummyZutat menge(double menge){
         zutat.setMenge(menge);
         return this;
