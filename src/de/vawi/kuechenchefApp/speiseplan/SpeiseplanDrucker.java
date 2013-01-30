@@ -12,6 +12,7 @@ import java.util.*;
 /**
  *
  * @author Tatsch
+ * @version 30.01.2013
  */
 class SpeiseplanDrucker {
 
