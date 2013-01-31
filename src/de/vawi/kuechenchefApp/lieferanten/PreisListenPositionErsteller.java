@@ -165,6 +165,14 @@ class PreisListenPositionErsteller {
         return nahrungsmittel;
     }
 
+    /**
+     * Diese Methode erstellt ein Nahrungsmittel, falls es bei einem vorherigen
+     * Suchlauf nicht gefunden wurde, aber in einer Preislistenposition
+     * aufgeführt wird.
+     *
+     * @param abschnitte die Abschnitte einer Preislisten-Position.
+     * @return Gibt das neu erstelle Nahrungsmittel wieder.
+     */
     protected Nahrungsmittel erstelleNahrungsmittelWennNichtGefunden(List<String> abschnitte) {
         Nahrungsmittel nahrungsmittel = erstelleNeuesNahrungsmittel(abschnitte);
         nahrungsmittelVerwaltung.fuegeHinzu(nahrungsmittel);

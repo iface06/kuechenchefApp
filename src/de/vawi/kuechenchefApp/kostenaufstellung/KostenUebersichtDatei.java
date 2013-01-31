@@ -6,6 +6,8 @@ import java.util.Iterator;
 
 /**
  *
+ * Erweitert Klasse Datei. 
+ * 
  * @author Tatsch
  * @version 30.01.2013
  */
