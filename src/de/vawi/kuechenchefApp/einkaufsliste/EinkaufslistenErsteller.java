@@ -127,7 +127,6 @@ public class EinkaufslistenErsteller {
     private void optimiereEinkaufslisteHinsichtlichLieferkosten() {
         for (Lieferant alternativLieferant : liste.holeLieferanten()) {
             for (EinkaufslistenPosition aktuellesAngebot : liste) {
-
                 Lieferant aktuellerLieferant = aktuellesAngebot.getLieferant();
                 if (aktuellerLieferantHatNurEinePositionInDerEinkaufsliste(aktuellerLieferant)
                         && beideSindBauern(aktuellerLieferant, alternativLieferant)
